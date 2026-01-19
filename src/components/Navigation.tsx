@@ -2,20 +2,54 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Home", href: "#home" },
   { name: "Why PristiqBuild", href: "#why-pristiqbuild" },
   { name: "Process", href: "#process" },
-  { name: "Projects", href: "#projects" },
+  { name: "Projects", href: "#projects", hasDropdown: true },
   { name: "About", href: "#about" },
+];
+
+const projectsList = [
+  {
+    name: "Opulence Heights",
+    slug: "opulence-heights",
+    category: "Smart Living Estate",
+  },
+  {
+    name: "Maitama Luxury Mansion",
+    slug: "maitama-luxury-mansion",
+    category: "Residential Roofing",
+  },
+  {
+    name: "Akure Castle Residence",
+    slug: "akure-lgs-roofing",
+    category: "Large Scale Roofing",
+  },
+  {
+    name: "Breeze Point Estate",
+    slug: "breeze-point-estate",
+    category: "Residential Development",
+  },
+  {
+    name: "Aso Grove Roof",
+    slug: "aso-grove-roofing",
+    category: "Roof Replacement",
+  },
 ];
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
+  const pathname = usePathname();
+  const isOnProjectPage = pathname?.startsWith("/projects/");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,12 +78,22 @@ export default function Navigation() {
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
+    // If we're on a project page, navigate to homepage first
+    if (isOnProjectPage) {
+      // Let the link navigate naturally to /{href}
+      setIsMobileMenuOpen(false);
+      setIsProjectsDropdownOpen(false);
+      return;
+    }
+
+    // Otherwise, smooth scroll on same page
     e.preventDefault();
     const targetId = href.slice(1);
     const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setIsMobileMenuOpen(false);
+      setIsProjectsDropdownOpen(false);
     }
   };
 
@@ -96,80 +140,168 @@ export default function Navigation() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <motion.a
-              href="#home"
+              href={isOnProjectPage ? "/" : "#home"}
               onClick={(e) => handleNavClick(e, "#home")}
               className="relative z-10"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="flex items-center gap-2">
-                <div
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    isScrolled ? "bg-primary-700" : "bg-white"
+              <div className="relative h-12 w-40">
+                {/* White text logo for transparent navbar */}
+                <Image
+                  src="/optimized/Pristiq Build whiteText.webp"
+                  alt="PristiqBuild Logo"
+                  fill
+                  className={`object-contain transition-opacity duration-300 ${
+                    isScrolled ? "opacity-0" : "opacity-100"
                   }`}
-                >
-                  <span
-                    className={`font-display font-bold text-xl ${
-                      isScrolled ? "text-white" : "text-primary-700"
-                    }`}
-                  >
-                    P
-                  </span>
-                </div>
-                <div>
-                  <span
-                    className={`font-display font-bold text-xl ${
-                      isScrolled ? "text-primary-900" : "text-white"
-                    }`}
-                  >
-                    Pristiq
-                  </span>
-                  <span
-                    className={`font-display font-bold text-xl ${
-                      isScrolled ? "text-primary-600" : "text-secondary-400"
-                    }`}
-                  >
-                    Build
-                  </span>
-                </div>
+                  priority
+                />
+                {/* Black text logo for scrolled navbar */}
+                <Image
+                  src="/optimized/Pristiq Build blacktext.webp"
+                  alt="PristiqBuild Logo"
+                  fill
+                  className={`object-contain transition-opacity duration-300 ${
+                    isScrolled ? "opacity-100" : "opacity-0"
+                  }`}
+                  priority
+                />
               </div>
             </motion.a>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className={`relative px-4 py-2 font-medium text-sm transition-colors ${
-                    isScrolled
-                      ? activeSection === link.href.slice(1)
-                        ? "text-primary-700"
-                        : "text-steel-700 hover:text-primary-700"
-                      : activeSection === link.href.slice(1)
-                        ? "text-white"
-                        : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {link.name}
-                  {activeSection === link.href.slice(1) && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className={`absolute bottom-0 left-4 right-4 h-0.5 ${
-                        isScrolled ? "bg-primary-600" : "bg-secondary-400"
-                      }`}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                // For Projects link with dropdown
+                if (link.hasDropdown) {
+                  return (
+                    <div
+                      key={link.name}
+                      className="relative"
+                      onMouseEnter={() => setIsProjectsDropdownOpen(true)}
+                      onMouseLeave={() => setIsProjectsDropdownOpen(false)}
+                    >
+                      <a
+                        href={isOnProjectPage ? `/${link.href}` : link.href}
+                        onClick={(e) => handleNavClick(e, link.href)}
+                        className={`relative px-4 py-2 font-medium text-sm transition-colors flex items-center gap-1 ${
+                          isScrolled
+                            ? activeSection === link.href.slice(1)
+                              ? "text-primary-700"
+                              : "text-steel-700 hover:text-primary-700"
+                            : activeSection === link.href.slice(1)
+                              ? "text-white"
+                              : "text-white/80 hover:text-white"
+                        }`}
+                      >
+                        {link.name}
+                        <ChevronDown
+                          size={16}
+                          className={`transition-transform ${
+                            isProjectsDropdownOpen ? "rotate-180" : ""
+                          }`}
+                        />
+                        {activeSection === link.href.slice(1) && (
+                          <motion.div
+                            layoutId="activeSection"
+                            className={`absolute bottom-0 left-4 right-4 h-0.5 ${
+                              isScrolled ? "bg-primary-600" : "bg-secondary-400"
+                            }`}
+                            transition={{
+                              type: "spring",
+                              stiffness: 380,
+                              damping: 30,
+                            }}
+                          />
+                        )}
+                      </a>
+
+                      {/* Dropdown Menu */}
+                      <AnimatePresence>
+                        {isProjectsDropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-2xl overflow-hidden z-50"
+                          >
+                            <div className="p-2">
+                              {projectsList.map((project, index) => (
+                                <Link
+                                  key={project.slug}
+                                  href={`/projects/${project.slug}`}
+                                  onClick={() => {
+                                    setIsProjectsDropdownOpen(false);
+                                    setIsMobileMenuOpen(false);
+                                  }}
+                                  className="block px-4 py-3 rounded-md hover:bg-primary-50 transition-colors group"
+                                >
+                                  <div className="font-medium text-steel-900 group-hover:text-primary-700 transition-colors">
+                                    {project.name}
+                                  </div>
+                                  <div className="text-xs text-steel-500 mt-0.5">
+                                    {project.category}
+                                  </div>
+                                </Link>
+                              ))}
+                            </div>
+                            <div className="bg-steel-50 px-4 py-3 border-t border-steel-100">
+                              <Link
+                                href="/#projects"
+                                onClick={() => setIsProjectsDropdownOpen(false)}
+                                className="text-sm font-medium text-primary-700 hover:text-primary-800 transition-colors"
+                              >
+                                View All Projects →
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                // Regular links
+                return (
+                  <a
+                    key={link.name}
+                    href={isOnProjectPage ? `/${link.href}` : link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`relative px-4 py-2 font-medium text-sm transition-colors ${
+                      isScrolled
+                        ? activeSection === link.href.slice(1)
+                          ? "text-primary-700"
+                          : "text-steel-700 hover:text-primary-700"
+                        : activeSection === link.href.slice(1)
+                          ? "text-white"
+                          : "text-white/80 hover:text-white"
+                    }`}
+                  >
+                    {link.name}
+                    {activeSection === link.href.slice(1) && (
+                      <motion.div
+                        layoutId="activeSection"
+                        className={`absolute bottom-0 left-4 right-4 h-0.5 ${
+                          isScrolled ? "bg-primary-600" : "bg-secondary-400"
+                        }`}
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
+                      />
+                    )}
+                  </a>
+                );
+              })}
             </div>
 
             {/* CTA Button */}
             <div className="hidden lg:block">
               <motion.a
-                href="#contact"
+                href={isOnProjectPage ? "/#contact" : "#contact"}
                 onClick={(e) => handleNavClick(e, "#contact")}
                 className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ${
                   isScrolled
@@ -220,28 +352,106 @@ export default function Navigation() {
               exit={{ x: "100%" }}
             >
               <div className="flex flex-col h-full pt-24 pb-8 px-6">
-                <nav className="flex-1">
+                <nav className="flex-1 overflow-y-auto">
                   <ul className="space-y-1">
-                    {navLinks.map((link, index) => (
-                      <motion.li
-                        key={link.name}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <a
-                          href={link.href}
-                          onClick={(e) => handleNavClick(e, link.href)}
-                          className={`block py-3 px-4 rounded-lg text-lg font-medium transition-colors ${
-                            activeSection === link.href.slice(1)
-                              ? "bg-primary-50 text-primary-700"
-                              : "text-steel-700 hover:bg-steel-50"
-                          }`}
+                    {navLinks.map((link, index) => {
+                      // Projects with dropdown
+                      if (link.hasDropdown) {
+                        return (
+                          <motion.li
+                            key={link.name}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                          >
+                            <button
+                              onClick={() =>
+                                setIsProjectsDropdownOpen(!isProjectsDropdownOpen)
+                              }
+                              className={`w-full flex items-center justify-between py-3 px-4 rounded-lg text-lg font-medium transition-colors ${
+                                activeSection === link.href.slice(1)
+                                  ? "bg-primary-50 text-primary-700"
+                                  : "text-steel-700 hover:bg-steel-50"
+                              }`}
+                            >
+                              {link.name}
+                              <ChevronDown
+                                size={20}
+                                className={`transition-transform ${
+                                  isProjectsDropdownOpen ? "rotate-180" : ""
+                                }`}
+                              />
+                            </button>
+
+                            {/* Mobile Dropdown */}
+                            <AnimatePresence>
+                              {isProjectsDropdownOpen && (
+                                <motion.div
+                                  initial={{ opacity: 0, height: 0 }}
+                                  animate={{ opacity: 1, height: "auto" }}
+                                  exit={{ opacity: 0, height: 0 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="pl-4 pt-2 space-y-1">
+                                    {projectsList.map((project) => (
+                                      <Link
+                                        key={project.slug}
+                                        href={`/projects/${project.slug}`}
+                                        onClick={() => {
+                                          setIsMobileMenuOpen(false);
+                                          setIsProjectsDropdownOpen(false);
+                                        }}
+                                        className="block py-2 px-4 rounded-lg text-sm hover:bg-primary-50 transition-colors"
+                                      >
+                                        <div className="font-medium text-steel-900">
+                                          {project.name}
+                                        </div>
+                                        <div className="text-xs text-steel-500 mt-0.5">
+                                          {project.category}
+                                        </div>
+                                      </Link>
+                                    ))}
+                                    <Link
+                                      href="/#projects"
+                                      onClick={() => {
+                                        setIsMobileMenuOpen(false);
+                                        setIsProjectsDropdownOpen(false);
+                                      }}
+                                      className="block py-2 px-4 text-sm font-medium text-primary-700 hover:text-primary-800"
+                                    >
+                                      View All Projects →
+                                    </Link>
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.li>
+                        );
+                      }
+
+                      // Regular links
+                      return (
+                        <motion.li
+                          key={link.name}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.05 }}
                         >
-                          {link.name}
-                        </a>
-                      </motion.li>
-                    ))}
+                          <a
+                            href={isOnProjectPage ? `/${link.href}` : link.href}
+                            onClick={(e) => handleNavClick(e, link.href)}
+                            className={`block py-3 px-4 rounded-lg text-lg font-medium transition-colors ${
+                              activeSection === link.href.slice(1)
+                                ? "bg-primary-50 text-primary-700"
+                                : "text-steel-700 hover:bg-steel-50"
+                            }`}
+                          >
+                            {link.name}
+                          </a>
+                        </motion.li>
+                      );
+                    })}
                   </ul>
                 </nav>
 
@@ -262,7 +472,7 @@ export default function Navigation() {
                     <span>info@pristiqbuild.com</span>
                   </a>
                   <motion.a
-                    href="#contact"
+                    href={isOnProjectPage ? "/#contact" : "#contact"}
                     onClick={(e) => handleNavClick(e, "#contact")}
                     className="block w-full py-4 bg-primary-700 text-white text-center rounded-lg font-semibold hover:bg-primary-800 transition-colors"
                     whileTap={{ scale: 0.98 }}

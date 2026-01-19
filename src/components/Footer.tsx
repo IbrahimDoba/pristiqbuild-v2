@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Phone,
   Mail,
@@ -15,22 +16,22 @@ import {
 
 const footerLinks = {
   company: [
-    { name: "About Us", href: "#about" },
-    { name: "Our Team", href: "#about" },
-    { name: "Careers", href: "#" },
-    { name: "News & Blog", href: "#" },
+    { name: "About Us", href: "/about" },
+    { name: "Our Team", href: "/team" },
+    { name: "Careers", href: "/careers" },
+    { name: "News & Blog", href: "/blog" },
   ],
   services: [
-    { name: "Modular Construction", href: "#services" },
-    { name: "Light Steel Gauge", href: "#services" },
-    { name: "AR/VR Solutions", href: "#technology" },
-    { name: "Smart Building", href: "#services" },
+    { name: "Modular Construction", href: "/services/modular-construction" },
+    { name: "Light Steel Gauge", href: "/services/light-steel-gauge" },
+    { name: "AR/VR Solutions", href: "/services/ar-vr-solutions" },
+    { name: "Smart Building", href: "/services/smart-building" },
   ],
   resources: [
-    { name: "Case Studies", href: "#projects" },
-    { name: "FAQs", href: "#" },
-    { name: "Cost Calculator", href: "#" },
-    { name: "VR Tour", href: "#contact" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "FAQs", href: "/faq" },
+    { name: "Cost Calculator", href: "/cost-calculator" },
+    { name: "Contact Us", href: "/contact" },
   ],
 };
 
@@ -65,19 +66,14 @@ export default function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-                <span className="font-display font-bold text-xl text-primary-700">
-                  P
-                </span>
-              </div>
-              <div>
-                <span className="font-display font-bold text-xl text-white">
-                  Pristiq
-                </span>
-                <span className="font-display font-bold text-xl text-secondary-400">
-                  Build
-                </span>
+            <div className="mb-6">
+              <div className="relative h-12 w-48">
+                <Image
+                  src="/optimized/Pristiq Build whiteText.webp"
+                  alt="PristiqBuild Logo"
+                  fill
+                  className="object-contain object-left"
+                />
               </div>
             </div>
 
@@ -220,13 +216,13 @@ export default function Footer() {
           {/* Legal Links */}
           <div className="flex items-center gap-6 text-sm">
             <a
-              href="#"
+              href="/privacy-policy"
               className="text-steel-400 hover:text-white transition-colors"
             >
               Privacy Policy
             </a>
             <a
-              href="#"
+              href="/terms-of-service"
               className="text-steel-400 hover:text-white transition-colors"
             >
               Terms of Service

@@ -35,7 +35,7 @@ export default function ProjectCTA({
         },
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -85,11 +85,11 @@ export default function ProjectCTA({
           {showContact && (
             <div className="flex flex-col sm:flex-row gap-6 justify-center text-white/80">
               <a
-                href="tel:+2348000000000"
+                href="tel:+2348130272706"
                 className="inline-flex items-center gap-2 hover:text-white transition-colors"
               >
                 <Phone className="w-5 h-5 text-secondary-400" />
-                <span>+234 800 000 0000</span>
+                <span>+234 813 027 2706</span>
               </a>
               <a
                 href="mailto:info@pristiqbuild.com"
