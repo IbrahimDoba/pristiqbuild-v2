@@ -7,10 +7,8 @@ import {
   Mail,
   MapPin,
   Facebook,
-  Twitter,
   Instagram,
   Linkedin,
-  Youtube,
   ArrowUp,
 } from "lucide-react";
 
@@ -36,11 +34,9 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Youtube, href: "#", label: "YouTube" },
+  { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61565826015488#", label: "Facebook" },
+  { icon: Instagram, href: "https://www.instagram.com/pristiqbuild/", label: "Instagram" },
+  { icon: Linkedin, href: "https://ng.linkedin.com/company/pristiqbuild", label: "LinkedIn" },
 ];
 
 export default function Footer() {
@@ -163,26 +159,26 @@ export default function Footer() {
         </div>
 
         {/* Newsletter */}
-        <div className="bg-steel-800/50 rounded-2xl p-8 mb-12">
+        <div className="bg-steel-800/50 rounded-2xl p-6 sm:p-8 mb-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left w-full lg:w-auto">
               <h4 className="font-display font-semibold text-lg mb-2">
                 Stay Updated
               </h4>
-              <p className="text-steel-400">
+              <p className="text-steel-400 text-sm sm:text-base">
                 Subscribe to our newsletter for construction insights and
                 updates.
               </p>
             </div>
-            <form className="flex w-full lg:w-auto gap-3">
+            <form className="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 lg:w-72 px-5 py-3 rounded-lg bg-steel-700 border border-steel-600 text-white placeholder-steel-400 focus:border-primary-500 focus:outline-none transition-colors"
+                className="flex-1 sm:flex-initial lg:w-72 px-4 sm:px-5 py-3 rounded-lg bg-steel-700 border border-steel-600 text-white placeholder-steel-400 focus:border-primary-500 focus:outline-none transition-colors text-sm sm:text-base"
               />
               <motion.button
                 type="submit"
-                className="px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors whitespace-nowrap"
+                className="w-full sm:w-auto px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors whitespace-nowrap text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

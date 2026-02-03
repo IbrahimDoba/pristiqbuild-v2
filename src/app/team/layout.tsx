@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Our Team | PristiqBuild - Meet Our Expert Leadership",
@@ -13,11 +11,5 @@ export default function TeamLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Navigation />
-      {children}
-      <Footer />
-    </>
-  );
+  return <>{children}</>;
 }

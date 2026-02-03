@@ -1,7 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import {
   ProjectHero,
   ProjectGallery,
@@ -159,8 +157,6 @@ const lifestyleFeatures = [
 export default function OpulenceHeightsProject() {
   return (
     <>
-      <Navigation />
-      <main id="main-content">
         <ProjectHero
           title="Opulence Heights"
           subtitle="Nigeria's first smart steel residential estate featuring 18 luxury villas with solar power, home automation, and precision engineered steel frame construction."
@@ -176,9 +172,9 @@ export default function OpulenceHeightsProject() {
         {/* About Section */}
         <section className="section-padding bg-white">
           <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
               <div>
-                <div className="flex items-center gap-4 mb-6">
+                <div className="flex flex-wrap items-center gap-3 mb-6">
                   <div className="px-4 py-2 bg-steel-100 rounded-lg">
                     <span className="font-display font-bold text-steel-700">
                       EFAB Properties
@@ -216,35 +212,36 @@ export default function OpulenceHeightsProject() {
                   </p>
                 </div>
               </div>
-              <div className="relative">
+              <div className="relative lg:sticky lg:top-32">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                   <Image
                     src="/dawaki estate/2.png"
                     alt="Opulence Heights villa exterior"
                     fill
                     className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
-                <div className="absolute -bottom-6 -left-6 w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10" />
+                <div className="absolute -bottom-6 -left-6 w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10 hidden lg:block" />
               </div>
             </div>
           </div>
         </section>
 
         {/* Quick Facts */}
-        <section className="py-16 bg-steel-900">
+        <section className="py-12 sm:py-16 bg-steel-900">
           <div className="container-custom">
-            <h2 className="heading-md text-white text-center mb-12">
+            <h2 className="heading-md text-white text-center mb-8 sm:mb-12">
               Quick Facts
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {quickFacts.map((fact, index) => (
                 <div
                   key={index}
-                  className="p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
+                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
                 >
-                  <div className="text-sm text-white/60 mb-1">{fact.label}</div>
-                  <div className="text-lg font-display font-bold text-white">
+                  <div className="text-xs sm:text-sm text-white/60 mb-1">{fact.label}</div>
+                  <div className="text-sm sm:text-lg font-display font-bold text-white">
                     {fact.value}
                   </div>
                 </div>
@@ -260,10 +257,10 @@ export default function OpulenceHeightsProject() {
         />
 
         {/* Lifestyle Features List */}
-        <section className="py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10 sm:mb-12">
                 <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
                   Complete Package
                 </span>
@@ -271,15 +268,15 @@ export default function OpulenceHeightsProject() {
                   Everything Included
                 </h2>
               </div>
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                 {lifestyleFeatures.map((feature, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-4 bg-white rounded-xl border border-steel-100 shadow-sm"
+                    className="flex items-start gap-3 p-3 sm:p-4 bg-white rounded-xl border border-steel-100 shadow-sm"
                   >
-                    <span className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center flex-shrink-0">
+                    <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg
-                        className="w-4 h-4 text-white"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -292,7 +289,7 @@ export default function OpulenceHeightsProject() {
                         />
                       </svg>
                     </span>
-                    <span className="text-steel-700 font-medium">{feature}</span>
+                    <span className="text-steel-700 font-medium text-sm sm:text-base">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -313,31 +310,31 @@ export default function OpulenceHeightsProject() {
                 Perfectly Positioned
               </h2>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              <div className="text-center p-8 bg-steel-50 rounded-2xl">
-                <MapPin className="w-12 h-12 text-primary-600 mx-auto mb-4" />
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto">
+              <div className="text-center p-6 sm:p-8 bg-steel-50 rounded-2xl">
+                <MapPin className="w-10 h-10 sm:w-12 sm:h-12 text-primary-600 mx-auto mb-4" />
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Prime Location
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Dawaki Hillside, 10 mins from Abuja CBD
                 </p>
               </div>
-              <div className="text-center p-8 bg-steel-50 rounded-2xl">
-                <Building2 className="w-12 h-12 text-primary-600 mx-auto mb-4" />
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+              <div className="text-center p-6 sm:p-8 bg-steel-50 rounded-2xl">
+                <Building2 className="w-10 h-10 sm:w-12 sm:h-12 text-primary-600 mx-auto mb-4" />
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Easy Access
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Connected to Katampe, Gwarinpa, Jahi
                 </p>
               </div>
-              <div className="text-center p-8 bg-steel-50 rounded-2xl">
-                <Car className="w-12 h-12 text-primary-600 mx-auto mb-4" />
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+              <div className="text-center p-6 sm:p-8 bg-steel-50 rounded-2xl sm:col-span-2 lg:col-span-1">
+                <Car className="w-10 h-10 sm:w-12 sm:h-12 text-primary-600 mx-auto mb-4" />
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Major Highways
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Minutes from major business districts
                 </p>
               </div>
@@ -361,30 +358,30 @@ export default function OpulenceHeightsProject() {
               </span>
               <h2 className="heading-lg text-white">Investment Opportunity</h2>
             </div>
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-12">
-              <div className="text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto mb-12">
+              <div className="text-center p-6 sm:p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
                 <div className="text-sm text-white/60 mb-2">Starting Price</div>
-                <div className="text-4xl font-display font-bold text-secondary-400 mb-1">
+                <div className="text-3xl sm:text-4xl font-display font-bold text-secondary-400 mb-1">
                   N400M
                 </div>
                 <div className="text-white/70">per villa</div>
               </div>
-              <div className="text-center p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
+              <div className="text-center p-6 sm:p-8 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
                 <div className="text-sm text-white/60 mb-2">Payment Plan</div>
-                <div className="text-4xl font-display font-bold text-white mb-1">
+                <div className="text-3xl sm:text-4xl font-display font-bold text-white mb-1">
                   12 Months
                 </div>
                 <div className="text-white/70">Flexible terms available</div>
               </div>
-              <div className="text-center p-8 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl">
+              <div className="text-center p-6 sm:p-8 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl sm:col-span-2 lg:col-span-1">
                 <div className="text-sm text-white/80 mb-2">Early Bird Offer</div>
-                <div className="text-4xl font-display font-bold text-white mb-1">
+                <div className="text-3xl sm:text-4xl font-display font-bold text-white mb-1">
                   Save N40M
                 </div>
                 <div className="text-white/90">on full off plan payment</div>
               </div>
             </div>
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-2xl mx-auto px-4">
               <h3 className="text-xl font-display font-bold text-center mb-6">
                 Why Invest Now?
               </h3>
@@ -397,9 +394,9 @@ export default function OpulenceHeightsProject() {
                 ].map((reason, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 text-white/90"
+                    className="flex items-start gap-3 text-white/90"
                   >
-                    <span className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0">
+                    <span className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg
                         className="w-4 h-4 text-white"
                         fill="none"
@@ -414,7 +411,7 @@ export default function OpulenceHeightsProject() {
                         />
                       </svg>
                     </span>
-                    <span>{reason}</span>
+                    <span className="text-sm sm:text-base">{reason}</span>
                   </div>
                 ))}
               </div>
@@ -433,7 +430,7 @@ export default function OpulenceHeightsProject() {
                 Project Timeline and Phases
               </h2>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 mb-12">
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-6 sm:gap-8 mb-12">
               <div className="text-center">
                 <div className="text-4xl font-display font-bold text-primary-700">
                   18 Months
@@ -448,44 +445,44 @@ export default function OpulenceHeightsProject() {
               </div>
               <div className="text-center">
                 <div className="text-4xl font-display font-bold text-steel-700">
-                  Q4 2025
+                  Q4 2026
                 </div>
                 <div className="text-steel-600">Final Completion</div>
               </div>
             </div>
-            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="p-6 bg-primary-50 rounded-2xl border-2 border-primary-200">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
+              <div className="p-4 sm:p-6 bg-primary-50 rounded-2xl border-2 border-primary-200">
                 <div className="inline-block px-3 py-1 bg-primary-600 text-white text-sm font-bold rounded-full mb-4">
                   In Progress
                 </div>
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Phase 1
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Show Unit and 4 Villas currently under construction with
                   expected completion soon
                 </p>
               </div>
-              <div className="p-6 bg-steel-50 rounded-2xl border border-steel-200">
+              <div className="p-4 sm:p-6 bg-steel-50 rounded-2xl border border-steel-200">
                 <div className="inline-block px-3 py-1 bg-steel-400 text-white text-sm font-bold rounded-full mb-4">
                   Planned
                 </div>
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Phase 2
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Infrastructure and sales phase with site development and
                   utility installation
                 </p>
               </div>
-              <div className="p-6 bg-steel-50 rounded-2xl border border-steel-200">
+              <div className="p-4 sm:p-6 bg-steel-50 rounded-2xl border border-steel-200 sm:col-span-2 lg:col-span-1">
                 <div className="inline-block px-3 py-1 bg-steel-400 text-white text-sm font-bold rounded-full mb-4">
                   Planned
                 </div>
-                <h3 className="font-display font-bold text-xl text-steel-900 mb-2">
+                <h3 className="font-display font-bold text-lg sm:text-xl text-steel-900 mb-2">
                   Phase 3
                 </h3>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Final units completion with remaining 14 villas construction
                   and handover
                 </p>
@@ -498,8 +495,6 @@ export default function OpulenceHeightsProject() {
           title="Experience Engineered Living"
           description="Request the brochure and payment plan, or schedule a private viewing to discover Nigeria's most advanced residential development."
         />
-      </main>
-      <Footer />
     </>
   );
 }

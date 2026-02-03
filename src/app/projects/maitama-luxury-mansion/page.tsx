@@ -1,7 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import {
   ProjectHero,
   ProjectGallery,
@@ -156,8 +154,6 @@ const galleryImages = [
 export default function MaitamaProject() {
   return (
     <>
-      <Navigation />
-      <main id="main-content">
         <ProjectHero
           title="Maitama Luxury Mansion"
           subtitle="A landmark steel roofing project showcasing precision engineering and rapid installation for one of Abuja's most prestigious residential developments."
@@ -230,8 +226,6 @@ export default function MaitamaProject() {
           title="Ready for Your Luxury Roofing Project?"
           description="Whether you are building a premium residence or renovating an existing property, Pristiq Build delivers world class Light Gauge Steel roofing solutions that combine durability, speed, and aesthetic excellence."
         />
-      </main>
-      <Footer />
     </>
   );
 }

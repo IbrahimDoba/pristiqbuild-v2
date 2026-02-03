@@ -130,45 +130,28 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 lg:top-8 left-0 right-0 z-40 transition-all duration-500 ${
-          isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-lg"
-            : "bg-transparent"
-        }`}
+        className="fixed top-0 lg:top-8 left-0 right-0 z-40 transition-all duration-500 bg-white/95 backdrop-blur-md shadow-lg"
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <motion.a
-              href={isOnProjectPage ? "/" : "#home"}
-              onClick={(e) => handleNavClick(e, "#home")}
-              className="relative z-10"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <div className="relative h-12 w-40">
-                {/* White text logo for transparent navbar */}
-                <Image
-                  src="/optimized/Pristiq Build whiteText.webp"
-                  alt="PristiqBuild Logo"
-                  fill
-                  className={`object-contain transition-opacity duration-300 ${
-                    isScrolled ? "opacity-0" : "opacity-100"
-                  }`}
-                  priority
-                />
-                {/* Black text logo for scrolled navbar */}
-                <Image
-                  src="/optimized/Pristiq Build blacktext.webp"
-                  alt="PristiqBuild Logo"
-                  fill
-                  className={`object-contain transition-opacity duration-300 ${
-                    isScrolled ? "opacity-100" : "opacity-0"
-                  }`}
-                  priority
-                />
-              </div>
-            </motion.a>
+            <Link href="/">
+              <motion.div
+                className="relative z-10 cursor-pointer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="relative h-12 w-40">
+                  <Image
+                    src="/optimized/Pristiq Build blacktext.webp"
+                    alt="PristiqBuild Logo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              </motion.div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
@@ -186,13 +169,9 @@ export default function Navigation() {
                         href={isOnProjectPage ? `/${link.href}` : link.href}
                         onClick={(e) => handleNavClick(e, link.href)}
                         className={`relative px-4 py-2 font-medium text-sm transition-colors flex items-center gap-1 ${
-                          isScrolled
-                            ? activeSection === link.href.slice(1)
-                              ? "text-primary-700"
-                              : "text-steel-700 hover:text-primary-700"
-                            : activeSection === link.href.slice(1)
-                              ? "text-white"
-                              : "text-white/80 hover:text-white"
+                          activeSection === link.href.slice(1)
+                            ? "text-primary-700"
+                            : "text-steel-700 hover:text-primary-700"
                         }`}
                       >
                         {link.name}
@@ -205,9 +184,7 @@ export default function Navigation() {
                         {activeSection === link.href.slice(1) && (
                           <motion.div
                             layoutId="activeSection"
-                            className={`absolute bottom-0 left-4 right-4 h-0.5 ${
-                              isScrolled ? "bg-primary-600" : "bg-secondary-400"
-                            }`}
+                            className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary-600"
                             transition={{
                               type: "spring",
                               stiffness: 380,
@@ -270,22 +247,16 @@ export default function Navigation() {
                     href={isOnProjectPage ? `/${link.href}` : link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`relative px-4 py-2 font-medium text-sm transition-colors ${
-                      isScrolled
-                        ? activeSection === link.href.slice(1)
-                          ? "text-primary-700"
-                          : "text-steel-700 hover:text-primary-700"
-                        : activeSection === link.href.slice(1)
-                          ? "text-white"
-                          : "text-white/80 hover:text-white"
+                      activeSection === link.href.slice(1)
+                        ? "text-primary-700"
+                        : "text-steel-700 hover:text-primary-700"
                     }`}
                   >
                     {link.name}
                     {activeSection === link.href.slice(1) && (
                       <motion.div
                         layoutId="activeSection"
-                        className={`absolute bottom-0 left-4 right-4 h-0.5 ${
-                          isScrolled ? "bg-primary-600" : "bg-secondary-400"
-                        }`}
+                        className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary-600"
                         transition={{
                           type: "spring",
                           stiffness: 380,
@@ -300,29 +271,21 @@ export default function Navigation() {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <motion.a
-                href={isOnProjectPage ? "/#contact" : "#contact"}
-                onClick={(e) => handleNavClick(e, "#contact")}
-                className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ${
-                  isScrolled
-                    ? "bg-primary-700 text-white hover:bg-primary-800"
-                    : "bg-white text-primary-700 hover:bg-primary-50"
-                }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Get a Quote
-              </motion.a>
+              <Link href="/contact">
+                <motion.div
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary-700 text-white hover:bg-primary-800 cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get a Quote
+                </motion.div>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden relative z-10 p-2 ${
-                isScrolled || isMobileMenuOpen
-                  ? "text-primary-900"
-                  : "text-white"
-              }`}
+              className="lg:hidden relative z-10 p-2 text-primary-900"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -471,14 +434,14 @@ export default function Navigation() {
                     <Mail size={18} />
                     <span>info@pristiqbuild.com</span>
                   </a>
-                  <motion.a
-                    href={isOnProjectPage ? "/#contact" : "#contact"}
-                    onClick={(e) => handleNavClick(e, "#contact")}
-                    className="block w-full py-4 bg-primary-700 text-white text-center rounded-lg font-semibold hover:bg-primary-800 transition-colors"
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Get a Quote
-                  </motion.a>
+                  <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
+                    <motion.div
+                      className="block w-full py-4 bg-primary-700 text-white text-center rounded-lg font-semibold hover:bg-primary-800 transition-colors cursor-pointer"
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Get a Quote
+                    </motion.div>
+                  </Link>
                 </div>
               </div>
             </motion.div>

@@ -96,6 +96,7 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
                   src={image.src}
                   alt={image.alt}
                   fill
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -141,12 +142,14 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
             <ChevronRight className="w-8 h-8 text-white" />
           </button>
 
-          <div className="relative w-full max-w-5xl h-[80vh] mx-4">
+          <div className="relative w-full max-w-5xl h-[60vh] sm:h-[80vh] mx-4">
             <Image
               src={images[currentIndex].src}
               alt={images[currentIndex].alt}
               fill
+              sizes="100vw"
               className="object-contain"
+              priority
             />
           </div>
 

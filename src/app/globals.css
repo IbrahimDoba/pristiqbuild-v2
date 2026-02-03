@@ -410,3 +410,84 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* MDX Content Styles */
+.mdx-prose {
+  /* Ensure proper spacing for all content */
+  line-height: 1.75;
+}
+
+.mdx-prose > *:first-child {
+  margin-top: 0 !important;
+}
+
+.mdx-prose > *:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Additional heading styles */
+.mdx-prose h1,
+.mdx-prose h2,
+.mdx-prose h3,
+.mdx-prose h4,
+.mdx-prose h5,
+.mdx-prose h6 {
+  scroll-margin-top: 100px;
+}
+
+/* Ensure proper list nesting */
+.mdx-prose ul ul,
+.mdx-prose ol ol,
+.mdx-prose ul ol,
+.mdx-prose ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Style nested lists */
+.mdx-prose li > ul,
+.mdx-prose li > ol {
+  margin-top: 0.5rem;
+}
+
+/* Code block improvements */
+.mdx-prose pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Table improvements */
+.mdx-prose table {
+  font-size: 0.95rem;
+}
+
+.mdx-prose th,
+.mdx-prose td {
+  vertical-align: top;
+}
+
+/* Image figure styles */
+.mdx-prose figure {
+  margin: 2rem 0;
+}
+
+.mdx-prose figcaption {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-steel-500);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+/* Article wrapper */
+.mdx-article {
+  /* Container for the full MDX article */
+}
+
+/* Smooth scroll for anchor links */
+.mdx-prose [id] {
+  scroll-margin-top: 100px;
+}

@@ -1,7 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import {
   ProjectHero,
   ProjectGallery,
@@ -92,7 +90,7 @@ const contentSections = [
     title: "A Testament to Innovation Meeting Traditional Needs",
     content:
       "Located in the prestigious Aso Grove Estate in Abuja, this project was a complete roof transformation, replacing an aging wooden truss system with a modern, precision built Light Gauge Steel framework. The client, keen on achieving the best possible roofing solution for long term performance, requested a system that combined beauty, efficiency, and longevity, and that is exactly what Pristiq Build delivered.",
-    image: "/maitama/aso1.JPG",
+    image: "/aso/aso1.JPG",
     imageAlt: "Aso Grove Estate residence with new LGS roofing",
     imagePosition: "right" as const,
   },
@@ -100,7 +98,7 @@ const contentSections = [
     title: "Comprehensive Scope of Work",
     content:
       "Our team handled the full roofing solution from removal of the existing timber structure to installation of new steel trusses, waterproofing layers, and roof sheets. The design was engineered to accommodate both durability and aesthetic appeal, ensuring the structure complemented the luxury of Aso Grove's environment.",
-    image: "/maitama/aso2.JPG",
+    image: "/aso/aso2.JPG",
     imageAlt: "LGS installation in progress",
     imagePosition: "left" as const,
     highlights: [
@@ -115,7 +113,7 @@ const contentSections = [
     title: "Expert Execution",
     content:
       "The replacement process required precision dismantling of the old roof while maintaining the building's structural integrity. Within three days, our specialized roofing team installed the new Light Gauge Steel truss system, ensuring all connections, alignments, and bracings met international engineering standards. To complete the system, we applied a polyurethane membrane, sealing the structure from water ingress and heat transfer, effectively improving the home's thermal performance and longevity.",
-    image: "/maitama/aso3.JPG",
+    image: "/aso/aso3.JPG",
     imageAlt: "Completed roof structure",
     imagePosition: "right" as const,
   },
@@ -123,22 +121,22 @@ const contentSections = [
 
 const galleryImages = [
   {
-    src: "/maitama/aso1.JPG",
+    src: "/aso/aso1.JPG",
     alt: "Aso Grove Estate exterior with new roofing",
     caption: "Complete roof transformation at Aso Grove Estate",
   },
   {
-    src: "/maitama/aso2.JPG",
+    src: "/aso/aso2.JPG",
     alt: "LGS installation process",
     caption: "Precision installation of steel framework",
   },
   {
-    src: "/maitama/aso3.JPG",
+    src: "/aso/aso3.JPG",
     alt: "Completed structure detail",
     caption: "Finished roofing structure",
   },
   {
-    src: "/maitama/aso4.JPG",
+    src: "/aso/aso4.JPG",
     alt: "Final result",
     caption: "Final result with improved aesthetics",
   },
@@ -176,8 +174,6 @@ const highlights = [
 export default function AsoGroveProject() {
   return (
     <>
-      <Navigation />
-      <main id="main-content">
         <ProjectHero
           title="Aso Grove Estate Roof Transformation"
           subtitle="A complete roof transformation replacing aging timber with modern Light Gauge Steel, completed in just 72 hours with advanced waterproofing."
@@ -185,7 +181,7 @@ export default function AsoGroveProject() {
           duration="72 Hours"
           area="280 sqm"
           status="Completed"
-          heroImage="/maitama/aso1.JPG"
+          heroImage="/aso/aso1.JPG"
           category="Roof Replacement"
         />
 
@@ -306,8 +302,6 @@ export default function AsoGroveProject() {
           title="Ready to Transform Your Roof?"
           description="Whether you are looking to replace an aging timber roof or upgrade to modern Light Gauge Steel construction, Pristiq Build delivers exceptional results with minimal disruption. Contact us today to discuss your roofing needs."
         />
-      </main>
-      <Footer />
     </>
   );
 }

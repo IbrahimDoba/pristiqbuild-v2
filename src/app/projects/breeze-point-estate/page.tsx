@@ -1,7 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import {
   ProjectHero,
   ProjectGallery,
@@ -162,8 +160,6 @@ const premiumFeatures = [
 export default function BreezePointProject() {
   return (
     <>
-      <Navigation />
-      <main id="main-content">
         <ProjectHero
           title="Breeze Point Estate"
           subtitle="Exclusive luxury living in F01 Kubwa featuring five 4 bedroom terrace homes with Light Gauge Steel roofing and smart home infrastructure."
@@ -186,24 +182,24 @@ export default function BreezePointProject() {
         />
 
         {/* Premium Finishes Section */}
-        <section className="py-20 bg-gradient-to-b from-white to-steel-50">
+        <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-steel-50">
           <div className="container-custom">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10 sm:mb-12">
               <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
                 Quality Details
               </span>
               <h2 className="heading-lg text-steel-900">Premium Finishes</h2>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {premiumFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300"
+                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300"
                 >
-                  <h3 className="font-display font-bold text-steel-900 text-lg mb-2">
+                  <h3 className="font-display font-bold text-steel-900 text-base sm:text-lg mb-2">
                     {feature.title}
                   </h3>
-                  <p className="text-steel-600">{feature.description}</p>
+                  <p className="text-steel-600 text-sm sm:text-base">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -213,7 +209,7 @@ export default function BreezePointProject() {
         {/* Why LGS Section */}
         <section className="section-padding bg-primary-900 text-white">
           <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
               <div>
                 <span className="inline-block mb-4 text-secondary-400 font-semibold tracking-wider uppercase text-sm">
                   Innovation First
@@ -221,22 +217,22 @@ export default function BreezePointProject() {
                 <h2 className="heading-lg text-white mb-6">
                   Why LGS for Roofing?
                 </h2>
-                <p className="text-xl text-white/80 leading-relaxed mb-8">
+                <p className="text-lg sm:text-xl text-white/80 leading-relaxed mb-6 sm:mb-8">
                   Breeze Point Estate is among the first luxury builds in F01 to
                   implement a full Light Gauge Steel roofing system, setting a
                   new standard for residential construction in the area.
                 </p>
-                <ul className="space-y-4">
+                <ul className="space-y-3 sm:space-y-4">
                   {[
                     "Over 60% faster installation than traditional timber",
                     "10% cost savings on roofing materials and labor",
                     "Zero risk of rot, sagging, or termites",
                     "Clean finish and long term structural integrity",
                   ].map((item, index) => (
-                    <li key={index} className="flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0">
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <svg
-                          className="w-4 h-4 text-white"
+                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -249,34 +245,34 @@ export default function BreezePointProject() {
                           />
                         </svg>
                       </span>
-                      <span className="text-white/90">{item}</span>
+                      <span className="text-white/90 text-sm sm:text-base">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="relative">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-                  <h3 className="text-2xl font-display font-bold mb-6">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-8 border border-white/20">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold mb-4 sm:mb-6">
                     Technical Specifications
                   </h3>
-                  <div className="space-y-4">
-                    <div className="flex justify-between border-b border-white/20 pb-3">
-                      <span className="text-white/70">Truss Profile</span>
-                      <span className="font-semibold">
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
+                      <span className="text-white/70 text-sm sm:text-base">Truss Profile</span>
+                      <span className="font-semibold text-sm sm:text-base">
                         Zinc coated 10cm profiles
                       </span>
                     </div>
-                    <div className="flex justify-between border-b border-white/20 pb-3">
-                      <span className="text-white/70">Installation Team</span>
-                      <span className="font-semibold">5 person crew</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
+                      <span className="text-white/70 text-sm sm:text-base">Installation Team</span>
+                      <span className="font-semibold text-sm sm:text-base">5 person crew</span>
                     </div>
-                    <div className="flex justify-between border-b border-white/20 pb-3">
-                      <span className="text-white/70">Installation Time</span>
-                      <span className="font-semibold">4 days</span>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
+                      <span className="text-white/70 text-sm sm:text-base">Installation Time</span>
+                      <span className="font-semibold text-sm sm:text-base">4 days</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/70">Equipment Used</span>
-                      <span className="font-semibold">
+                    <div className="flex flex-col sm:flex-row sm:justify-between">
+                      <span className="text-white/70 text-sm sm:text-base">Equipment Used</span>
+                      <span className="font-semibold text-sm sm:text-base">
                         Automated tools
                       </span>
                     </div>
@@ -290,37 +286,37 @@ export default function BreezePointProject() {
         <ProjectGallery images={galleryImages} title="Construction Progress" />
 
         {/* Investment Info */}
-        <section className="py-20 bg-white">
+        <section className="py-16 sm:py-20 bg-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10 sm:mb-12">
                 <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
                   Investment Opportunity
                 </span>
                 <h2 className="heading-lg text-steel-900">Project Status</h2>
               </div>
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
-                <div className="text-center p-6 bg-steel-50 rounded-2xl">
-                  <div className="text-3xl font-display font-bold text-primary-700 mb-2">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
+                <div className="text-center p-5 sm:p-6 bg-steel-50 rounded-2xl">
+                  <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
                     Under Construction
                   </div>
-                  <div className="text-steel-600">Current Status</div>
+                  <div className="text-steel-600 text-sm sm:text-base">Current Status</div>
                 </div>
-                <div className="text-center p-6 bg-steel-50 rounded-2xl">
-                  <div className="text-3xl font-display font-bold text-primary-700 mb-2">
+                <div className="text-center p-5 sm:p-6 bg-steel-50 rounded-2xl">
+                  <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
                     3 Units
                   </div>
-                  <div className="text-steel-600">Remaining Available</div>
+                  <div className="text-steel-600 text-sm sm:text-base">Remaining Available</div>
                 </div>
-                <div className="text-center p-6 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl text-white">
-                  <div className="text-3xl font-display font-bold mb-2">
+                <div className="text-center p-5 sm:p-6 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl text-white sm:col-span-2 lg:col-span-1">
+                  <div className="text-xl sm:text-3xl font-display font-bold mb-2">
                     Flexible
                   </div>
-                  <div className="text-white/90">Payment Options</div>
+                  <div className="text-white/90 text-sm sm:text-base">Payment Options</div>
                 </div>
               </div>
-              <div className="text-center">
-                <p className="text-lg text-steel-600 leading-relaxed">
+              <div className="text-center px-4">
+                <p className="text-base sm:text-lg text-steel-600 leading-relaxed">
                   Payment options include full payment, installments, and
                   mortgage support. Contact us for detailed pricing and
                   availability information.
@@ -331,18 +327,18 @@ export default function BreezePointProject() {
         </section>
 
         {/* CEO Quote */}
-        <section className="py-20 bg-gradient-to-b from-steel-50 to-white">
-          <div className="container-custom">
+        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
+          <div className="container-custom px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="w-20 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600 mx-auto mb-8" />
-              <blockquote className="text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-8">
+              <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600 mx-auto mb-6 sm:mb-8" />
+              <blockquote className="text-xl sm:text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-6 sm:mb-8">
                 &ldquo;We are excited to bring Breeze Point Estate to life in
                 Kubwa's most sought after district. Every detail from foundation
                 to final finish reflects our dedication to building homes that
                 last, function smartly, and stand out in value and
                 beauty.&rdquo;
               </blockquote>
-              <cite className="text-lg text-steel-600 not-italic">
+              <cite className="text-base sm:text-lg text-steel-600 not-italic">
                 <span className="font-semibold text-steel-900">Yusuf Doba</span>
                 <span className="mx-2">|</span>
                 CEO, Pristiq Build
@@ -355,8 +351,6 @@ export default function BreezePointProject() {
           title="Interested in Breeze Point Estate?"
           description="Secure your unit in this exclusive development. Contact us today to schedule a site visit, receive detailed pricing, or learn more about payment options."
         />
-      </main>
-      <Footer />
     </>
   );
 }

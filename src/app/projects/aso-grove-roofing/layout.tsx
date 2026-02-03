@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     title: "Aso Grove Estate Roof Replacement | Pristiq Build",
     description:
       "Complete timber to LGS roof conversion in 72 hours with waterproofing at Aso Grove Estate, Abuja.",
-    images: ["/maitama/aso1.JPG"],
+    images: ["/aso/aso1.JPG"],
     type: "article",
   },
 };

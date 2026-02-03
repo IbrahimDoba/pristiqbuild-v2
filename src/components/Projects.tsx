@@ -88,9 +88,9 @@ const projects = [
     description:
       "Complete timber to LGS roof conversion in just 72 hours with advanced polyurethane waterproofing.",
     images: [
-      "/maitama/aso1.JPG",
-      "/maitama/aso2.JPG",
-      "/maitama/aso3.JPG",
+      "/aso/aso1.JPG",
+      "/aso/aso2.JPG",
+      "/aso/aso3.JPG",
     ],
     featured: false,
   },

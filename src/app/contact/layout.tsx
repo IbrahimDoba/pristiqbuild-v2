@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Contact Us | PristiqBuild - Get Your Free Construction Quote",
@@ -13,11 +11,5 @@ export default function ContactLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Navigation />
-      {children}
-      <Footer />
-    </>
-  );
+  return <>{children}</>;
 }

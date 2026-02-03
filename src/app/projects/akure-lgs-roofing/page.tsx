@@ -1,7 +1,5 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import {
   ProjectHero,
   ProjectGallery,
@@ -167,8 +165,6 @@ const highlights = [
 export default function AkureProject() {
   return (
     <>
-      <Navigation />
-      <main id="main-content">
         <ProjectHero
           title="Akure Castle Style Residence"
           subtitle="One of Pristiq Build's largest and most technically challenging roofing projects, delivering over 1,080 square meters of precision engineered Light Gauge Steel roofing."
@@ -191,22 +187,22 @@ export default function AkureProject() {
         />
 
         {/* Key Highlights Grid */}
-        <section className="py-20 bg-steel-900 text-white">
+        <section className="py-16 sm:py-20 bg-steel-900 text-white">
           <div className="container-custom">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10 sm:mb-12">
               <span className="inline-block mb-4 text-secondary-400 font-semibold tracking-wider uppercase text-sm">
                 Project Specifications
               </span>
               <h2 className="heading-lg text-white">Key Highlights</h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
               {highlights.map((item, index) => (
                 <div
                   key={index}
-                  className="p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
+                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
                 >
-                  <div className="text-sm text-white/60 mb-1">{item.label}</div>
-                  <div className="text-lg font-display font-bold text-white">
+                  <div className="text-xs sm:text-sm text-white/60 mb-1">{item.label}</div>
+                  <div className="text-sm sm:text-lg font-display font-bold text-white">
                     {item.value}
                   </div>
                 </div>
@@ -220,7 +216,7 @@ export default function AkureProject() {
         {/* Results Section */}
         <section className="section-padding bg-white">
           <div className="container-custom">
-            <div className="text-center mb-12">
+            <div className="text-center mb-10 sm:mb-12">
               <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
                 Project Outcome
               </span>
@@ -228,39 +224,39 @@ export default function AkureProject() {
                 Exceptional Results
               </h2>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl border border-primary-200 text-center">
-                <div className="text-3xl font-display font-bold text-primary-700 mb-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl border border-primary-200 text-center">
+                <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
                   Architecturally Striking
                 </div>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   A final structure that sets a new standard for modern steel
                   roofing in Nigeria
                 </p>
               </div>
-              <div className="p-6 bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl border border-secondary-200 text-center">
-                <div className="text-3xl font-display font-bold text-secondary-700 mb-2">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl border border-secondary-200 text-center">
+                <div className="text-xl sm:text-3xl font-display font-bold text-secondary-700 mb-2">
                   Lifetime Durability
                 </div>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Long term strength, beauty, and value through advanced LGS
                   technology
                 </p>
               </div>
-              <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border border-green-200 text-center">
-                <div className="text-3xl font-display font-bold text-green-700 mb-2">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border border-green-200 text-center">
+                <div className="text-xl sm:text-3xl font-display font-bold text-green-700 mb-2">
                   75% Waste Reduction
                 </div>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Environmental and cost efficiency through innovative
                   construction techniques
                 </p>
               </div>
-              <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200 text-center">
-                <div className="text-3xl font-display font-bold text-blue-700 mb-2">
+              <div className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200 text-center">
+                <div className="text-xl sm:text-3xl font-display font-bold text-blue-700 mb-2">
                   On Schedule
                 </div>
-                <p className="text-steel-600">
+                <p className="text-steel-600 text-sm sm:text-base">
                   Completed efficiently within schedule despite project
                   complexity
                 </p>
@@ -270,10 +266,10 @@ export default function AkureProject() {
         </section>
 
         {/* Client Story */}
-        <section className="py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
+              <div className="text-center mb-10 sm:mb-12">
                 <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
                   Client Story
                 </span>
@@ -281,15 +277,15 @@ export default function AkureProject() {
                   Building Dreams from Abroad
                 </h2>
               </div>
-              <div className="p-8 bg-white rounded-2xl shadow-xl border border-steel-100">
-                <p className="text-lg text-steel-600 leading-relaxed mb-6">
+              <div className="p-5 sm:p-8 bg-white rounded-2xl shadow-xl border border-steel-100">
+                <p className="text-base sm:text-lg text-steel-600 leading-relaxed mb-4 sm:mb-6">
                   This project was commissioned by a Nigerian client living in
                   the diaspora who envisioned a lifetime roof for their castle
                   style dream home. Despite the distance, our transparent
                   communication, regular updates, and professional execution
                   ensured their vision was realized exactly as planned.
                 </p>
-                <p className="text-lg text-steel-600 leading-relaxed">
+                <p className="text-base sm:text-lg text-steel-600 leading-relaxed">
                   The client's vision of a lifetime roof was realized through
                   Pristiq Build's advanced LGS technology, ensuring long term
                   strength, beauty, and value. This project showcases our
@@ -306,8 +302,6 @@ export default function AkureProject() {
           title="Ready for Your Large Scale Roofing Project?"
           description="Whether you are building a castle style residence or need a robust roofing solution for any large project, Pristiq Build has the expertise to bring your vision to life with precision and efficiency."
         />
-      </main>
-      <Footer />
     </>
   );
 }
