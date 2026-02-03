@@ -1,16 +1,16 @@
 import { MetadataRoute } from 'next';
-import { getAllBlogPosts } from '@/lib/mdx';
+import { getAllPosts } from '@/lib/mdx';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.pristiqbuild.com';
 
   // Get all blog posts
-  const posts = await getAllBlogPosts();
+  const posts = getAllPosts();
 
   // Blog post URLs
   const blogUrls = posts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.publishDate),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
