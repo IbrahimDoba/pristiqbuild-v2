@@ -11,6 +11,7 @@ import {
   Linkedin,
   ArrowUp,
 } from "lucide-react";
+import NewsletterForm from "@/components/forms/NewsletterForm";
 
 const footerLinks = {
   company: [
@@ -170,21 +171,7 @@ export default function Footer() {
                 updates.
               </p>
             </div>
-            <form className="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 sm:flex-initial lg:w-72 px-4 sm:px-5 py-3 rounded-lg bg-steel-700 border border-steel-600 text-white placeholder-steel-400 focus:border-primary-500 focus:outline-none transition-colors text-sm sm:text-base"
-              />
-              <motion.button
-                type="submit"
-                className="w-full sm:w-auto px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors whitespace-nowrap text-sm sm:text-base"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Subscribe
-              </motion.button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 

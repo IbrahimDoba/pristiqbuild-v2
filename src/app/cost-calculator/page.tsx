@@ -7,7 +7,6 @@ import {
   Home,
   Building2,
   Warehouse,
-  ArrowRight,
   CheckCircle,
   Info,
   DollarSign,
@@ -52,6 +51,26 @@ export default function CostCalculatorPage() {
     }
 
     setEstimate(baseCost);
+
+    // Record the calculation. Fire and forget on purpose: this is our own
+    // analytics, so a failure must never interrupt the estimate the visitor
+    // asked for. Anonymous runs are stored but do not email the sales team.
+    void fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        source: "CALCULATOR",
+        projectType,
+        buildingSize: size,
+        floors: floorCount,
+        smartFeatures,
+        solarPower,
+        estimate: baseCost,
+      }),
+      keepalive: true,
+    }).catch(() => {
+      /* Never surfaced to the visitor. */
+    });
   };
 
   const formatCurrency = (amount: number) => {
@@ -311,7 +330,7 @@ export default function CostCalculatorPage() {
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-12 text-center">
-              What's Included in Our Pricing
+              What&apos;s Included in Our Pricing
             </h2>
 
             <div className="grid md:grid-cols-2 gap-8">

@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
-import Image from "next/image";
 import {
   Phone,
   Mail,
@@ -15,7 +14,11 @@ import {
   Calendar,
   Building2,
   CheckCircle,
+  AlertCircle,
 } from "lucide-react";
+import { useLeadForm } from "@/lib/leads/use-lead-form";
+import HoneypotField from "@/components/forms/HoneypotField";
+import FieldError from "@/components/forms/FieldError";
 
 const contactMethods = [
   {
@@ -68,8 +71,8 @@ export default function ContactPage() {
     budget: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
+    useLeadForm();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -105,17 +108,20 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const form = e.currentTarget as HTMLFormElement;
+    const website = new FormData(form).get("website");
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    const sent = await submit({
+      source: "QUOTE_FORM",
+      ...formData,
+      website: typeof website === "string" ? website : "",
+    });
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+    // Clear the fields but leave the confirmation on screen. The previous
+    // build reset it after three seconds, which wiped the message before a
+    // visitor had finished reading it.
+    if (sent) {
       setFormData({
         name: "",
         email: "",
@@ -125,7 +131,7 @@ export default function ContactPage() {
         budget: "",
         message: "",
       });
-    }, 3000);
+    }
   };
 
   return (
@@ -228,13 +234,31 @@ export default function ContactPage() {
                   <h3 className="heading-sm text-steel-900 mb-2">
                     Thank You!
                   </h3>
-                  <p className="text-steel-600">
+                  <p className="text-steel-600 mb-6">
                     We&apos;ve received your message and will get back to you
                     within 24 hours.
                   </p>
+                  <button
+                    onClick={reset}
+                    className="text-primary-700 font-medium hover:text-primary-800"
+                  >
+                    Send another message
+                  </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <HoneypotField />
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800"
+                    >
+                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
+
                   {/* Name */}
                   <div>
                     <label
@@ -251,8 +275,9 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                      placeholder="John Doe"
+                      placeholder="Adaeze Okonkwo"
                     />
+                      <FieldError name="name" errors={fieldErrors} />
                   </div>
 
                   {/* Email & Phone */}
@@ -272,8 +297,9 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                        placeholder="john@example.com"
+                        placeholder="adaeze@example.com"
                       />
+                        <FieldError name="email" errors={fieldErrors} />
                     </div>
                     <div>
                       <label
@@ -292,6 +318,7 @@ export default function ContactPage() {
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                         placeholder="+234 XXX XXX XXXX"
                       />
+                        <FieldError name="phone" errors={fieldErrors} />
                     </div>
                   </div>
 

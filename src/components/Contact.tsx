@@ -8,11 +8,13 @@ import {
   MapPin,
   Clock,
   Send,
-  MessageSquare,
   Calendar,
   Glasses,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
+import { useLeadForm } from "@/lib/leads/use-lead-form";
+import HoneypotField from "@/components/forms/HoneypotField";
 
 const contactInfo = [
   {
@@ -63,16 +65,20 @@ export default function Contact() {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
+    useLeadForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+
+    const form = e.currentTarget as HTMLFormElement;
+    const website = new FormData(form).get("website");
+
+    await submit({
+      source: "CONTACT_FORM",
+      ...formData,
+      website: typeof website === "string" ? website : "",
+    });
   };
 
   const handleChange = (
@@ -153,7 +159,7 @@ export default function Contact() {
                   </p>
                   <button
                     onClick={() => {
-                      setIsSubmitted(false);
+                      reset();
                       setFormData({
                         name: "",
                         email: "",
@@ -168,7 +174,19 @@ export default function Contact() {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <HoneypotField />
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800"
+                    >
+                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label
@@ -184,9 +202,20 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
-                        placeholder="John Doe"
+                        aria-invalid={Boolean(fieldErrors.name)}
+                        aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                        className={`w-full px-4 py-3 rounded-lg border outline-none transition-colors focus:ring-2 ${
+                          fieldErrors.name
+                            ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                            : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
+                        }`}
+                        placeholder="Adaeze Okonkwo"
                       />
+                      {fieldErrors.name && (
+                        <p id="name-error" className="mt-2 text-sm text-red-700">
+                          {fieldErrors.name}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -202,9 +231,20 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
-                        placeholder="john@example.com"
+                        aria-invalid={Boolean(fieldErrors.email)}
+                        aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                        className={`w-full px-4 py-3 rounded-lg border outline-none transition-colors focus:ring-2 ${
+                          fieldErrors.email
+                            ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                            : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
+                        }`}
+                        placeholder="adaeze@example.com"
                       />
+                      {fieldErrors.email && (
+                        <p id="email-error" className="mt-2 text-sm text-red-700">
+                          {fieldErrors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
 
