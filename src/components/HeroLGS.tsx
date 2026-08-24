@@ -5,60 +5,31 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroLGS() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Set initial states
-      gsap.set(".hero-bg-image", { scale: 1.2, opacity: 0 });
+      // Only the decorative layers are animated from JS.
+      //
+      // The copy entrance lives in CSS (globals.css, "Hero entrance"). Driving
+      // it from here meant setting opacity to 0 at hydration, which on a
+      // throttled connection blanked the headline about four seconds after it
+      // had already painted. The headline itself now has no entrance at all:
+      // it is the LCP element and carries the value proposition.
+      gsap.set(".hero-bg-image", { scale: 1.12, opacity: 0 });
       gsap.set(".hero-overlay", { opacity: 0 });
-      gsap.set(".hero-eyebrow", { opacity: 0, y: -30 });
-      gsap.set(".hero-title", { opacity: 0, y: 50 });
-      gsap.set(".hero-description", { opacity: 0, y: 50 });
 
-      // Main entry timeline
-      const tl = gsap.timeline({ delay: 0.3 });
+      const tl = gsap.timeline({ delay: 0.05 });
 
-      // 1. Background image zooms in and fades in
-      tl.to(".hero-bg-image", {
-        scale: 1,
-        opacity: 1,
-        duration: 1.5,
-        ease: EASINGS.expo,
-      });
-
-      // 2. Overlay fades in
-      tl.to(".hero-overlay", {
-        opacity: 1,
-        duration: 1,
-      }, "-=1");
-
-      // 3. Eyebrow badge flies in
-      tl.to(".hero-eyebrow", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: EASINGS.back,
-      }, "-=0.5");
-
-      // 4. Title slides up and fades in
-      tl.to(".hero-title", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.expo,
-      }, "-=0.4");
-
-      // 5. Description fades in
-      tl.to(".hero-description", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.smoothOut,
-      }, "-=0.5");
+      tl.to(
+        ".hero-bg-image",
+        { scale: 1, opacity: 1, duration: 1.6, ease: EASINGS.expo },
+        0
+      ).to(".hero-overlay", { opacity: 1, duration: 0.6 }, 0);
 
       // Parallax effect on scroll - background moves slower
       gsap.to(".hero-bg-image", {
@@ -133,7 +104,7 @@ export default function HeroLGS() {
 
           {/* Main Title */}
           <h1 className="hero-title text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-            Building Nigeria's Future,{" "}
+            Building Nigeria&apos;s Future,{" "}
             <span className="text-gradient-gold">One Module</span> at a Time
           </h1>
 
@@ -145,8 +116,25 @@ export default function HeroLGS() {
             innovative solutions that are faster, stronger, and smarter.
           </p>
 
-          {/* Decorative line */}
-          <div className="w-32 h-1 bg-gradient-to-r from-secondary-400 to-transparent rounded-full" />
+          {/* Primary conversion path.
+              The hero previously contained no link or button at all, so the
+              most-visited section of the site asked for nothing. "Get a Quote"
+              matches the nav label deliberately: one label per intent. */}
+          <div className="hero-actions flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-primary-600 text-white font-semibold shadow-lg shadow-primary-900/30 hover:bg-primary-500 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Get a Quote
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/cost-calculator"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg border border-white/40 bg-white/10 text-white font-semibold backdrop-blur-sm hover:bg-white/20 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Estimate Your Cost
+            </Link>
+          </div>
         </div>
       </div>
 

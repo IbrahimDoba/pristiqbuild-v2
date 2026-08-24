@@ -6,7 +6,7 @@ interface AuthorBioProps {
 }
 
 export default function AuthorBio({ author, bio }: AuthorBioProps) {
-  const defaultBio = `${author} — Construction industry professional with extensive experience in Nigerian building projects, specializing in modern construction methods and materials.`;
+  const defaultBio = `${author} - Construction industry professional with extensive experience in Nigerian building projects, specializing in modern construction methods and materials.`;
 
   return (
     <div className="mt-16 p-6 md:p-8 bg-gradient-to-r from-primary-50 via-gray-50 to-primary-50/30 rounded-xl border border-primary-100 shadow-sm">

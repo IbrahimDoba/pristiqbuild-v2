@@ -310,13 +310,13 @@ export default function Hero() {
         <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg shadow-secondary-500/30 hover:shadow-xl hover:shadow-secondary-500/40"
+            className="group relative inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-[color,background-color,border-color,box-shadow] shadow-lg shadow-secondary-500/30 hover:shadow-xl hover:shadow-secondary-500/40"
           >
             Schedule Consultation
             <span className="inline-block">→</span>
           </a>
 
-          <button className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all border border-white/20">
+          <button className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors border border-white/20">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
               <Play className="w-4 h-4 fill-current ml-0.5" />
             </div>

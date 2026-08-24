@@ -63,12 +63,12 @@ export default function ProjectFeatures({
       <div className="container-custom">
         {(title || subtitle) && (
           <div className="features-header text-center mb-8 sm:mb-12">
-            {subtitle && (
-              <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-                {subtitle}
-              </span>
-            )}
             {title && <h2 className="heading-lg text-steel-900">{title}</h2>}
+            {subtitle && (
+              <p className="body-lg text-steel-600 mt-4 max-w-2xl mx-auto">
+                {subtitle}
+              </p>
+            )}
           </div>
         )}
 
@@ -84,7 +84,7 @@ export default function ProjectFeatures({
               key={index}
               className={`feature-item group ${
                 layout === "grid"
-                  ? "p-4 sm:p-6 bg-steel-50 rounded-xl sm:rounded-2xl border border-steel-100 hover:border-primary-200 hover:bg-white hover:shadow-lg transition-all duration-300"
+                  ? "p-4 sm:p-6 bg-steel-50 rounded-xl sm:rounded-2xl border border-steel-100 hover:border-primary-200 hover:bg-white hover:shadow-lg transition-[color,background-color,border-color,box-shadow] duration-300"
                   : "flex items-start gap-4 p-5 bg-steel-50 rounded-xl border border-steel-100"
               }`}
             >

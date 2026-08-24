@@ -200,13 +200,13 @@ export default async function BlogPost({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/cost-calculator"
-              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-50 transition-all hover:scale-105 shadow-lg"
+              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-lg"
             >
               Calculate Your Project Cost
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-all hover:scale-105 border border-primary-500"
+              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border border-primary-500"
             >
               Contact Us
             </Link>
@@ -223,7 +223,7 @@ export default async function BlogPost({
           <div className="space-y-4">
             <Link
               href="/blog"
-              className="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-all group"
+              className="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
             >
               <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors flex items-center gap-2">
                 Explore All Articles

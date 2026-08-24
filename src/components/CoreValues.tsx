@@ -152,9 +152,6 @@ export default function CoreValues() {
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div className="section-header text-center max-w-4xl mx-auto mb-20">
-          <span className="eyebrow inline-block mb-4 text-black font-semibold tracking-wider uppercase text-sm">
-            Why Choose Us
-          </span>
           <h2 className="heading-xl text-steel-900 mb-6">
             What Sets{" "}
             <span className="text-gradient-gold">PristiqBuild</span> Apart
@@ -176,7 +173,7 @@ export default function CoreValues() {
               } ${index === 3 ? "lg:col-span-2" : ""}`}
             >
               {/* Card Container */}
-              <div className="relative h-full min-h-[320px] rounded-3xl overflow-hidden bg-white shadow-xl shadow-steel-200/50 border border-steel-100 transition-all duration-700 hover:shadow-2xl hover:shadow-primary-300/40 hover:-translate-y-2">
+              <div className="relative h-full min-h-[320px] rounded-3xl overflow-hidden bg-white shadow-xl shadow-steel-200/50 border border-steel-100 transition-[box-shadow,transform] duration-700 hover:shadow-2xl hover:shadow-primary-300/40 hover:-translate-y-2">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                   <Image
@@ -203,7 +200,7 @@ export default function CoreValues() {
                 {/* Content */}
                 <div className="relative z-10 h-full p-8 flex flex-col justify-between">
                   {/* Icon */}
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 border border-white/30">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-white/30">
                     <value.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
 

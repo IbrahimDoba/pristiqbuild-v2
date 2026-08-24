@@ -137,7 +137,7 @@ export default function AboutPage() {
               <span className="text-secondary-400">One Module at a Time</span>
             </h1>
             <p className="body-lg text-white/90 max-w-3xl mx-auto mb-8">
-              We&apos;re not just constructing buildings—we&apos;re transforming
+              We&apos;re not just constructing buildings, we&apos;re transforming
               Nigeria&apos;s construction industry with precision engineering,
               cutting-edge technology, and unwavering commitment to quality.
             </p>
@@ -266,7 +266,7 @@ export default function AboutPage() {
               The Principles That Drive Us
             </h2>
             <p className="body-lg text-steel-600 max-w-2xl mx-auto">
-              Our values aren&apos;t just words on a wall—they&apos;re the
+              Our values aren&apos;t just words on a wall, they&apos;re the
               foundation of everything we do.
             </p>
           </div>
@@ -332,9 +332,6 @@ export default function AboutPage() {
       <section className="section-padding bg-primary-900 text-white fade-in-section">
         <div className="container-custom">
           <div className="text-center mb-12">
-            <span className="eyebrow mb-4 block text-secondary-400">
-              Certifications & Accreditations
-            </span>
             <h2 className="heading-lg mb-6">
               Recognized for Excellence
             </h2>

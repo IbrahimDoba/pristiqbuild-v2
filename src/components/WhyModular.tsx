@@ -164,7 +164,7 @@ export default function WhyModular() {
             className="body-lg text-steel-600"
           >
             Nigeria faces a housing deficit of over ₦59 trillion. Modular
-            construction is the solution — faster, more affordable, and
+            construction is the solution: faster, more affordable, and
             sustainable.
           </motion.p>
         </div>
@@ -227,7 +227,7 @@ export default function WhyModular() {
               }}
               className="group"
             >
-              <div className="bg-white rounded-2xl p-6 h-full shadow-lg shadow-steel-200/50 border border-steel-100 transition-all duration-500 hover:shadow-xl hover:border-primary-200 hover:-translate-y-2">
+              <div className="bg-white rounded-2xl p-6 h-full shadow-lg shadow-steel-200/50 border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-500 hover:shadow-xl hover:border-primary-200 hover:-translate-y-2">
                 <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center mb-4 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                   <benefit.icon className="w-7 h-7 text-white" />
                 </div>

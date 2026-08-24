@@ -225,15 +225,15 @@ export default function ARVRSolutionsPage() {
                 <p>
                   <strong>Virtual Reality (VR)</strong> and <strong>Augmented Reality (AR)</strong> are
                   transforming how we plan, present, and construct buildings in Nigeria. No more
-                  trying to imagine spaces from 2D drawings—now you can walk through them.
+                  trying to imagine spaces from 2D drawings, now you can walk through them.
                 </p>
                 <p>
                   Our AR/VR solutions give you and your clients the power to experience buildings
                   in full scale before breaking ground. Make design decisions with confidence,
-                  spot issues early, and ensure everyone's vision aligns perfectly.
+                  spot issues early, and ensure everyone&apos;s vision aligns perfectly.
                 </p>
                 <p>
-                  Whether you're a developer selling off-plan properties, an architect presenting
+                  Whether you&apos;re a developer selling off-plan properties, an architect presenting
                   to clients, or a contractor coordinating complex builds, our visualization
                   technology gives you a competitive edge.
                 </p>
@@ -292,7 +292,7 @@ export default function ARVRSolutionsPage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
                 <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center mb-6">
                   <feature.icon className="w-7 h-7 text-white" />
@@ -358,7 +358,7 @@ export default function ARVRSolutionsPage() {
             {useCases.map((useCase, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
+                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow"
               >
                 <div className="relative h-64">
                   <SafeImage
@@ -446,14 +446,14 @@ export default function ARVRSolutionsPage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Glasses className="w-6 h-6" />
                 Book a Demo
               </Link>
               <Link
                 href="/case-studies"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 See Examples
                 <ArrowRight className="w-6 h-6" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
@@ -56,13 +56,29 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
   const openLightbox = (index: number) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-    document.body.style.overflow = "hidden";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    document.body.style.overflow = "auto";
   };
+
+  // Scroll lock lives in an effect, not in the click handlers.
+  //
+  // Writing to document.body during a handler mutates state React does not own
+  // and cannot roll back, which React 19 flags. Restoring the previous value
+  // rather than hardcoding "auto" also means we do not clobber a scroll lock
+  // set by anything else on the page.
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [lightboxOpen]);
+
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -72,13 +88,29 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Keyboard control. A lightbox that traps the visitor with no Escape and no
+  // arrow keys is not finished.
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLightboxOpen(false);
+      if (event.key === "ArrowRight") {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }
+      if (event.key === "ArrowLeft") {
+        setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightboxOpen, images.length]);
+
   return (
     <section ref={containerRef} className="section-padding bg-steel-50">
       <div className="container-custom">
         <div className="gallery-header text-center mb-12">
-          <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-            Visual Journey
-          </span>
           <h2 className="heading-lg text-steel-900">{title}</h2>
         </div>
 
@@ -90,6 +122,15 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
                 index === 0 ? "col-span-2 row-span-2" : ""
               }`}
               onClick={() => openLightbox(index)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  openLightbox(index);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${image.alt}`}
             >
               <div className={`relative ${index === 0 ? "aspect-square" : "aspect-[4/3]"}`}>
                 <Image
@@ -120,9 +161,15 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center">
+        <div
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${title}, image ${currentIndex + 1} of ${images.length}`}
+        >
           <button
             onClick={closeLightbox}
+            aria-label="Close gallery"
             className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
           >
             <X className="w-6 h-6 text-white" />
@@ -130,6 +177,7 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
 
           <button
             onClick={prevImage}
+            aria-label="Previous image"
             className="absolute left-6 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
           >
             <ChevronLeft className="w-8 h-8 text-white" />
@@ -137,6 +185,7 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
 
           <button
             onClick={nextImage}
+            aria-label="Next image"
             className="absolute right-6 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
           >
             <ChevronRight className="w-8 h-8 text-white" />
@@ -158,6 +207,8 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to image ${index + 1}`}
+                aria-current={index === currentIndex}
                 className={`w-2.5 h-2.5 rounded-full transition-colors ${
                   index === currentIndex ? "bg-white" : "bg-white/40"
                 }`}

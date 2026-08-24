@@ -189,7 +189,7 @@ export default function TeamPage() {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                   {/* Image */}
                   <div className="relative h-80 overflow-hidden">
                     <Image
@@ -292,7 +292,6 @@ export default function TeamPage() {
       <section className="section-padding bg-white fade-in-section">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="eyebrow mb-4 block">Team Culture</span>
             <h2 className="heading-lg text-steel-900 mb-6">
               What Unites Us
             </h2>

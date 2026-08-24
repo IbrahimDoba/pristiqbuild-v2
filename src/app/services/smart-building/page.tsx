@@ -215,7 +215,7 @@ export default function SmartBuildingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-6">
-                What Makes a Building "Smart"?
+                What Makes a Building &quot;Smart&quot;?
               </h2>
               <div className="space-y-4 text-lg text-steel-700 leading-relaxed">
                 <p>
@@ -225,14 +225,14 @@ export default function SmartBuildingPage() {
                 </p>
                 <p>
                   At PristiqBuild, we integrate smart technology directly into the construction
-                  process—not as an afterthought. From intelligent climate control to advanced
+                  process, not as an afterthought. From intelligent climate control to advanced
                   security systems, we build connectivity and automation into the foundation
                   of your project.
                 </p>
                 <p>
-                  In Nigeria's challenging climate and energy landscape, smart buildings offer
+                  In Nigeria&apos;s challenging climate and energy landscape, smart buildings offer
                   tangible benefits: lower energy bills, enhanced security, remote monitoring,
-                  and increased property value. It's not luxury—it's practical innovation for
+                  and increased property value. It&apos;s not luxury, it&apos;s practical innovation for
                   modern living and working.
                 </p>
               </div>
@@ -266,7 +266,7 @@ export default function SmartBuildingPage() {
                 <Smartphone className="w-10 h-10 mb-3" />
                 <div className="text-2xl font-bold mb-2">Total Control</div>
                 <div className="text-sm text-primary-100">
-                  Manage your entire building from your smartphone—anywhere, anytime
+                  Manage your entire building from your smartphone, anywhere, anytime
                 </div>
               </div>
             </div>
@@ -290,7 +290,7 @@ export default function SmartBuildingPage() {
             {smartSystems.map((system, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
                 <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center mb-6">
                   <system.icon className="w-7 h-7 text-white" />
@@ -331,7 +331,7 @@ export default function SmartBuildingPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-all border border-gray-200"
+                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-[box-shadow,transform] border border-gray-200"
               >
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
                   <benefit.icon className="w-6 h-6 text-primary-600" />
@@ -366,7 +366,7 @@ export default function SmartBuildingPage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
+                className="group bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-[box-shadow,transform]"
               >
                 <div className="relative h-72 overflow-hidden">
                   <SafeImage
@@ -450,20 +450,20 @@ export default function SmartBuildingPage() {
               Build Smart from the Start
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Don't retrofit intelligence—integrate it. Let's design a smart building
+              Don&apos;t retrofit intelligence, integrate it. Let&apos;s design a smart building
               solution tailored to your needs and budget.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Smartphone className="w-6 h-6" />
                 Schedule Consultation
               </Link>
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Estimate Smart Costs
                 <ArrowRight className="w-6 h-6" />

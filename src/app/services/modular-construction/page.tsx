@@ -134,7 +134,7 @@ export default function ModularConstructionPage() {
                 Modular Construction Services
               </h1>
               <p className="text-xl md:text-2xl text-steel-200 mb-8 leading-relaxed">
-                Building Nigeria's future with precision-engineered modular solutions.
+                Building Nigeria&apos;s future with precision-engineered modular solutions.
                 Faster timelines, superior quality, and sustainable construction.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
@@ -179,7 +179,7 @@ export default function ModularConstructionPage() {
                   to exact specifications, ensuring perfect fit and superior structural integrity.
                 </p>
                 <p>
-                  This method is particularly well-suited for Nigeria's construction challenges—
+                  This method is particularly well-suited for Nigeria&apos;s construction challenges, 
                   reducing weather-related delays, minimizing on-site labor issues, and
                   delivering consistent quality regardless of location.
                 </p>
@@ -237,7 +237,7 @@ export default function ModularConstructionPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
                 <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
                   <benefit.icon className="w-7 h-7 text-primary-600" />
@@ -313,7 +313,7 @@ export default function ModularConstructionPage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2"
+                className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-[box-shadow,transform] hover:-translate-y-2"
               >
                 <div className="relative h-64 overflow-hidden">
                   <SafeImage
@@ -348,20 +348,20 @@ export default function ModularConstructionPage() {
               Ready to Build Faster and Smarter?
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Let's discuss how modular construction can transform your next project.
+              Let&apos;s discuss how modular construction can transform your next project.
               Get expert consultation and a detailed quote today.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <DollarSign className="w-6 h-6" />
                 Calculate Project Cost
               </Link>
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Users className="w-6 h-6" />
                 Schedule Consultation

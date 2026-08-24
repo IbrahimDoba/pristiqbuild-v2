@@ -1,14 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import MotionProvider from "@/components/MotionProvider";
 
-const inter = Inter({
+// Body face. Reads better than Inter at small sizes on mid-range Android,
+// which is most of this audience, and its slightly humanist shapes give the
+// geometric display face something to contrast against.
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-plex-sans",
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -115,16 +120,18 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${plexSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <Navigation />
-        <main id="main-content" className="pt-20">
-          {children}
-        </main>
-        <Footer />
+        <MotionProvider>
+          <Navigation />
+          <main id="main-content" className="pt-20">
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

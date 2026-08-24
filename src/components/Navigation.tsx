@@ -130,7 +130,7 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 lg:top-8 left-0 right-0 z-40 transition-all duration-500 bg-white/95 backdrop-blur-md shadow-lg"
+        className="fixed top-0 lg:top-8 left-0 right-0 z-40 transition-colors duration-500 bg-white/95 backdrop-blur-md shadow-lg"
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">
@@ -273,7 +273,7 @@ export default function Navigation() {
             <div className="hidden lg:block">
               <Link href="/contact">
                 <motion.div
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary-700 text-white hover:bg-primary-800 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-colors bg-primary-700 text-white hover:bg-primary-800 cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

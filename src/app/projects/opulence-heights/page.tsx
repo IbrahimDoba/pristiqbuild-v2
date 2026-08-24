@@ -197,7 +197,7 @@ export default function OpulenceHeightsProject() {
                   Opulence Heights is a revolutionary smart living estate
                   located in the elevated terrain of Dawaki Hillside, Abuja.
                   Developed through a joint venture between EFAB Properties and
-                  PristiqBuild, this project introduces Nigeria's first
+                  PristiqBuild, this project introduces Nigeria&apos;s first
                   precision built steel frame homes with global standards in
                   energy efficiency, automation, and infrastructure.
                 </p>
@@ -208,7 +208,7 @@ export default function OpulenceHeightsProject() {
                 </p>
                 <div className="p-6 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl border border-primary-100">
                   <p className="text-xl font-display font-semibold text-steel-800 italic">
-                    &ldquo;It's not just smart. It's engineered living.&rdquo;
+                    &ldquo;It&apos;s not just smart. It&apos;s engineered living.&rdquo;
                   </p>
                 </div>
               </div>
@@ -423,9 +423,6 @@ export default function OpulenceHeightsProject() {
         <section className="py-20 bg-white">
           <div className="container-custom">
             <div className="text-center mb-12">
-              <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-                Development Schedule
-              </span>
               <h2 className="heading-lg text-steel-900">
                 Project Timeline and Phases
               </h2>

@@ -34,7 +34,7 @@ const values = [
   {
     icon: Target,
     title: "Quality Obsessed",
-    description: "We never compromise on quality—every project reflects our commitment to excellence."
+    description: "We never compromise on quality, every project reflects our commitment to excellence."
   },
   {
     icon: Heart,
@@ -122,7 +122,7 @@ export default function CareersPage() {
                 Careers at PristiqBuild
               </h1>
               <p className="text-xl md:text-2xl text-steel-200 leading-relaxed">
-                Join a team that's transforming Nigeria's construction industry with
+                Join a team that&apos;s transforming Nigeria&apos;s construction industry with
                 innovation, excellence, and cutting-edge technology.
               </p>
             </div>
@@ -144,7 +144,7 @@ export default function CareersPage() {
                     Current Hiring Status
                   </h2>
                   <p className="text-lg text-steel-700 leading-relaxed mb-6">
-                    We're currently not hiring for specific positions, but we're always
+                    We&apos;re currently not hiring for specific positions, but we&apos;re always
                     interested in connecting with talented individuals who share our passion
                     for innovation in construction. We regularly review applications and
                     reach out when opportunities arise.
@@ -152,14 +152,14 @@ export default function CareersPage() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <a
                       href="mailto:careers@pristiqbuild.com?subject=Career Interest at PristiqBuild"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary-600 text-white font-bold rounded-xl hover:bg-primary-700 transition-colors"
                     >
                       <Mail className="w-5 h-5" />
                       Express Interest
                     </a>
                     <Link
                       href="/contact"
-                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-100 text-steel-900 font-bold rounded-xl hover:bg-gray-200 transition-all"
+                      className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-100 text-steel-900 font-bold rounded-xl hover:bg-gray-200 transition-colors"
                     >
                       Contact Us
                     </Link>
@@ -179,7 +179,7 @@ export default function CareersPage() {
               Why Work With Us?
             </h2>
             <p className="text-xl text-steel-600">
-              Be part of a team that's building the future of construction in Nigeria
+              Be part of a team that&apos;s building the future of construction in Nigeria
             </p>
           </div>
 
@@ -187,7 +187,7 @@ export default function CareersPage() {
             {values.map((value, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-all"
+                className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border border-gray-200 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow]"
               >
                 <div className="w-14 h-14 bg-primary-600 rounded-xl flex items-center justify-center mb-6">
                   <value.icon className="w-7 h-7 text-white" />
@@ -213,7 +213,7 @@ export default function CareersPage() {
                 Benefits & Perks
               </h2>
               <p className="text-xl text-steel-600">
-                We invest in our team members' success and well-being
+                We invest in our team members&apos; success and well-being
               </p>
             </div>
 
@@ -250,7 +250,7 @@ export default function CareersPage() {
             {departments.map((dept, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all border border-gray-100"
+                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow border border-gray-100"
               >
                 <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
                   <dept.icon className="w-6 h-6 text-primary-600" />
@@ -278,18 +278,18 @@ export default function CareersPage() {
                 </h2>
                 <div className="space-y-6 text-lg text-steel-700 leading-relaxed">
                   <p>
-                    At PristiqBuild, you'll work with Nigeria's brightest minds in construction
-                    technology. We're not just building structures—we're pioneering new ways
+                    At PristiqBuild, you&apos;ll work with Nigeria&apos;s brightest minds in construction
+                    technology. We&apos;re not just building structures, we&apos;re pioneering new ways
                     to deliver quality, speed, and sustainability.
                   </p>
                   <p>
                     Our culture values innovation, collaboration, and continuous improvement.
-                    Whether you're fresh from university or an experienced professional, you'll
+                    Whether you&apos;re fresh from university or an experienced professional, you&apos;ll
                     find opportunities to grow, learn, and make a real impact.
                   </p>
                   <p>
                     From our state-of-the-art manufacturing facility to cutting-edge AR/VR labs,
-                    you'll have access to tools and resources that empower you to do your best work.
+                    you&apos;ll have access to tools and resources that empower you to do your best work.
                   </p>
                 </div>
 
@@ -339,20 +339,20 @@ export default function CareersPage() {
               Ready to Build Your Future With Us?
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Even if we're not actively hiring right now, we'd love to hear from you.
-              Send us your CV and let's stay connected for future opportunities.
+              Even if we&apos;re not actively hiring right now, we&apos;d love to hear from you.
+              Send us your CV and let&apos;s stay connected for future opportunities.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a
                 href="mailto:careers@pristiqbuild.com?subject=Career Opportunity at PristiqBuild"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Mail className="w-6 h-6" />
                 Send Your CV
               </a>
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Learn More About Us
               </Link>

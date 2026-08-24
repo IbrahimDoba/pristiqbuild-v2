@@ -286,8 +286,8 @@ export default function AkureProject() {
                   ensured their vision was realized exactly as planned.
                 </p>
                 <p className="text-base sm:text-lg text-steel-600 leading-relaxed">
-                  The client's vision of a lifetime roof was realized through
-                  Pristiq Build's advanced LGS technology, ensuring long term
+                  The client&apos;s vision of a lifetime roof was realized through
+                  Pristiq Build&apos;s advanced LGS technology, ensuring long term
                   strength, beauty, and value. This project showcases our
                   ability to handle large scale roofing systems with unmatched
                   technical precision, blending innovation, sustainability, and

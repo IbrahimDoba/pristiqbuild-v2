@@ -92,14 +92,6 @@ export default function About() {
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="eyebrow inline-block mb-4"
-          >
-            About Us
-          </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -172,7 +164,7 @@ export default function About() {
                 <p>
                   Founded with a vision to transform Nigeria&apos;s construction
                   landscape, PristiqBuild emerged from a recognition of the
-                  immense housing deficit facing our nation — a challenge
+                  immense housing deficit facing our nation: a challenge
                   requiring innovative solutions.
                 </p>
                 <p>
@@ -238,7 +230,7 @@ export default function About() {
                 }}
                 className="group"
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg shadow-steel-200/50 border border-steel-100 transition-all duration-500 hover:shadow-xl hover:border-primary-200">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg shadow-steel-200/50 border border-steel-100 transition-[color,background-color,border-color,box-shadow] duration-500 hover:shadow-xl hover:border-primary-200">
                   {/* Avatar Image */}
                   <div className="relative h-96 bg-steel-100 overflow-hidden">
                     <img

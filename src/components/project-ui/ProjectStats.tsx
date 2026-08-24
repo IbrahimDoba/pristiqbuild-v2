@@ -47,7 +47,7 @@ export default function ProjectStats({ stats }: ProjectStatsProps) {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="stat-card group relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center shadow-lg border border-steel-100 hover:shadow-xl hover:border-primary-200 transition-all duration-500"
+              className="stat-card group relative bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center shadow-lg border border-steel-100 hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-500"
             >
               <div className="inline-flex items-center justify-center w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 mb-3 sm:mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
                 <stat.icon className="w-5 h-5 sm:w-7 sm:h-7 text-white" />

@@ -171,12 +171,12 @@ export default function ComingSoon({
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full pl-12 pr-4 py-4 bg-steel-50 border border-steel-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                      className="w-full pl-12 pr-4 py-4 bg-steel-50 border border-steel-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-colors"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-6 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-all duration-300 whitespace-nowrap"
+                    className="px-6 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-[color,background-color,border-color,box-shadow] duration-300 whitespace-nowrap"
                   >
                     Notify Me
                   </button>
@@ -232,7 +232,7 @@ export default function ComingSoon({
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300 text-center"
+                  className="p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-300 text-center"
                 >
                   <div className="text-4xl mb-4">{feature.icon}</div>
                   <h3 className="font-display font-bold text-lg text-steel-900 mb-2">

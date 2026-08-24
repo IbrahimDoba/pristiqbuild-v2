@@ -322,7 +322,7 @@ export default function Process() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="group relative bg-white rounded-2xl p-8 text-center overflow-hidden shadow-xl border border-steel-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+              className="group relative bg-white rounded-2xl p-8 text-center overflow-hidden shadow-xl border border-steel-100 hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-2"
             >
               {/* Background Pattern */}
               <div

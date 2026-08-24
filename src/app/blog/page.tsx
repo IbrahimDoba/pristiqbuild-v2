@@ -64,7 +64,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-300 hover:-translate-y-1"
             >
               <div className="relative h-48 bg-gray-200 overflow-hidden">
                 <SafeImage
@@ -103,7 +103,7 @@ export default function BlogPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center text-primary-600 font-semibold group-hover:gap-2 transition-all">
+                <div className="flex items-center text-primary-600 font-semibold group-hover:gap-2 transition-colors">
                   Read Article
                   <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -139,7 +139,7 @@ export default function BlogPage() {
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
-                      className="group bg-white rounded-lg p-6 shadow hover:shadow-lg transition-all hover:border-primary-500 border border-transparent"
+                      className="group bg-white rounded-lg p-6 shadow hover:shadow-lg transition-[color,background-color,border-color,box-shadow] hover:border-primary-500 border border-transparent"
                     >
                       <div className="flex items-start gap-4">
                         <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
@@ -182,14 +182,14 @@ export default function BlogPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/cost-calculator"
-              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all hover:scale-105 inline-flex items-center justify-center gap-2"
+              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-[color,background-color,border-color,transform] hover:scale-105 inline-flex items-center justify-center gap-2"
             >
               Calculate Project Cost
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-all hover:scale-105 inline-flex items-center justify-center"
+              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 inline-flex items-center justify-center"
             >
               Contact Us
             </Link>

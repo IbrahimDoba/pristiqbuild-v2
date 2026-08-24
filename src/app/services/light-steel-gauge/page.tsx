@@ -190,7 +190,7 @@ export default function LightSteelGaugePage() {
               </h2>
               <div className="space-y-4 text-lg text-steel-700 leading-relaxed">
                 <p>
-                  <strong>Light Gauge Steel (LGS)</strong> is thin, cold-formed steel that's shaped
+                  <strong>Light Gauge Steel (LGS)</strong> is thin, cold-formed steel that&apos;s shaped
                   into precise structural profiles for building construction. Unlike heavy structural
                   steel, LGS is lightweight, easy to work with, and optimized for modern building needs.
                 </p>
@@ -201,8 +201,8 @@ export default function LightSteelGaugePage() {
                   ensuring consistent quality and precision.
                 </p>
                 <p>
-                  This technology is ideal for Nigeria's construction industry—it resists termites,
-                  won't rot in humid conditions, withstands coastal corrosion, and assembles rapidly
+                  This technology is ideal for Nigeria&apos;s construction industry, it resists termites,
+                  won&apos;t rot in humid conditions, withstands coastal corrosion, and assembles rapidly
                   even in challenging weather.
                 </p>
               </div>
@@ -257,7 +257,7 @@ export default function LightSteelGaugePage() {
             {specifications.map((spec, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-primary-500 transition-all"
+                className="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-primary-500 transition-[color,background-color,border-color,box-shadow]"
               >
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
                   <spec.icon className="w-6 h-6 text-primary-600" />
@@ -289,7 +289,7 @@ export default function LightSteelGaugePage() {
             {advantages.map((advantage, index) => (
               <div
                 key={index}
-                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-all"
+                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-[color,background-color,border-color,box-shadow]"
               >
                 <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
                   <advantage.icon className="w-6 h-6 text-white" />
@@ -375,7 +375,7 @@ export default function LightSteelGaugePage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all"
+                className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-shadow"
               >
                 <div className="relative h-80">
                   <SafeImage
@@ -414,14 +414,14 @@ export default function LightSteelGaugePage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Ruler className="w-6 h-6" />
                 Calculate Your Project
               </Link>
               <Link
                 href="/blog"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Read Our Blog
                 <ArrowRight className="w-6 h-6" />

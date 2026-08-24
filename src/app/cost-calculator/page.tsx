@@ -135,7 +135,7 @@ export default function CostCalculatorPage() {
                       <button
                         key={type.value}
                         onClick={() => setProjectType(type.value)}
-                        className={`p-4 sm:p-6 rounded-xl border-2 transition-all ${
+                        className={`p-4 sm:p-6 rounded-xl border-2 transition-colors ${
                           projectType === type.value
                             ? 'border-primary-600 bg-primary-50'
                             : 'border-gray-200 hover:border-primary-300'
@@ -197,7 +197,7 @@ export default function CostCalculatorPage() {
                     Additional Features
                   </label>
                   <div className="space-y-3">
-                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 cursor-pointer transition-all">
+                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={smartFeatures}
@@ -211,7 +211,7 @@ export default function CostCalculatorPage() {
                       <div className="text-primary-600 font-semibold sm:text-right">+15%</div>
                     </label>
 
-                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 cursor-pointer transition-all">
+                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-primary-300 cursor-pointer transition-colors">
                       <input
                         type="checkbox"
                         checked={solarPower}
@@ -231,7 +231,7 @@ export default function CostCalculatorPage() {
                 <button
                   onClick={calculateEstimate}
                   disabled={!projectType || !buildingSize}
-                  className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   <Calculator className="w-5 h-5" />
                   Calculate Estimate
@@ -286,7 +286,7 @@ export default function CostCalculatorPage() {
 
                     <Link
                       href="/contact"
-                      className="block w-full py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all text-center"
+                      className="block w-full py-4 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-colors text-center"
                     >
                       Get Detailed Quote
                     </Link>
@@ -403,19 +403,19 @@ export default function CostCalculatorPage() {
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
               Our team will provide a comprehensive, itemized quote tailored to your
-              exact requirements—usually within 24 hours.
+              exact requirements, usually within 24 hours.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <FileText className="w-6 h-6" />
                 Request Detailed Quote
               </Link>
               <Link
                 href="tel:+2348130272706"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Phone className="w-6 h-6" />
                 Call Us Now

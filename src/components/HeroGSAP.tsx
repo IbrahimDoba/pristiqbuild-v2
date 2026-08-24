@@ -300,7 +300,7 @@ export default function HeroGSAP() {
         <div className="hero-cta flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
           <a
             href="#contact"
-            className="group relative inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-xl shadow-secondary-500/50 hover:shadow-2xl hover:shadow-secondary-500/60 hover:-translate-y-1"
+            className="group relative inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-[color,background-color,border-color,box-shadow,transform] shadow-xl shadow-secondary-500/50 hover:shadow-2xl hover:shadow-secondary-500/60 hover:-translate-y-1"
           >
             Schedule Consultation
             <span className="inline-block group-hover:translate-x-1 transition-transform">
@@ -308,7 +308,7 @@ export default function HeroGSAP() {
             </span>
           </a>
 
-          <button className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all border border-white/20 hover:-translate-y-1">
+          <button className="group inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-semibold text-lg transition-[color,background-color,border-color,transform] border border-white/20 hover:-translate-y-1">
             <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
               <Play className="w-4 h-4 fill-current ml-0.5" />
             </div>

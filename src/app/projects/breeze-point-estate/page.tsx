@@ -194,7 +194,7 @@ export default function BreezePointProject() {
               {premiumFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300"
+                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-300"
                 >
                   <h3 className="font-display font-bold text-steel-900 text-base sm:text-lg mb-2">
                     {feature.title}
@@ -333,7 +333,7 @@ export default function BreezePointProject() {
               <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600 mx-auto mb-6 sm:mb-8" />
               <blockquote className="text-xl sm:text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-6 sm:mb-8">
                 &ldquo;We are excited to bring Breeze Point Estate to life in
-                Kubwa's most sought after district. Every detail from foundation
+                Kubwa&apos;s most sought after district. Every detail from foundation
                 to final finish reflects our dedication to building homes that
                 last, function smartly, and stand out in value and
                 beauty.&rdquo;

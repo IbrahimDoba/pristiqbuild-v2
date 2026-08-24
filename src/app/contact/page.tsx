@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap/config";
 import {
   Phone,
   Mail,
@@ -73,27 +71,10 @@ export default function ContactPage() {
   });
   const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
     useLeadForm();
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const sections = gsap.utils.toArray<HTMLElement>(".fade-in-section");
-      sections.forEach((section) => {
-        gsap.from(section, {
-          opacity: 0,
-          y: 60,
-          duration: 1,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        });
-      });
-    },
-    { scope: containerRef }
-  );
+  // The scrubbed fade that used to live here made every section drift in as
+  // the visitor scrolled. It communicated nothing, delayed the contact details
+  // people came for, and tied paint work to the scroll position. Removed.
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -135,7 +116,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
@@ -165,7 +146,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Methods */}
-      <section className="section-padding bg-white fade-in-section">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactMethods.map((method, index) => (
@@ -175,7 +156,7 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white border-2 border-steel-100 rounded-xl p-6 hover:border-primary-300 hover:shadow-lg transition-all group"
+                className="bg-white border-2 border-steel-100 rounded-xl p-6 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4 group-hover:bg-primary-700 group-hover:text-white transition-colors">
                   <method.icon size={28} />
@@ -205,7 +186,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content - Form & Info */}
-      <section className="section-padding bg-steel-50 fade-in-section">
+      <section className="section-padding bg-steel-50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}

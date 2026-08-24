@@ -262,7 +262,7 @@ export default function Contact() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors"
                         placeholder="+234 xxx xxx xxxx"
                       />
                     </div>
@@ -278,7 +278,7 @@ export default function Contact() {
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all bg-white"
+                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors bg-white"
                       >
                         <option value="">Select a service</option>
                         {serviceTypes.map((service) => (
@@ -304,7 +304,7 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all resize-none"
+                      className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors resize-none"
                       placeholder="Tell us about your project..."
                     />
                   </div>
@@ -312,7 +312,7 @@ export default function Contact() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-all disabled:opacity-70"
+                    className="w-full bg-gradient-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-colors disabled:opacity-70"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                   >
@@ -428,7 +428,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-all"
+                className="flex items-center gap-4 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -446,7 +446,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1.1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-all"
+                className="flex items-center gap-4 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

@@ -265,7 +265,7 @@ export default function Services() {
                 className="group"
               >
                 <div
-                  className={`p-6 bg-white rounded-xl border ${sColors.border} hover:shadow-lg transition-all duration-300 h-full`}
+                  className={`p-6 bg-white rounded-xl border ${sColors.border} hover:shadow-lg transition-shadow duration-300 h-full`}
                 >
                   <div
                     className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${sColors.gradient} mb-4`}
@@ -302,14 +302,14 @@ export default function Services() {
                     onClick={() => setActiveService(index)}
                     onMouseEnter={() => setHoveredService(index)}
                     onMouseLeave={() => setHoveredService(null)}
-                    className={`group w-full text-left p-4 rounded-xl transition-all duration-300 flex items-center gap-4 ${
+                    className={`group w-full text-left p-4 rounded-xl transition-colors duration-300 flex items-center gap-4 ${
                       isActive
                         ? `${sColors.bg} ${sColors.border} border-2`
                         : "bg-white border border-transparent hover:border-steel-200"
                     }`}
                   >
                     <div
-                      className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                      className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors duration-300 ${
                         isActive || isHovered
                           ? `bg-gradient-to-br ${sColors.gradient}`
                           : "bg-steel-100"
@@ -336,7 +336,7 @@ export default function Services() {
                       </p>
                     </div>
                     <ChevronRight
-                      className={`w-5 h-5 flex-shrink-0 transition-all duration-300 ${
+                      className={`w-5 h-5 flex-shrink-0 transition-colors duration-300 ${
                         isActive
                           ? `${sColors.text} translate-x-1`
                           : "text-steel-400"
@@ -403,7 +403,7 @@ export default function Services() {
                     {/* CTA */}
                     <motion.a
                       href="#contact"
-                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r ${colors.gradient} text-white font-semibold transition-all hover:shadow-lg`}
+                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r ${colors.gradient} text-white font-semibold transition-shadow hover:shadow-lg`}
                       whileHover={{ scale: 1.02, x: 4 }}
                       whileTap={{ scale: 0.98 }}
                     >

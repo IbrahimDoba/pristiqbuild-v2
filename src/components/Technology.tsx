@@ -149,7 +149,7 @@ export default function Technology() {
               }}
               className="group"
             >
-              <div className="relative h-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 transition-all duration-500 hover:bg-white/10 hover:border-white/20">
+              <div className="relative h-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 transition-colors duration-500 hover:bg-white/10 hover:border-white/20">
                 {/* Accent Line */}
                 <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary-400/50 to-transparent" />
 
@@ -218,7 +218,7 @@ export default function Technology() {
                   Client-Centric Design Process
                 </h3>
                 <p className="body-md text-white/70">
-                  Our technology isn&apos;t just about innovation — it&apos;s
+                  Our technology isn&apos;t just about innovation: it&apos;s
                   about putting you at the center of every decision. Experience
                   transparent collaboration, real-time updates, and complete
                   control over your project from concept to completion.

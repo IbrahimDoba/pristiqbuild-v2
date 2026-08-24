@@ -162,9 +162,6 @@ export default function Projects() {
       <div className="container-custom relative z-10">
         {/* Section Header */}
         <div className="projects-header text-center max-w-3xl mx-auto mb-16">
-          <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-            Our Portfolio
-          </span>
           <h2 className="heading-xl text-steel-900 mb-6">
             Featured <span className="text-gradient-gold">Projects</span>
           </h2>
@@ -181,7 +178,7 @@ export default function Projects() {
               key={project.id}
               className="project-card group"
             >
-              <div className="relative h-full bg-white rounded-3xl overflow-hidden shadow-xl border border-steel-100 transition-all duration-700 hover:shadow-2xl hover:border-primary-300 hover:-translate-y-2">
+              <div className="relative h-full bg-white rounded-3xl overflow-hidden shadow-xl border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-700 hover:shadow-2xl hover:border-primary-300 hover:-translate-y-2">
                 {/* Image Container */}
                 <div className="relative overflow-hidden h-72">
                   <Image
@@ -264,7 +261,7 @@ export default function Projects() {
                     ))}
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="relative aspect-video rounded-lg overflow-hidden border-2 border-primary-200 bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white font-bold text-sm hover:from-primary-700 hover:to-secondary-700 transition-all"
+                      className="relative aspect-video rounded-lg overflow-hidden border-2 border-primary-200 bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white font-bold text-sm hover:from-primary-700 hover:to-secondary-700 transition-colors"
                     >
                       +More
                     </Link>
