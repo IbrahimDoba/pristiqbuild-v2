@@ -103,13 +103,10 @@ export default function StructuredData() {
         closes: '18:00',
       },
     ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '150',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    // No aggregateRating here on purpose. The previous build published
+    // "4.9 from 150 reviews" with no review system anywhere on the site.
+    // Unverifiable review markup risks a manual action, and misrepresents
+    // ratings to anyone reading the search result.
   };
 
   const websiteData = {

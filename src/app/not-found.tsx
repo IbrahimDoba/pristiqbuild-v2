@@ -6,8 +6,6 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { Home, ArrowLeft, Search, HardHat, Mail } from "lucide-react";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 
 export default function NotFound() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,7 +111,6 @@ export default function NotFound() {
 
   return (
     <>
-      <Navigation />
       <main ref={containerRef} className="min-h-screen bg-white">
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 overflow-hidden">
@@ -291,7 +288,6 @@ export default function NotFound() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

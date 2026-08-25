@@ -1,6 +1,53 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /**
+   * Security headers. The site previously sent none.
+   *
+   * No Content-Security-Policy yet on purpose: a useful one has to enumerate
+   * the Google Analytics and Maps origins the pages actually load, and getting
+   * that wrong silently breaks the page rather than failing loudly. It lands
+   * with the analytics work, once the real origin list is known.
+   */
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // Two years, so the domain qualifies for HSTS preloading later.
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          // Clickjacking. Blocks the site being framed to overlay fake CTAs.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          // Stops the browser second-guessing declared content types.
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // Send the origin cross-site, the full path same-site. Keeps
+          // internal referrer attribution working without leaking query
+          // strings to third parties.
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          // Nothing on this site needs these.
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+        ],
+      },
+      {
+        // Lead submissions must never be cached by a CDN or a shared proxy.
+        source: "/api/:path*",
+        headers: [
+          { key: "Cache-Control", value: "no-store, max-age=0" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
+      },
+    ];
+  },
+
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

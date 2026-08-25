@@ -6,8 +6,6 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { Clock, Bell, ArrowLeft, Mail } from "lucide-react";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
 
 interface ComingSoonProps {
   title: string;
@@ -105,7 +103,6 @@ export default function ComingSoon({
 
   return (
     <>
-      <Navigation />
       <main ref={containerRef} className="min-h-screen bg-secondary-50">
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 overflow-hidden">
@@ -247,7 +244,6 @@ export default function ComingSoon({
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -19,11 +19,21 @@ export default function manifest(): MetadataRoute.Manifest {
         src: '/icon-192.png',
         sizes: '192x192',
         type: 'image/png',
+        purpose: 'any',
       },
       {
         src: '/icon-512.png',
         sizes: '512x512',
         type: 'image/png',
+        purpose: 'any',
+      },
+      // The mark sits inside a 56% safe zone on a solid ground, so Android can
+      // crop it to any shape without clipping the glyph.
+      {
+        src: '/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
     categories: ['business', 'construction', 'technology'],

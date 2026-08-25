@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
 import MotionProvider from "@/components/MotionProvider";
+import Analytics from "@/components/Analytics";
 
 // Body face. Reads better than Inter at small sizes on mid-range Android,
 // which is most of this audience, and its slightly humanist shapes give the
@@ -118,6 +119,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <StructuredData />
+        <Analytics />
       </head>
       <body
         className={`${plexSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
