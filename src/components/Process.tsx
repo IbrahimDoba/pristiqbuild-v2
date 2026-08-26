@@ -2,8 +2,7 @@
 
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap/config";
-import { EASINGS } from "@/lib/gsap/easings";
+import { gsap, ScrollTrigger } from "@/lib/gsap/config";
 import Image from "next/image";
 import {
   PenTool,
@@ -88,270 +87,228 @@ const steps = [
   },
 ];
 
+const outcomes = [
+  { value: "30-50%", label: "Faster than traditional", sub: "Construction timeline" },
+  { value: "20-30%", label: "Cost savings", sub: "Compared to conventional" },
+  { value: "90%", label: "Factory built", sub: "Before it reaches site" },
+];
+
+/**
+ * The build process, as one horizontal run.
+ *
+ * This was seven stacked left-image / right-text rows, 4,184px tall, which was
+ * 35% of the homepage and the same layout family repeated seven times. The
+ * steps are a sequence, so panning through them left to right says what the
+ * content actually is, and the numbering finally earns its place.
+ *
+ * Three behaviours, by capability rather than by guesswork:
+ *   desktop, motion allowed  pinned section, scroll drives the pan
+ *   touch or narrow          native horizontal scroll-snap, no hijack
+ *   reduced motion           same native scroll, nothing pinned
+ *
+ * Scroll hijacking on a phone is hostile, so it is never enabled there.
+ */
 export default function Process() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
   useGSAP(
     () => {
-      // Set initial states
-      gsap.set(".process-header", { opacity: 0, y: 50 });
-      gsap.set(".process-step", { opacity: 0, y: 100 });
-      gsap.set(".timeline-line", { scaleY: 0 });
-      gsap.set(".process-stats", { opacity: 0, y: 60 });
+      const mm = gsap.matchMedia();
 
-      // Header animation
-      gsap.to(".process-header", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.expo,
-        scrollTrigger: {
-          trigger: ".process-header",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
+      mm.add(
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const track = trackRef.current;
+          const section = sectionRef.current;
+          if (!track || !section) return;
 
-      // Timeline line grows as you scroll
-      gsap.to(".timeline-line", {
-        scaleY: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".timeline-container",
-          start: "top 60%",
-          end: "bottom 80%",
-          scrub: 1,
-        },
-      });
+          const distance = () => track.scrollWidth - window.innerWidth;
 
-      // Animate steps with stagger
-      gsap.to(".process-step", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: EASINGS.expo,
-        scrollTrigger: {
-          trigger: ".timeline-container",
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      });
+          const tween = gsap.to(track, {
+            x: () => -distance(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: section,
+              start: "top top",
+              end: () => `+=${distance()}`,
+              pin: true,
+              scrub: 1,
+              // Widths depend on the viewport, so the distance has to be
+              // recomputed rather than baked in at creation.
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                // Written straight to a custom property. Routing a per-frame
+                // value through React state would re-render the whole section
+                // on every scroll tick.
+                railRef.current?.style.setProperty(
+                  "--progress",
+                  String(self.progress)
+                );
 
-      // Stats animation
-      gsap.to(".process-stats", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.expo,
-        scrollTrigger: {
-          trigger: ".process-stats",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
+                // Panels plus the closing stats panel share the track, so the
+                // counter maps progress across steps only.
+                const step = Math.min(
+                  steps.length,
+                  Math.max(1, Math.round(self.progress * steps.length) || 1)
+                );
+                if (counterRef.current) {
+                  counterRef.current.textContent = String(step).padStart(2, "0");
+                }
+              },
+            },
+          });
+
+          return () => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+          };
+        }
+      );
+
+      // Panel images load lazily, so the pinned distance is wrong until they
+      // have settled. One refresh after load corrects it.
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+      return () => window.removeEventListener("load", onLoad);
     },
-    { scope: containerRef }
+    { scope: sectionRef }
   );
 
   return (
     <section
       id="process"
-      ref={containerRef}
-      className="section-padding relative bg-linear-to-b from-white via-gray-50 to-white overflow-hidden"
+      ref={sectionRef}
+      className="relative bg-steel-950 text-white overflow-hidden lg:min-h-[100dvh] lg:flex lg:flex-col lg:justify-center py-20 lg:pt-32 lg:pb-12"
     >
-      {/* Background Elements */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-linear-to-br from-primary-400/20 to-secondary-400/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-40 left-0 w-96 h-96 bg-linear-to-br from-secondary-400/20 to-primary-400/20 rounded-full blur-3xl" />
-
-      {/* Grid Pattern */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: "50px 50px",
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
         }}
       />
 
-      <div className="container-custom relative z-10">
-        {/* Section Header */}
-        <div className="process-header text-center max-w-3xl mx-auto mb-20">
-          <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-            Our Process
-          </span>
-          <h2 className="heading-xl text-steel-900 mb-6">
-            How We <span className="text-gradient-gold">Build</span>
+      {/* Left-aligned, unlike every other section header on the page. */}
+      <header className="container-custom w-full relative z-10 mb-10 lg:mb-12">
+        <div className="max-w-2xl">
+          <h2 className="heading-lg mb-4">
+            How We <span className="text-secondary-400">Build</span>
           </h2>
-          <p className="text-xl text-steel-600 leading-relaxed">
-            Our streamlined process delivers projects 30-50% faster than
-            traditional construction while maintaining the highest quality
-            standards.
+          <p className="body-lg text-white/70">
+            Seven stages, start to handover. Factory work and site work run in
+            parallel, which is where the time saving comes from.
           </p>
         </div>
+      </header>
 
-        {/* Timeline Container */}
-        <div className="timeline-container relative max-w-6xl mx-auto">
-          {/* Vertical Timeline Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-steel-200 via-steel-200 to-steel-200 -translate-x-1/2 rounded-full">
-            <div className="timeline-line absolute top-0 left-0 w-full h-full bg-linear-to-b from-primary-600 via-secondary-500 to-primary-600 origin-top rounded-full" />
-          </div>
-
-          {/* Process Steps */}
-          <div className="space-y-16">
-            {steps.map((step, index) => {
-              const isEven = index % 2 === 0;
-              return (
-                <div
-                  key={step.number}
-                  className={`process-step relative lg:grid lg:grid-cols-2 lg:gap-12 items-center`}
-                >
-                  {/* Image Side */}
-                  <div
-                    className={`relative ${
-                      isEven ? "lg:order-1" : "lg:order-2"
-                    } mb-6 lg:mb-0`}
-                  >
-                    <div className="group relative">
-                      {/* Main Image Container */}
-                      <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-                        <Image
-                          src={step.image}
-                          alt={step.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-linear-to-tr from-primary-900/40 via-transparent to-transparent" />
-
-                        {/* Step Number Overlay */}
-                        <div className="absolute top-6 left-6 w-20 h-20 rounded-lg bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
-                          <span className="text-4xl font-display font-bold text-primary-600">
-                            {step.number}
-                          </span>
-                        </div>
-
-                        {/* Duration Badge */}
-                        <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                          <span className="text-sm font-semibold text-primary-600">
-                            {step.duration}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Decorative Glow */}
-                      <div className="absolute inset-0 bg-linear-to-br from-primary-400/30 to-secondary-400/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 -z-10" />
-                    </div>
-                  </div>
-
-                  {/* Content Side */}
-                  <div
-                    className={`${
-                      isEven ? "lg:order-2" : "lg:order-1"
-                    } ${
-                      isEven ? "lg:pl-8" : "lg:pr-8"
-                    }`}
-                  >
-                    <div className="space-y-4">
-                      {/* Icon */}
-                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-linear-to-br from-primary-600 to-secondary-600 shadow-lg">
-                        <step.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-3xl md:text-4xl font-display font-bold text-steel-900">
-                        {step.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-lg text-steel-600 leading-relaxed">
-                        {step.description}
-                      </p>
-
-                      {/* Highlights */}
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {step.highlights.map((highlight, i) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-700 bg-primary-50 px-4 py-2 rounded-full border border-primary-100"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary-600" />
-                            {highlight}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Timeline Node (Desktop) */}
-                  <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                    <div className="relative">
-                      <div className="w-6 h-6 rounded-full bg-white border-4 border-primary-600 shadow-lg" />
-                      <div className="absolute inset-0 rounded-full bg-primary-400 animate-ping opacity-30" />
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Benefits Stats */}
-        <div className="process-stats mt-24 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              value: "30-50%",
-              label: "Faster Than Traditional",
-              sublabel: "Construction timeline",
-              gradient: "from-orange-500 to-orange-600",
-            },
-            {
-              value: "20-30%",
-              label: "Cost Savings",
-              sublabel: "Compared to conventional",
-              gradient: "from-primary-600 to-primary-700",
-            },
-            {
-              value: "90%",
-              label: "Factory Built",
-              sublabel: "Weather-independent",
-              gradient: "from-primary-700 to-primary-800",
-            },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              className="group relative bg-white rounded-2xl p-8 text-center overflow-hidden shadow-xl border border-steel-100 hover:shadow-2xl transition-[box-shadow,transform] duration-500 hover:-translate-y-2"
+      {/*
+        One track for all three behaviours. On desktop GSAP translates it and
+        overflow stays hidden; below lg the browser scrolls it natively with
+        snap points, which is what a thumb expects.
+      */}
+      <div className="relative z-10 lg:overflow-hidden">
+        <div
+          ref={trackRef}
+          className="flex gap-5 lg:gap-6 px-6 lg:px-[max(1.5rem,calc((100vw-1400px)/2))] overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4 lg:pb-0"
+        >
+          {steps.map((step) => (
+            <article
+              key={step.number}
+              className="snap-start shrink-0 w-[82vw] sm:w-[62vw] md:w-[46vw] lg:w-[clamp(320px,30vw,420px)] rounded-2xl bg-white/[0.04] border border-white/10 overflow-hidden flex flex-col"
             >
-              {/* Background Pattern */}
-              <div
-                className="absolute inset-0 opacity-5"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,0,0,0.2) 1px, transparent 0)`,
-                  backgroundSize: "24px 24px",
-                }}
-              />
-
-              {/* Gradient Bar */}
-              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r ${stat.gradient}`} />
-
-              <div className="relative z-10">
-                <div className={`text-5xl md:text-6xl font-display font-bold bg-linear-to-r ${stat.gradient} bg-clip-text text-transparent mb-3`}>
-                  {stat.value}
-                </div>
-                <div className="text-lg font-semibold text-steel-900 mb-1">
-                  {stat.label}
-                </div>
-                <div className="text-sm text-steel-500">{stat.sublabel}</div>
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <Image
+                  src={step.image}
+                  alt={step.title}
+                  fill
+                  sizes="(max-width: 1024px) 82vw, 420px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-steel-950 via-steel-950/25 to-transparent" />
+                <span className="absolute top-4 left-4 inline-flex items-center justify-center w-11 h-11 rounded-lg bg-steel-950/80 backdrop-blur-sm border border-white/15 font-display font-bold tabular text-secondary-400">
+                  {step.number}
+                </span>
+                <step.icon
+                  className="absolute bottom-4 right-4 w-6 h-6 text-white/70"
+                  aria-hidden="true"
+                />
               </div>
 
-              {/* Hover Glow */}
-              <div className={`absolute inset-0 bg-linear-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 -z-10`} />
-            </div>
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="font-display font-semibold text-xl mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-white/65 leading-relaxed mb-5">
+                  {step.description}
+                </p>
+
+                <ul className="flex flex-wrap gap-2 mb-5 list-none p-0 m-0">
+                  {step.highlights.map((h) => (
+                    <li
+                      key={h}
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.06] border border-white/10 text-xs text-white/70"
+                    >
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="mt-auto text-xs uppercase tracking-wider text-white/45 tabular">
+                  {step.duration}
+                </p>
+              </div>
+            </article>
           ))}
+
+          {/* The pan pays off here rather than just stopping. */}
+          <article className="snap-start shrink-0 w-[82vw] sm:w-[62vw] md:w-[46vw] lg:w-[clamp(340px,32vw,460px)] rounded-2xl bg-primary-700 border border-primary-600 p-8 flex flex-col justify-center">
+            <h3 className="font-display font-semibold text-2xl mb-8">
+              What that adds up to
+            </h3>
+            <dl className="space-y-6 m-0">
+              {outcomes.map((o) => (
+                <div key={o.label}>
+                  <dt className="font-display font-bold text-4xl tabular leading-none mb-1.5">
+                    {o.value}
+                  </dt>
+                  <dd className="m-0">
+                    <span className="block font-medium">{o.label}</span>
+                    <span className="block text-sm text-white/60">{o.sub}</span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </article>
         </div>
       </div>
+
+      {/* Progress rail and step counter.
+          A counter, not a "scroll to explore" prompt: it says where you are in
+          the sequence, which the reader cannot otherwise tell once the section
+          is pinned. Telling someone to scroll is not information. */}
+      <div className="container-custom w-full relative z-10 mt-10 hidden lg:block">
+        <div className="flex items-center gap-5">
+          <div
+            ref={railRef}
+            className="relative h-0.5 flex-1 rounded-full bg-white/15 overflow-hidden"
+            style={{ ["--progress" as string]: "0" }}
+          >
+            <span
+              className="absolute inset-0 bg-secondary-400 origin-left rounded-full"
+              style={{ transform: "scaleX(var(--progress))" }}
+            />
+          </div>
+          <p className="font-display font-semibold tabular text-sm text-white/70 whitespace-nowrap">
+            <span ref={counterRef}>01</span>
+            <span className="text-white/30"> / 0{steps.length}</span>
+          </p>
+        </div>
+      </div>
+
     </section>
   );
 }
