@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostBySlug, getAllSlugs } from '@/lib/mdx';
+import { getPostBySlug, getAllSlugs, getAllPostSummaries } from '@/lib/mdx';
+import { relatedPosts } from '@/lib/blog-query';
 import { Calendar, Clock, User, ArrowLeft, Tag } from 'lucide-react';
 import SafeImage from '@/components/SafeImage';
 import ShareButton from '@/components/ShareButton';
@@ -60,6 +61,9 @@ export default async function BlogPost({
   if (!post) {
     notFound();
   }
+
+  // Scored on shared tags, with a smaller bonus for the same category.
+  const related = relatedPosts(getAllPostSummaries(), post);
 
   return (
     <article className="min-h-screen bg-white">
@@ -215,26 +219,45 @@ export default async function BlogPost({
       </div>
 
       {/* Related Articles */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-steel-50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-8 text-gray-900">
-            Continue Reading
+          <h2 className="heading-sm text-steel-900 mb-8">
+            {related.length > 0 ? 'Related reading' : 'Keep reading'}
           </h2>
-          <div className="space-y-4">
-            <Link
-              href="/blog"
-              className="block p-6 bg-white rounded-2xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors flex items-center gap-2">
-                Explore All Articles
-                <ArrowLeft className="w-5 h-5 rotate-180" />
-              </h3>
-              <p className="text-gray-600 mt-2">
-                Discover more insights on light gauge steel construction in
-                Nigeria
-              </p>
-            </Link>
-          </div>
+
+          {related.length > 0 ? (
+            <ul className="grid sm:grid-cols-3 gap-6 list-none p-0 m-0">
+              {related.map((item) => (
+                <li key={item.slug}>
+                  <Link
+                    href={`/blog/${item.slug}`}
+                    className="group flex h-full flex-col bg-white rounded-2xl border border-steel-100 p-5 transition-[box-shadow,transform] hover:shadow-lg hover:-translate-y-0.5"
+                  >
+                    <span className="text-xs font-semibold text-primary-700 mb-2">
+                      {item.category}
+                    </span>
+                    <h3 className="font-display font-semibold text-steel-900 leading-snug mb-2 group-hover:text-primary-700 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-steel-600 line-clamp-2">
+                      {item.description}
+                    </p>
+                    <span className="mt-auto pt-4 text-xs text-steel-500">
+                      {item.readTime}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <Link
+            href="/blog"
+            className="mt-8 inline-flex items-center gap-2 text-primary-700 font-semibold hover:text-primary-800 transition-colors"
+          >
+            Browse all articles
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </article>
