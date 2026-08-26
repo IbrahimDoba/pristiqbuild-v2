@@ -87,6 +87,10 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
+    /* `clip`, not `hidden`. Both stop the sideways scroll, but `hidden`
+     * establishes a scroll container, which silently breaks position: sticky
+     * and every GSAP pin on the page. `clip` does not. */
+    overflow-x: clip;
   }
 
   body {
@@ -94,7 +98,7 @@
     color: var(--foreground);
     font-family: var(--font-body);
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Naira figures, square metres, timelines and phone numbers all sit in
@@ -104,6 +108,21 @@
   time,
   output {
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Touch behaviour.
+   *
+   * `manipulation` drops the 300ms double-tap-to-zoom delay browsers keep for
+   * legacy pages, which is felt on every tap on a phone. The tap highlight is
+   * set deliberately to the brand rather than left as the UA's default blue
+   * flash. Pinch zoom is untouched: only the synthetic delay goes. */
+  a,
+  button,
+  [role="button"],
+  input[type="submit"],
+  label {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: color-mix(in srgb, var(--color-primary-600) 18%, transparent);
   }
 
   /* Custom Selection */

@@ -146,8 +146,11 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Methods */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-white" aria-labelledby="contact-methods">
         <div className="container-custom">
+          <h2 id="contact-methods" className="sr-only">
+            Ways to reach us
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactMethods.map((method, index) => (
               <motion.div
@@ -257,7 +260,8 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       placeholder="Adaeze Okonkwo"
-                    />
+                        autoComplete="name"
+                      />
                       <FieldError name="name" errors={fieldErrors} />
                   </div>
 
@@ -279,6 +283,7 @@ export default function ContactPage() {
                         required
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                         placeholder="adaeze@example.com"
+                        autoComplete="email" spellCheck={false} inputMode="email"
                       />
                         <FieldError name="email" errors={fieldErrors} />
                     </div>
@@ -298,6 +303,7 @@ export default function ContactPage() {
                         required
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                         placeholder="+234 XXX XXX XXXX"
+                        autoComplete="tel" inputMode="tel"
                       />
                         <FieldError name="phone" errors={fieldErrors} />
                     </div>
@@ -346,7 +352,8 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       placeholder="e.g., Abuja, Lagos, Port Harcourt"
-                    />
+                        autoComplete="address-level2"
+                      />
                   </div>
 
                   {/* Budget */}
@@ -389,7 +396,7 @@ export default function ContactPage() {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors resize-none"
-                      placeholder="Tell us about your project, timeline, and any specific requirements..."
+                      placeholder="Tell us about your project, timeline, and any specific requirements…"
                     />
                   </div>
 

@@ -57,6 +57,17 @@ export function useLeadForm() {
 
         if (!response.ok || !data.ok) {
           setFieldErrors(data.fields ?? {});
+
+          // Move focus to the first field the server rejected. Without this a
+          // keyboard or screen-reader user has to hunt back up the form to
+          // find out what went wrong.
+          const firstField = Object.keys(data.fields ?? {})[0];
+          if (firstField) {
+            requestAnimationFrame(() => {
+              const el = document.getElementById(firstField);
+              if (el instanceof HTMLElement) el.focus();
+            });
+          }
           setError(
             data.error ??
               "Something went wrong. Please try again, or call +234 813 027 2706."

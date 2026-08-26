@@ -108,6 +108,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: "#1A5F7A",
+  // Tells the browser which form controls, scrollbars and system UI to
+  // render. The site is light-only today, so it says so explicitly rather
+  // than leaving the UA to guess.
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -118,6 +122,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* next/font self-hosts the faces, so there is no font CDN to reach.
+            These cover the Google Maps embed on /contact, which otherwise
+            pays full DNS, TCP and TLS cost on first paint. */}
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="" />
         <StructuredData />
         <Analytics />
       </head>

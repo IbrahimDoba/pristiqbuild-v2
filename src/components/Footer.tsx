@@ -109,7 +109,7 @@ export default function Footer() {
 
           {/* Links Columns */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Company</h4>
+            <h2 className="font-display font-semibold text-lg mb-6">Company</h2>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -125,7 +125,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Services</h4>
+            <h2 className="font-display font-semibold text-lg mb-6">Services</h2>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
@@ -141,9 +141,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">
+            <h2 className="font-display font-semibold text-lg mb-6">
               Resources
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
@@ -163,9 +163,9 @@ export default function Footer() {
         <div className="bg-steel-800/50 rounded-2xl p-6 sm:p-8 mb-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="text-center lg:text-left w-full lg:w-auto">
-              <h4 className="font-display font-semibold text-lg mb-2">
+              <h2 className="font-display font-semibold text-lg mb-2">
                 Stay Updated
-              </h4>
+              </h2>
               <p className="text-steel-400 text-sm sm:text-base">
                 Subscribe to our newsletter for construction insights and
                 updates.

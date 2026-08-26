@@ -210,6 +210,7 @@ export default function Contact() {
                             : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
                         }`}
                         placeholder="Adaeze Okonkwo"
+                        autoComplete="name"
                       />
                       {fieldErrors.name && (
                         <p id="name-error" className="mt-2 text-sm text-red-700">
@@ -239,6 +240,7 @@ export default function Contact() {
                             : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
                         }`}
                         placeholder="adaeze@example.com"
+                        autoComplete="email" spellCheck={false} inputMode="email"
                       />
                       {fieldErrors.email && (
                         <p id="email-error" className="mt-2 text-sm text-red-700">
@@ -264,6 +266,7 @@ export default function Contact() {
                         onChange={handleChange}
                         className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors"
                         placeholder="+234 xxx xxx xxxx"
+                        autoComplete="tel" inputMode="tel"
                       />
                     </div>
                     <div>
@@ -305,7 +308,7 @@ export default function Contact() {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors resize-none"
-                      placeholder="Tell us about your project..."
+                      placeholder="Tell us about your project…"
                     />
                   </div>
 

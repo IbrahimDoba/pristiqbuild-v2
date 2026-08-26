@@ -89,7 +89,7 @@ export default function NewsletterForm() {
           whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
           whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
         >
-          {isSubmitting ? "Subscribing..." : "Subscribe"}
+          {isSubmitting ? "Subscribing…" : "Subscribe"}
         </motion.button>
       </div>
 

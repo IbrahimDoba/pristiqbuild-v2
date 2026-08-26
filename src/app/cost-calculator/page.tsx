@@ -166,7 +166,7 @@ export default function CostCalculatorPage() {
                     value={buildingSize}
                     onChange={(e) => setBuildingSize(e.target.value)}
                     placeholder="e.g., 250"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none text-steel-900"
+                    className="w-full px-4 py-3 border-2 border-steel-200 rounded-lg outline-none transition-colors focus:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600/25 text-steel-900"
                   />
                   <p className="text-sm text-steel-500 mt-2">
                     Enter the total floor area in square meters
@@ -181,7 +181,7 @@ export default function CostCalculatorPage() {
                   <select
                     value={floors}
                     onChange={(e) => setFloors(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-600 focus:outline-none text-steel-900"
+                    className="w-full px-4 py-3 border-2 border-steel-200 rounded-lg outline-none transition-colors focus:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600/25 text-steel-900"
                   >
                     {[1, 2, 3, 4, 5, 6].map((num) => (
                       <option key={num} value={num}>
