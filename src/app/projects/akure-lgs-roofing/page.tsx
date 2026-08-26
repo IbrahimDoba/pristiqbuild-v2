@@ -199,7 +199,7 @@ export default function AkureProject() {
               {highlights.map((item, index) => (
                 <div
                   key={index}
-                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
+                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
                 >
                   <div className="text-xs sm:text-sm text-white/60 mb-1">{item.label}</div>
                   <div className="text-sm sm:text-lg font-display font-bold text-white">
@@ -225,7 +225,7 @@ export default function AkureProject() {
               </h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
-              <div className="p-4 sm:p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl border border-primary-200 text-center">
+              <div className="p-4 sm:p-6 bg-linear-to-br from-primary-50 to-primary-100 rounded-2xl border border-primary-200 text-center">
                 <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
                   Architecturally Striking
                 </div>
@@ -234,7 +234,7 @@ export default function AkureProject() {
                   roofing in Nigeria
                 </p>
               </div>
-              <div className="p-4 sm:p-6 bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl border border-secondary-200 text-center">
+              <div className="p-4 sm:p-6 bg-linear-to-br from-secondary-50 to-secondary-100 rounded-2xl border border-secondary-200 text-center">
                 <div className="text-xl sm:text-3xl font-display font-bold text-secondary-700 mb-2">
                   Lifetime Durability
                 </div>
@@ -243,7 +243,7 @@ export default function AkureProject() {
                   technology
                 </p>
               </div>
-              <div className="p-4 sm:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-2xl border border-green-200 text-center">
+              <div className="p-4 sm:p-6 bg-linear-to-br from-primary-50 to-primary-100 rounded-2xl border border-green-200 text-center">
                 <div className="text-xl sm:text-3xl font-display font-bold text-green-700 mb-2">
                   75% Waste Reduction
                 </div>
@@ -252,7 +252,7 @@ export default function AkureProject() {
                   construction techniques
                 </p>
               </div>
-              <div className="p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl border border-blue-200 text-center">
+              <div className="p-4 sm:p-6 bg-linear-to-br from-primary-50 to-primary-100 rounded-2xl border border-blue-200 text-center">
                 <div className="text-xl sm:text-3xl font-display font-bold text-blue-700 mb-2">
                   On Schedule
                 </div>
@@ -266,7 +266,7 @@ export default function AkureProject() {
         </section>
 
         {/* Client Story */}
-        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 sm:py-20 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10 sm:mb-12">

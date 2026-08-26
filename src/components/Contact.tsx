@@ -99,7 +99,7 @@ export default function Contact() {
       className="section-padding relative bg-white overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-steel-50 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-steel-50 to-transparent" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-50 rounded-full blur-3xl opacity-50" />
 
       <div className="container-custom relative z-10">
@@ -180,9 +180,9 @@ export default function Contact() {
                   {error && (
                     <div
                       role="alert"
-                      className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800"
+                      className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
                     >
-                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                      <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                       <p className="text-sm">{error}</p>
                     </div>
                   )}
@@ -312,7 +312,7 @@ export default function Contact() {
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-colors disabled:opacity-70"
+                    className="w-full bg-linear-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-colors disabled:opacity-70"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                   >
@@ -352,7 +352,7 @@ export default function Contact() {
                   {info.href ? (
                     <a
                       href={info.href}
-                      className="block bg-steel-50 rounded-xl p-5 hover:bg-primary-50 transition-colors group"
+                      className="block bg-steel-50 rounded-2xl p-5 hover:bg-primary-50 transition-colors group"
                     >
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center group-hover:bg-primary-600 transition-colors">
@@ -369,7 +369,7 @@ export default function Contact() {
                       </div>
                     </a>
                   ) : (
-                    <div className="bg-steel-50 rounded-xl p-5">
+                    <div className="bg-steel-50 rounded-2xl p-5">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center">
                           <info.icon className="w-5 h-5 text-primary-600" />
@@ -394,7 +394,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.9 }}
-              className="bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl h-64 flex items-center justify-center relative overflow-hidden"
+              className="bg-linear-to-br from-primary-100 to-primary-200 rounded-2xl h-64 flex items-center justify-center relative overflow-hidden"
             >
               <div className="absolute inset-0 opacity-30">
                 <div
@@ -428,7 +428,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-colors"
+                className="flex items-center gap-4 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-2xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -446,7 +446,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1.1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-colors"
+                className="flex items-center gap-4 bg-linear-to-r from-primary-700 to-primary-800 rounded-2xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

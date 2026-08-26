@@ -76,8 +76,8 @@ export default function ProjectHero({
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-steel-950 via-steel-900/70 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-steel-950/50 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-steel-950 via-steel-900/70 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-r from-steel-950/50 to-transparent" />
       </div>
 
       {/* Back Button */}
@@ -95,7 +95,7 @@ export default function ProjectHero({
       <div className="hero-content relative z-10 container-custom pb-12 sm:pb-16 md:pb-24 pt-32 sm:pt-40">
         {/* Category Badge */}
         <div className="hero-badge mb-4 sm:mb-6">
-          <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-full text-xs sm:text-sm font-bold text-white shadow-lg">
+          <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-full text-xs sm:text-sm font-bold text-white shadow-lg">
             {category}
           </span>
         </div>
@@ -108,21 +108,21 @@ export default function ProjectHero({
 
         {/* Project Details */}
         <div className="flex flex-wrap gap-2 sm:gap-4 md:gap-6">
-          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-lg sm:rounded-xl border border-white/20">
+          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-2xl border border-white/20">
             <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
             <span className="text-white font-medium text-sm sm:text-base">{location}</span>
           </div>
-          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-lg sm:rounded-xl border border-white/20">
+          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-2xl border border-white/20">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
             <span className="text-white font-medium text-sm sm:text-base">{duration}</span>
           </div>
           {area && (
-            <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-lg sm:rounded-xl border border-white/20">
+            <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-white/10 backdrop-blur-sm rounded-2xl sm:rounded-2xl border border-white/20">
               <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-secondary-400" />
               <span className="text-white font-medium text-sm sm:text-base">{area}</span>
             </div>
           )}
-          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-primary-600/80 backdrop-blur-sm rounded-lg sm:rounded-xl border border-primary-500/50">
+          <div className="hero-badge flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-3 bg-primary-600/80 backdrop-blur-sm rounded-2xl sm:rounded-2xl border border-primary-500/50">
             <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             <span className="text-white font-bold text-sm sm:text-base">{status}</span>
           </div>

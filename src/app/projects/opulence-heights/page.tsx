@@ -206,7 +206,7 @@ export default function OpulenceHeightsProject() {
                   integrated security, each of the 18 villas represents a new
                   benchmark for residential excellence in West Africa.
                 </p>
-                <div className="p-6 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-2xl border border-primary-100">
+                <div className="p-6 bg-linear-to-r from-primary-50 to-secondary-50 rounded-2xl border border-primary-100">
                   <p className="text-xl font-display font-semibold text-steel-800 italic">
                     &ldquo;It&apos;s not just smart. It&apos;s engineered living.&rdquo;
                   </p>
@@ -222,7 +222,7 @@ export default function OpulenceHeightsProject() {
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </div>
-                <div className="absolute -bottom-6 -left-6 w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10 hidden lg:block" />
+                <div className="absolute -bottom-6 -left-6 w-full h-full bg-linear-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10 hidden lg:block" />
               </div>
             </div>
           </div>
@@ -238,7 +238,7 @@ export default function OpulenceHeightsProject() {
               {quickFacts.map((fact, index) => (
                 <div
                   key={index}
-                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 text-center"
+                  className="p-3 sm:p-5 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 text-center"
                 >
                   <div className="text-xs sm:text-sm text-white/60 mb-1">{fact.label}</div>
                   <div className="text-sm sm:text-lg font-display font-bold text-white">
@@ -257,7 +257,7 @@ export default function OpulenceHeightsProject() {
         />
 
         {/* Lifestyle Features List */}
-        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 sm:py-20 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10 sm:mb-12">
@@ -272,9 +272,9 @@ export default function OpulenceHeightsProject() {
                 {lifestyleFeatures.map((feature, index) => (
                   <div
                     key={index}
-                    className="flex items-start gap-3 p-3 sm:p-4 bg-white rounded-xl border border-steel-100 shadow-sm"
+                    className="flex items-start gap-3 p-3 sm:p-4 bg-white rounded-2xl border border-steel-100 shadow-sm"
                   >
-                    <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0 mt-0.5">
                       <svg
                         className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                         fill="none"
@@ -343,7 +343,7 @@ export default function OpulenceHeightsProject() {
         </section>
 
         {/* Investment Section */}
-        <section className="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
+        <section className="section-padding bg-linear-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-10"
             style={{
@@ -373,7 +373,7 @@ export default function OpulenceHeightsProject() {
                 </div>
                 <div className="text-white/70">Flexible terms available</div>
               </div>
-              <div className="text-center p-6 sm:p-8 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl sm:col-span-2 lg:col-span-1">
+              <div className="text-center p-6 sm:p-8 bg-linear-to-br from-secondary-500 to-secondary-600 rounded-2xl sm:col-span-2 lg:col-span-1">
                 <div className="text-sm text-white/80 mb-2">Early Bird Offer</div>
                 <div className="text-3xl sm:text-4xl font-display font-bold text-white mb-1">
                   Save N40M
@@ -396,7 +396,7 @@ export default function OpulenceHeightsProject() {
                     key={index}
                     className="flex items-start gap-3 text-white/90"
                   >
-                    <span className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="w-6 h-6 rounded-full bg-secondary-500 flex items-center justify-center shrink-0 mt-0.5">
                       <svg
                         className="w-4 h-4 text-white"
                         fill="none"

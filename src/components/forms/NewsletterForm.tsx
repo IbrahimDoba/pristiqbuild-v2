@@ -39,13 +39,15 @@ export default function NewsletterForm() {
         className="flex items-center gap-2 text-primary-300 font-medium"
         role="status"
       >
-        <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
+        <CheckCircle2 className="w-5 h-5 shrink-0" />
         You are on the list. Look out for our next update.
       </motion.p>
     );
   }
 
-  const fieldError = fieldErrors.email ?? (error ? null : null);
+  // Field-level message when the server named the field, otherwise the banner
+  // below carries the generic error.
+  const fieldError = fieldErrors.email ?? null;
 
   return (
     <form

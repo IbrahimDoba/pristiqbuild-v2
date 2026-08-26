@@ -174,7 +174,7 @@ export default function WhyModular() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="bg-gradient-to-r from-primary-700 via-primary-800 to-primary-900 rounded-3xl p-8 md:p-12 mb-16 relative overflow-hidden"
+          className="bg-linear-to-r from-primary-700 via-primary-800 to-primary-900 rounded-2xl p-8 md:p-12 mb-16 relative overflow-hidden"
         >
           {/* Background Elements */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-secondary-500/10 rounded-full blur-3xl" />
@@ -228,7 +228,7 @@ export default function WhyModular() {
               className="group"
             >
               <div className="bg-white rounded-2xl p-6 h-full shadow-lg shadow-steel-200/50 border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-500 hover:shadow-xl hover:border-primary-200 hover:-translate-y-2">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center mb-4 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                <div className="w-14 h-14 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center mb-4 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                   <benefit.icon className="w-7 h-7 text-white" />
                 </div>
                 <div className="text-3xl font-display font-bold text-primary-700 mb-1">
@@ -314,9 +314,9 @@ export default function WhyModular() {
           transition={{ duration: 0.5, delay: 1 }}
           className="mt-16 grid md:grid-cols-2 gap-8"
         >
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 border border-green-200">
+          <div className="bg-linear-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-green-200">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center flex-shrink-0">
+              <div className="w-14 h-14 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
                 <Recycle className="w-7 h-7 text-white" />
               </div>
               <div>
@@ -344,9 +344,9 @@ export default function WhyModular() {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-primary-200">
+          <div className="bg-linear-to-br from-primary-50 to-primary-100 rounded-2xl p-8 border border-primary-200">
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center flex-shrink-0">
+              <div className="w-14 h-14 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
                 <Factory className="w-7 h-7 text-white" />
               </div>
               <div>

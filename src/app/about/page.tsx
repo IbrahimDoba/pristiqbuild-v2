@@ -120,7 +120,7 @@ export default function AboutPage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
           <div className="grid-pattern absolute inset-0" />
         </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
         </div>
 
         {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
       {/* Stats Section */}
@@ -227,7 +227,7 @@ export default function AboutPage() {
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Mission */}
-            <div className="bg-gradient-to-br from-primary-700 to-primary-900 rounded-2xl p-12 text-white">
+            <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-12 text-white">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
                 <Target size={32} />
               </div>
@@ -241,7 +241,7 @@ export default function AboutPage() {
             </div>
 
             {/* Vision */}
-            <div className="bg-gradient-to-br from-secondary-600 to-secondary-700 rounded-2xl p-12 text-white">
+            <div className="bg-linear-to-br from-secondary-600 to-secondary-700 rounded-2xl p-12 text-white">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
                 <Eye size={32} />
               </div>
@@ -279,7 +279,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4">
                   <value.icon size={28} />
@@ -313,7 +313,7 @@ export default function AboutPage() {
                 className="relative pl-8 pb-12 border-l-4 border-primary-200 last:pb-0"
               >
                 <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary-600 border-4 border-white shadow-lg" />
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
+                <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow">
                   <div className="text-2xl font-bold text-primary-700 mb-2">
                     {item.year}
                   </div>
@@ -345,9 +345,9 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg p-4"
+                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl p-4"
               >
-                <CheckCircle className="text-secondary-400 flex-shrink-0" size={24} />
+                <CheckCircle className="text-secondary-400 shrink-0" size={24} />
                 <span className="text-white/90">{cert}</span>
               </motion.div>
             ))}
@@ -358,7 +358,7 @@ export default function AboutPage() {
       {/* CTA Section */}
       <section className="section-padding bg-white fade-in-section">
         <div className="container-custom">
-          <div className="bg-gradient-to-r from-primary-700 to-primary-900 rounded-3xl p-12 md:p-16 text-center text-white">
+          <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-12 md:p-16 text-center text-white">
             <h2 className="heading-lg mb-6">
               Ready to Build Your Future with Us?
             </h2>

@@ -165,7 +165,7 @@ export default function ARVRSolutionsPage() {
           className="object-cover opacity-20"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-steel-900/80" />
+        <div className="absolute inset-0 bg-linear-to-r from-primary-900/90 to-steel-900/80" />
 
         {/* Animated grid background */}
         <div className="absolute inset-0 opacity-10">
@@ -240,15 +240,15 @@ export default function ARVRSolutionsPage() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-xl">
+                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-lg">
                   <Glasses className="w-6 h-6 text-primary-600" />
                   <span className="font-semibold text-steel-900">VR Headsets</span>
                 </div>
-                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-xl">
+                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-lg">
                   <Smartphone className="w-6 h-6 text-primary-600" />
                   <span className="font-semibold text-steel-900">Mobile AR</span>
                 </div>
-                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-xl">
+                <div className="flex items-center gap-3 px-6 py-3 bg-primary-50 rounded-lg">
                   <Monitor className="w-6 h-6 text-primary-600" />
                   <span className="font-semibold text-steel-900">Desktop 3D</span>
                 </div>
@@ -264,7 +264,7 @@ export default function ARVRSolutionsPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-br from-primary-600 to-primary-700 text-white p-8 rounded-2xl shadow-2xl max-w-xs">
+              <div className="absolute -bottom-6 -left-6 bg-linear-to-br from-primary-600 to-primary-700 text-white p-8 rounded-2xl shadow-2xl max-w-xs">
                 <Lightbulb className="w-12 h-12 mb-4" />
                 <div className="text-2xl font-bold mb-2">Catch Errors Early</div>
                 <div className="text-sm text-primary-100">
@@ -277,7 +277,7 @@ export default function ARVRSolutionsPage() {
       </section>
 
       {/* Features */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -292,9 +292,9 @@ export default function ARVRSolutionsPage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-linear-to-br from-primary-600 to-primary-700 rounded-lg flex items-center justify-center mb-6">
                   <feature.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-steel-900 mb-3">
@@ -310,7 +310,7 @@ export default function ARVRSolutionsPage() {
       </section>
 
       {/* Benefits Stats */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700">
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -358,7 +358,7 @@ export default function ARVRSolutionsPage() {
             {useCases.map((useCase, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-50 to-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow"
+                className="bg-linear-to-br from-gray-50 to-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow"
               >
                 <div className="relative h-64">
                   <SafeImage
@@ -367,7 +367,7 @@ export default function ARVRSolutionsPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-2xl font-bold text-white mb-2">
                       {useCase.title}
@@ -381,7 +381,7 @@ export default function ARVRSolutionsPage() {
                   <ul className="space-y-3">
                     {useCase.features.map((feature, fIndex) => (
                       <li key={fIndex} className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary-600 flex-shrink-0" />
+                        <CheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
                         <span className="text-steel-700">{feature}</span>
                       </li>
                     ))}
@@ -394,7 +394,7 @@ export default function ARVRSolutionsPage() {
       </section>
 
       {/* Process */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -409,15 +409,15 @@ export default function ARVRSolutionsPage() {
             {process.map((item, index) => (
               <div key={index} className="relative mb-12 last:mb-0">
                 {index < process.length - 1 && (
-                  <div className="absolute left-8 top-20 w-0.5 h-full bg-gradient-to-b from-primary-300 to-transparent hidden md:block" />
+                  <div className="absolute left-8 top-20 w-0.5 h-full bg-linear-to-b from-primary-300 to-transparent hidden md:block" />
                 )}
 
                 <div className="flex flex-col md:flex-row gap-6 items-start">
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">
+                  <div className="shrink-0 w-16 h-16 bg-linear-to-br from-primary-600 to-primary-700 text-white rounded-lg flex items-center justify-center text-2xl font-bold shadow-lg">
                     {item.step}
                   </div>
 
-                  <div className="flex-1 bg-white p-8 rounded-xl border-2 border-gray-200">
+                  <div className="flex-1 bg-white p-8 rounded-2xl border-2 border-gray-200">
                     <h3 className="text-2xl font-bold text-steel-900 mb-3">
                       {item.title}
                     </h3>
@@ -433,7 +433,7 @@ export default function ARVRSolutionsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
@@ -446,14 +446,14 @@ export default function ARVRSolutionsPage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Glasses className="w-6 h-6" />
                 Book a Demo
               </Link>
               <Link
                 href="/case-studies"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 See Examples
                 <ArrowRight className="w-6 h-6" />

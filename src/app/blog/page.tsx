@@ -17,7 +17,7 @@ export default function BlogPage() {
   const categories = Array.from(new Set(posts.map((post) => post.category)));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Back Button */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -32,7 +32,7 @@ export default function BlogPage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-20">
+      <section className="relative bg-linear-to-r from-primary-600 to-primary-700 text-white py-20">
         <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -64,7 +64,7 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-300 hover:-translate-y-1"
+              className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-[box-shadow,transform] duration-300 hover:-translate-y-1"
             >
               <div className="relative h-48 bg-gray-200 overflow-hidden">
                 <SafeImage
@@ -139,10 +139,10 @@ export default function BlogPage() {
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
-                      className="group bg-white rounded-lg p-6 shadow hover:shadow-lg transition-[color,background-color,border-color,box-shadow] hover:border-primary-500 border border-transparent"
+                      className="group bg-white rounded-2xl p-6 shadow hover:shadow-lg transition-[color,background-color,border-color,box-shadow] hover:border-primary-500 border border-transparent"
                     >
                       <div className="flex items-start gap-4">
-                        <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
+                        <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden bg-gray-200">
                           <SafeImage
                             src={post.coverImage}
                             alt={post.coverImageAlt}
@@ -170,7 +170,7 @@ export default function BlogPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
+      <section className="bg-linear-to-r from-primary-600 to-primary-700 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Ready to Start Your LGS Project?

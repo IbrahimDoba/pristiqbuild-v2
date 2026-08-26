@@ -73,7 +73,7 @@ export default function HomeCTA() {
   return (
     <section
       ref={containerRef}
-      className="section-padding bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 relative overflow-hidden"
+      className="section-padding bg-linear-to-br from-primary-900 via-primary-800 to-primary-900 relative overflow-hidden"
     >
       {/* Background Pattern */}
       <div
@@ -110,14 +110,14 @@ export default function HomeCTA() {
           <div className="cta-buttons flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <Link
               href="/contact"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-secondary-500 to-secondary-600 text-white font-bold rounded-xl shadow-lg shadow-secondary-500/25 hover:shadow-xl hover:from-secondary-600 hover:to-secondary-700 transition-[color,background-color,border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-linear-to-r from-secondary-500 to-secondary-600 text-white font-bold rounded-lg shadow-lg shadow-secondary-500/25 hover:shadow-xl hover:from-secondary-600 hover:to-secondary-700 transition-[color,background-color,border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5"
             >
               Get a Free Quote
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/projects"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-colors duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg border border-white/20 hover:bg-white/20 transition-colors duration-300"
             >
               View Our Projects
             </Link>

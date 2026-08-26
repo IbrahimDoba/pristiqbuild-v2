@@ -35,7 +35,7 @@ const values = [
     title: "Sustainability",
     description:
       "Committed to eco-friendly practices, reducing waste and energy consumption in all our constructions.",
-    gradient: "from-green-500 to-green-600",
+    gradient: "from-primary-700 to-primary-800",
     image: "/LGS/lgs5.jpeg",
   },
   {
@@ -43,7 +43,7 @@ const values = [
     title: "Trust & Reliability",
     description:
       "Building lasting relationships through transparent communication and consistent delivery.",
-    gradient: "from-blue-500 to-blue-600",
+    gradient: "from-primary-800 to-primary-900",
     image: "/LGS/lgs2.jpeg",
   },
   {
@@ -51,7 +51,7 @@ const values = [
     title: "Growth Focused",
     description:
       "Dedicated to expanding capabilities and market reach while developing our team and partners.",
-    gradient: "from-purple-500 to-purple-600",
+    gradient: "from-primary-500 to-primary-600",
     image: "/LGS/construction.jpg",
   },
 ];
@@ -131,11 +131,11 @@ export default function CoreValues() {
     <section
       id="why-pristiqbuild"
       ref={containerRef}
-      className="section-padding relative bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden"
+      className="section-padding relative bg-linear-to-b from-white via-gray-50 to-white overflow-hidden"
     >
       {/* Animated Background Shapes */}
-      <div className="floating-shape floating-shape-1 absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-secondary-400/30 to-primary-400/30 rounded-full blur-3xl" />
-      <div className="floating-shape floating-shape-2 absolute bottom-40 left-10 w-96 h-96 bg-gradient-to-br from-primary-400/30 to-secondary-400/30 rounded-full blur-3xl" />
+      <div className="floating-shape floating-shape-1 absolute top-20 right-10 w-72 h-72 bg-linear-to-br from-secondary-400/30 to-primary-400/30 rounded-full blur-3xl" />
+      <div className="floating-shape floating-shape-2 absolute bottom-40 left-10 w-96 h-96 bg-linear-to-br from-primary-400/30 to-secondary-400/30 rounded-full blur-3xl" />
 
       {/* Grid Pattern Overlay */}
       <div
@@ -173,7 +173,7 @@ export default function CoreValues() {
               } ${index === 3 ? "lg:col-span-2" : ""}`}
             >
               {/* Card Container */}
-              <div className="relative h-full min-h-[320px] rounded-3xl overflow-hidden bg-white shadow-xl shadow-steel-200/50 border border-steel-100 transition-[box-shadow,transform] duration-700 hover:shadow-2xl hover:shadow-primary-300/40 hover:-translate-y-2">
+              <div className="relative h-full min-h-[320px] rounded-2xl overflow-hidden bg-white shadow-xl shadow-steel-200/50 border border-steel-100 transition-[box-shadow,transform] duration-700 hover:shadow-2xl hover:shadow-primary-300/40 hover:-translate-y-2">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                   <Image
@@ -183,7 +183,7 @@ export default function CoreValues() {
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   {/* Gradient Overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-90 group-hover:opacity-95 transition-opacity duration-700`} />
+                  <div className={`absolute inset-0 bg-linear-to-br ${value.gradient} opacity-90 group-hover:opacity-95 transition-opacity duration-700`} />
                   {/* Pattern Overlay */}
                   <div
                     className="absolute inset-0 opacity-10"
@@ -200,7 +200,7 @@ export default function CoreValues() {
                 {/* Content */}
                 <div className="relative z-10 h-full p-8 flex flex-col justify-between">
                   {/* Icon */}
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-white/30">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-white/20 backdrop-blur-sm mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 border border-white/30">
                     <value.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                   </div>
 
@@ -220,12 +220,12 @@ export default function CoreValues() {
 
                 {/* Shine Effect on Hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+                  <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
                 </div>
               </div>
 
               {/* Glow Effect */}
-              <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${value.gradient} opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-20 -z-10`} />
+              <div className={`absolute inset-0 rounded-2xl bg-linear-to-br ${value.gradient} opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-20 -z-10`} />
             </div>
           ))}
         </div>

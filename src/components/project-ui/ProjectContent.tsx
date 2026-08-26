@@ -67,7 +67,7 @@ export default function ProjectContent({ sections }: ProjectContentProps) {
                 <ul className="mt-6 sm:mt-8 space-y-3">
                   {section.highlights.map((highlight, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <span className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary-100 flex items-center justify-center mt-0.5">
+                      <span className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary-100 flex items-center justify-center mt-0.5">
                         <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary-600" />
                       </span>
                       <span className="text-steel-700 leading-relaxed text-sm sm:text-base">
@@ -96,7 +96,7 @@ export default function ProjectContent({ sections }: ProjectContentProps) {
                   />
                 </div>
                 {/* Decorative element - hidden on mobile to prevent overflow */}
-                <div className="hidden lg:block absolute -bottom-4 -right-4 w-full h-full bg-gradient-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10" />
+                <div className="hidden lg:block absolute -bottom-4 -right-4 w-full h-full bg-linear-to-br from-primary-200 to-secondary-200 rounded-2xl -z-10" />
               </div>
             )}
           </div>

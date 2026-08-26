@@ -176,10 +176,10 @@ export default function MaitamaProject() {
         />
 
         {/* Client Testimonial */}
-        <section className="py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-20 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="w-20 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600 mx-auto mb-8" />
+              <div className="w-20 h-1 bg-linear-to-r from-secondary-500 to-secondary-600 mx-auto mb-8" />
               <blockquote className="text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-8">
                 &ldquo;The speed and quality of execution exceeded expectations.
                 We are glad we made the switch to LGS.&rdquo;

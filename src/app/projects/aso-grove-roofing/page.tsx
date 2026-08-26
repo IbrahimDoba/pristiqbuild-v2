@@ -208,7 +208,7 @@ export default function AsoGroveProject() {
               {highlights.map((item, index) => (
                 <div
                   key={index}
-                  className="p-5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
+                  className="p-5 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"
                 >
                   <div className="text-sm text-white/60 mb-1">{item.label}</div>
                   <div className="text-lg font-display font-bold text-white">
@@ -242,9 +242,9 @@ export default function AsoGroveProject() {
               {benefits.map((benefit, index) => (
                 <div
                   key={index}
-                  className="text-center p-8 bg-gradient-to-br from-steel-50 to-white rounded-2xl border border-steel-100 shadow-lg"
+                  className="text-center p-8 bg-linear-to-br from-steel-50 to-white rounded-2xl border border-steel-100 shadow-lg"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center mx-auto mb-6 shadow-lg">
+                  <div className="w-16 h-16 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center mx-auto mb-6 shadow-lg">
                     <CheckCircle className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="font-display font-bold text-xl text-steel-900 mb-3">
@@ -258,7 +258,7 @@ export default function AsoGroveProject() {
         </section>
 
         {/* Philosophy Section */}
-        <section className="py-20 bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
+        <section className="py-20 bg-linear-to-br from-primary-900 via-primary-800 to-primary-900 text-white relative overflow-hidden">
           <div
             className="absolute inset-0 opacity-10"
             style={{
@@ -278,17 +278,17 @@ export default function AsoGroveProject() {
                 philosophy: Build smarter. Build stronger. Build for the future.
               </p>
               <div className="flex flex-wrap justify-center gap-6">
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
                   <span className="text-secondary-400 font-semibold">
                     Reduced Maintenance
                   </span>
                 </div>
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
                   <span className="text-secondary-400 font-semibold">
                     Improved Safety
                   </span>
                 </div>
-                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20">
                   <span className="text-secondary-400 font-semibold">
                     Increased Property Value
                   </span>

@@ -140,7 +140,7 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl">
                     <svg className="w-6 h-6 text-steel-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@ export default function ProjectGallery({ images, title = "Project Gallery" }: Pr
                   </div>
                 </div>
                 {image.caption && (
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-white text-sm font-medium">{image.caption}</p>
                   </div>
                 )}

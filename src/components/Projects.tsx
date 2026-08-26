@@ -178,7 +178,7 @@ export default function Projects() {
               key={project.id}
               className="project-card group"
             >
-              <div className="relative h-full bg-white rounded-3xl overflow-hidden shadow-xl border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-700 hover:shadow-2xl hover:border-primary-300 hover:-translate-y-2">
+              <div className="relative h-full bg-white rounded-2xl overflow-hidden shadow-xl border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-700 hover:shadow-2xl hover:border-primary-300 hover:-translate-y-2">
                 {/* Image Container */}
                 <div className="relative overflow-hidden h-72">
                   <Image
@@ -188,7 +188,7 @@ export default function Projects() {
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
                   {/* Category Badge */}
                   <div className="absolute top-6 left-6">
@@ -200,7 +200,7 @@ export default function Projects() {
                   {/* Featured Badge */}
                   {project.featured && (
                     <div className="absolute top-6 right-6">
-                      <span className="px-4 py-2 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-full text-xs font-bold text-white shadow-lg">
+                      <span className="px-4 py-2 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-full text-xs font-bold text-white shadow-lg">
                         ⭐ Featured
                       </span>
                     </div>
@@ -231,7 +231,7 @@ export default function Projects() {
                   <div className="absolute inset-0 bg-primary-900/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="px-8 py-4 bg-white text-primary-700 rounded-xl font-bold text-lg shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-secondary-500 hover:text-white"
+                      className="px-8 py-4 bg-white text-primary-700 rounded-2xl font-bold text-lg shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-secondary-500 hover:text-white"
                     >
                       View Details
                     </Link>
@@ -249,7 +249,7 @@ export default function Projects() {
                     {project.images.slice(1, 3).map((img, i) => (
                       <div
                         key={i}
-                        className="relative aspect-video rounded-lg overflow-hidden border-2 border-steel-100 group/thumb"
+                        className="relative aspect-video rounded-2xl overflow-hidden border-2 border-steel-100 group/thumb"
                       >
                         <Image
                           src={img}
@@ -261,7 +261,7 @@ export default function Projects() {
                     ))}
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="relative aspect-video rounded-lg overflow-hidden border-2 border-primary-200 bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white font-bold text-sm hover:from-primary-700 hover:to-secondary-700 transition-colors"
+                      className="relative aspect-video rounded-2xl overflow-hidden border-2 border-primary-200 bg-linear-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white font-bold text-sm hover:from-primary-700 hover:to-secondary-700 transition-colors"
                     >
                       +More
                     </Link>
@@ -269,7 +269,7 @@ export default function Projects() {
                 </div>
 
                 {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-400/30 to-secondary-400/30 rounded-3xl opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-40 -z-10" />
+                <div className="absolute inset-0 bg-linear-to-br from-primary-400/30 to-secondary-400/30 rounded-2xl opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-40 -z-10" />
               </div>
             </div>
           ))}

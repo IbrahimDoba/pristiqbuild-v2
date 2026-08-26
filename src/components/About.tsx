@@ -125,7 +125,7 @@ export default function About() {
               className="bg-white rounded-2xl p-8 shadow-lg shadow-steel-200/50 border border-steel-100"
             >
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 rounded-xl bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
                   <value.icon className="w-7 h-7 text-white" />
                 </div>
                 <div>
@@ -144,7 +144,7 @@ export default function About() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-linear-to-br from-primary-700 via-primary-800 to-primary-900 rounded-3xl p-8 md:p-12 mb-20 relative overflow-hidden"
+          className="bg-linear-to-br from-primary-700 via-primary-800 to-primary-900 rounded-2xl p-8 md:p-12 mb-20 relative overflow-hidden"
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -189,7 +189,7 @@ export default function About() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/10"
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10"
                 >
                   <div className="text-3xl md:text-4xl font-display font-bold text-white mb-1">
                     {stat.value}

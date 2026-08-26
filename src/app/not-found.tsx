@@ -150,7 +150,7 @@ export default function NotFound() {
               {/* Illustration */}
               <div className="error-illustration mb-10">
                 <div className="floating-element inline-block relative">
-                  <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center shadow-xl">
+                  <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-2xl bg-linear-to-br from-primary-100 to-primary-200 flex items-center justify-center shadow-xl">
                     <HardHat className="w-16 h-16 sm:w-20 sm:h-20 text-primary-700" />
                   </div>
                   {/* Floating particles */}
@@ -174,14 +174,14 @@ export default function NotFound() {
               <div className="error-actions flex flex-col sm:flex-row gap-4 justify-center mb-16">
                 <Link
                   href="/"
-                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl shadow-lg shadow-primary-700/25 hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-[color,background-color,border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5"
+                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-linear-to-r from-primary-700 to-primary-600 text-white font-bold rounded-lg shadow-lg shadow-primary-700/25 hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-[color,background-color,border-color,box-shadow,transform] duration-300 hover:-translate-y-0.5"
                 >
                   <Home className="w-5 h-5" />
                   Back to Home
                 </Link>
                 <button
                   onClick={() => window.history.back()}
-                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-steel-700 font-bold rounded-xl border-2 border-steel-200 hover:border-primary-300 hover:bg-primary-50 transition-colors duration-300"
+                  className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-steel-700 font-bold rounded-lg border-2 border-steel-200 hover:border-primary-300 hover:bg-primary-50 transition-colors duration-300"
                 >
                   <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                   Go Back
@@ -198,7 +198,7 @@ export default function NotFound() {
                     <Link
                       key={link.name}
                       href={link.href}
-                      className="group inline-flex items-center gap-2 px-5 py-3 bg-steel-50 hover:bg-primary-50 text-steel-700 hover:text-primary-700 rounded-xl border border-steel-200 hover:border-primary-200 transition-colors duration-300"
+                      className="group inline-flex items-center gap-2 px-5 py-3 bg-steel-50 hover:bg-primary-50 text-steel-700 hover:text-primary-700 rounded-lg border border-steel-200 hover:border-primary-200 transition-colors duration-300"
                     >
                       <link.icon className="w-4 h-4" />
                       <span className="font-medium">{link.name}</span>
@@ -211,12 +211,12 @@ export default function NotFound() {
         </section>
 
         {/* Help Section */}
-        <section className="py-16 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto">
-              <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-xl border border-steel-100">
+              <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-xl border border-steel-100">
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary-100 mb-4">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-100 mb-4">
                     <Mail className="w-6 h-6 text-primary-700" />
                   </div>
                   <h2 className="heading-md text-steel-900 mb-2">
@@ -231,9 +231,9 @@ export default function NotFound() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <a
                     href="tel:+2348130272706"
-                    className="flex items-center gap-4 p-5 bg-steel-50 rounded-xl hover:bg-primary-50 transition-colors group"
+                    className="flex items-center gap-4 p-5 bg-steel-50 rounded-2xl hover:bg-primary-50 transition-colors group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                    <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
                       <svg
                         className="w-5 h-5 text-primary-600"
                         fill="none"
@@ -258,9 +258,9 @@ export default function NotFound() {
 
                   <a
                     href="mailto:info@pristiqbuild.com"
-                    className="flex items-center gap-4 p-5 bg-steel-50 rounded-xl hover:bg-primary-50 transition-colors group"
+                    className="flex items-center gap-4 p-5 bg-steel-50 rounded-2xl hover:bg-primary-50 transition-colors group"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                    <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
                       <svg
                         className="w-5 h-5 text-primary-600"
                         fill="none"

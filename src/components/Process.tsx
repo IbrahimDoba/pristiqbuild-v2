@@ -158,11 +158,11 @@ export default function Process() {
     <section
       id="process"
       ref={containerRef}
-      className="section-padding relative bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden"
+      className="section-padding relative bg-linear-to-b from-white via-gray-50 to-white overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute top-20 right-0 w-96 h-96 bg-gradient-to-br from-primary-400/20 to-secondary-400/20 rounded-full blur-3xl" />
-      <div className="absolute bottom-40 left-0 w-96 h-96 bg-gradient-to-br from-secondary-400/20 to-primary-400/20 rounded-full blur-3xl" />
+      <div className="absolute top-20 right-0 w-96 h-96 bg-linear-to-br from-primary-400/20 to-secondary-400/20 rounded-full blur-3xl" />
+      <div className="absolute bottom-40 left-0 w-96 h-96 bg-linear-to-br from-secondary-400/20 to-primary-400/20 rounded-full blur-3xl" />
 
       {/* Grid Pattern */}
       <div
@@ -195,8 +195,8 @@ export default function Process() {
         {/* Timeline Container */}
         <div className="timeline-container relative max-w-6xl mx-auto">
           {/* Vertical Timeline Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-steel-200 via-steel-200 to-steel-200 -translate-x-1/2 rounded-full">
-            <div className="timeline-line absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary-600 via-secondary-500 to-primary-600 origin-top rounded-full" />
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-steel-200 via-steel-200 to-steel-200 -translate-x-1/2 rounded-full">
+            <div className="timeline-line absolute top-0 left-0 w-full h-full bg-linear-to-b from-primary-600 via-secondary-500 to-primary-600 origin-top rounded-full" />
           </div>
 
           {/* Process Steps */}
@@ -224,10 +224,10 @@ export default function Process() {
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-primary-900/40 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-linear-to-tr from-primary-900/40 via-transparent to-transparent" />
 
                         {/* Step Number Overlay */}
-                        <div className="absolute top-6 left-6 w-20 h-20 rounded-2xl bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
+                        <div className="absolute top-6 left-6 w-20 h-20 rounded-lg bg-white/95 backdrop-blur-sm flex items-center justify-center shadow-xl">
                           <span className="text-4xl font-display font-bold text-primary-600">
                             {step.number}
                           </span>
@@ -242,7 +242,7 @@ export default function Process() {
                       </div>
 
                       {/* Decorative Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary-400/30 to-secondary-400/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 -z-10" />
+                      <div className="absolute inset-0 bg-linear-to-br from-primary-400/30 to-secondary-400/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-700 -z-10" />
                     </div>
                   </div>
 
@@ -256,7 +256,7 @@ export default function Process() {
                   >
                     <div className="space-y-4">
                       {/* Icon */}
-                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-600 to-secondary-600 shadow-lg">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-linear-to-br from-primary-600 to-secondary-600 shadow-lg">
                         <step.icon className="w-8 h-8 text-white" strokeWidth={2.5} />
                       </div>
 
@@ -311,13 +311,13 @@ export default function Process() {
               value: "20-30%",
               label: "Cost Savings",
               sublabel: "Compared to conventional",
-              gradient: "from-green-500 to-green-600",
+              gradient: "from-primary-600 to-primary-700",
             },
             {
               value: "90%",
               label: "Factory Built",
               sublabel: "Weather-independent",
-              gradient: "from-blue-500 to-blue-600",
+              gradient: "from-primary-700 to-primary-800",
             },
           ].map((stat, i) => (
             <div
@@ -334,10 +334,10 @@ export default function Process() {
               />
 
               {/* Gradient Bar */}
-              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${stat.gradient}`} />
+              <div className={`absolute top-0 left-0 right-0 h-1.5 bg-linear-to-r ${stat.gradient}`} />
 
               <div className="relative z-10">
-                <div className={`text-5xl md:text-6xl font-display font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-3`}>
+                <div className={`text-5xl md:text-6xl font-display font-bold bg-linear-to-r ${stat.gradient} bg-clip-text text-transparent mb-3`}>
                   {stat.value}
                 </div>
                 <div className="text-lg font-semibold text-steel-900 mb-1">
@@ -347,7 +347,7 @@ export default function Process() {
               </div>
 
               {/* Hover Glow */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 -z-10`} />
+              <div className={`absolute inset-0 bg-linear-to-br ${stat.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500 -z-10`} />
             </div>
           ))}
         </div>

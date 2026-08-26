@@ -94,7 +94,7 @@ export default async function BlogPost({
           className="object-cover opacity-90"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Title Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
@@ -156,7 +156,7 @@ export default async function BlogPost({
       {/* Article Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Description / Lead */}
-        <div className="mb-10 p-6 md:p-8 bg-gradient-to-r from-primary-50 to-blue-50 border-l-4 border-primary-500 rounded-r-xl">
+        <div className="mb-10 p-6 md:p-8 bg-linear-to-r from-primary-50 to-primary-50 border-l-4 border-primary-500 rounded-r-xl">
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
             {post.description}
           </p>
@@ -189,7 +189,7 @@ export default async function BlogPost({
         <AuthorBio author={post.author} />
 
         {/* CTA */}
-        <div className="mt-12 p-8 md:p-10 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl text-white text-center shadow-xl">
+        <div className="mt-12 p-8 md:p-10 bg-linear-to-r from-primary-600 to-primary-700 rounded-2xl text-white text-center shadow-xl">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
             Ready to Start Your LGS Project?
           </h3>
@@ -200,13 +200,13 @@ export default async function BlogPost({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/cost-calculator"
-              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-lg"
+              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-2xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-lg"
             >
               Calculate Your Project Cost
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border border-primary-500"
+              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-2xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border border-primary-500"
             >
               Contact Us
             </Link>
@@ -223,7 +223,7 @@ export default async function BlogPost({
           <div className="space-y-4">
             <Link
               href="/blog"
-              className="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
+              className="block p-6 bg-white rounded-2xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
             >
               <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors flex items-center gap-2">
                 Explore All Articles

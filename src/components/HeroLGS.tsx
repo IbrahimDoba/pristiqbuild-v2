@@ -77,7 +77,7 @@ export default function HeroLGS() {
       </div>
 
       {/* Dark Overlay for text readability */}
-      <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-primary-900/95 via-primary-900/85 to-primary-900/70 z-10" />
+      <div className="hero-overlay absolute inset-0 bg-linear-to-r from-primary-900/95 via-primary-900/85 to-primary-900/70 z-10" />
 
       {/* Grid Pattern Overlay */}
       <div
@@ -139,7 +139,7 @@ export default function HeroLGS() {
       </div>
 
       {/* Bottom fade to white */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-30" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent z-30" />
     </section>
   );
 }

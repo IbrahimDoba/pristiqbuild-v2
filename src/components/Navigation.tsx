@@ -229,7 +229,7 @@ export default function Navigation() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-2xl overflow-hidden z-50"
+                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl overflow-hidden z-50"
                           >
                             <div className="p-2">
                               {projectsList.map((project) => (
@@ -240,7 +240,7 @@ export default function Navigation() {
                                     setIsProjectsDropdownOpen(false);
                                     setIsMobileMenuOpen(false);
                                   }}
-                                  className="block px-4 py-3 rounded-md hover:bg-primary-50 transition-colors group"
+                                  className="block px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors group"
                                 >
                                   <div className="font-medium text-steel-900 group-hover:text-primary-700 transition-colors">
                                     {project.name}

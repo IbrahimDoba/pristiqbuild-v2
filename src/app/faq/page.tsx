@@ -191,7 +191,7 @@ export default function FAQPage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
           <div className="grid-pattern absolute inset-0" />
         </div>
@@ -228,7 +228,7 @@ export default function FAQPage() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
       {/* FAQ Content */}
@@ -276,7 +276,7 @@ export default function FAQPage() {
                       return (
                         <div
                           key={qIndex}
-                          className="bg-white border border-steel-200 rounded-xl overflow-hidden hover:border-primary-300 transition-colors"
+                          className="bg-white border border-steel-200 rounded-2xl overflow-hidden hover:border-primary-300 transition-colors"
                         >
                           <button
                             onClick={() => toggleQuestion(catIndex, qIndex)}
@@ -286,7 +286,7 @@ export default function FAQPage() {
                               {faq.question}
                             </span>
                             <ChevronDown
-                              className={`flex-shrink-0 text-primary-600 transition-transform mt-1 ${
+                              className={`shrink-0 text-primary-600 transition-transform mt-1 ${
                                 isOpen ? "rotate-180" : ""
                               }`}
                               size={20}
@@ -333,7 +333,7 @@ export default function FAQPage() {
       {/* Still Have Questions CTA */}
       <section className="section-padding bg-steel-50 fade-in-section">
         <div className="container-custom">
-          <div className="bg-gradient-to-r from-primary-700 to-primary-900 rounded-3xl p-12 md:p-16 text-center text-white">
+          <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-12 md:p-16 text-center text-white">
             <h2 className="heading-lg mb-6">Still Have Questions?</h2>
             <p className="body-lg text-white/90 mb-8 max-w-2xl mx-auto">
               Our team is here to help! Reach out and we&apos;ll provide

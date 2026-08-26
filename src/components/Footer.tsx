@@ -97,7 +97,7 @@ export default function Footer() {
                 <span>info@pristiqbuild.com</span>
               </a>
               <div className="flex items-start gap-3 text-steel-400">
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-1" />
+                <MapPin className="w-4 h-4 shrink-0 mt-1" />
                 <span>
                   Murjanatu House, 1 Zambezi Crescent,
                   <br />

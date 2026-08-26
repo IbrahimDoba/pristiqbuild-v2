@@ -125,7 +125,7 @@ export default function ModularConstructionPage() {
           className="object-cover opacity-40"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-steel-900/90 to-steel-900/50" />
+        <div className="absolute inset-0 bg-linear-to-r from-steel-900/90 to-steel-900/50" />
 
         <div className="relative h-full flex items-center">
           <div className="container-custom">
@@ -206,7 +206,7 @@ export default function ModularConstructionPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-xl shadow-xl max-w-xs">
+              <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-2xl shadow-xl max-w-xs">
                 <div className="flex items-center gap-3 mb-2">
                   <TrendingUp className="w-8 h-8" />
                   <div>
@@ -221,7 +221,7 @@ export default function ModularConstructionPage() {
       </section>
 
       {/* Benefits Grid */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -237,9 +237,9 @@ export default function ModularConstructionPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
-                <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-primary-100 rounded-lg flex items-center justify-center mb-6">
                   <benefit.icon className="w-7 h-7 text-primary-600" />
                 </div>
                 <h3 className="text-xl font-bold text-steel-900 mb-3">
@@ -271,17 +271,17 @@ export default function ModularConstructionPage() {
               <div key={index} className="relative mb-12 last:mb-0">
                 {/* Connection Line */}
                 {index < process.length - 1 && (
-                  <div className="absolute left-8 top-20 w-0.5 h-full bg-gradient-to-b from-primary-300 to-transparent hidden md:block" />
+                  <div className="absolute left-8 top-20 w-0.5 h-full bg-linear-to-b from-primary-300 to-transparent hidden md:block" />
                 )}
 
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   {/* Step Number */}
-                  <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-2xl flex items-center justify-center text-2xl font-bold shadow-lg">
+                  <div className="shrink-0 w-16 h-16 bg-linear-to-br from-primary-600 to-primary-700 text-white rounded-lg flex items-center justify-center text-2xl font-bold shadow-lg">
                     {item.step}
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 bg-gradient-to-br from-gray-50 to-white p-8 rounded-xl border border-gray-200">
+                  <div className="flex-1 bg-linear-to-br from-gray-50 to-white p-8 rounded-2xl border border-gray-200">
                     <h3 className="text-2xl font-bold text-steel-900 mb-3">
                       {item.title}
                     </h3>
@@ -297,7 +297,7 @@ export default function ModularConstructionPage() {
       </section>
 
       {/* Applications */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -313,7 +313,7 @@ export default function ModularConstructionPage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-[box-shadow,transform] hover:-translate-y-2"
+                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-[box-shadow,transform] hover:-translate-y-2"
               >
                 <div className="relative h-64 overflow-hidden">
                   <SafeImage
@@ -322,7 +322,7 @@ export default function ModularConstructionPage() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <h3 className="text-2xl font-bold text-white mb-2">
                       {app.title}
@@ -341,7 +341,7 @@ export default function ModularConstructionPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
@@ -354,14 +354,14 @@ export default function ModularConstructionPage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <DollarSign className="w-6 h-6" />
                 Calculate Project Cost
               </Link>
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Users className="w-6 h-6" />
                 Schedule Consultation

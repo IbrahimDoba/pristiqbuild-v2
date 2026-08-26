@@ -196,7 +196,7 @@ const colorClasses = {
     bg: "bg-green-50",
     text: "text-green-700",
     border: "border-green-200",
-    gradient: "from-green-500 to-green-600",
+    gradient: "from-primary-600 to-primary-700",
     hover: "group-hover:bg-green-100",
   },
 };
@@ -217,7 +217,7 @@ export default function Services() {
       className="section-padding relative bg-steel-50 overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-50 to-transparent opacity-50" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-primary-50 to-transparent opacity-50" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary-100 rounded-full blur-3xl opacity-30" />
 
       <div className="container-custom relative z-10">
@@ -265,10 +265,10 @@ export default function Services() {
                 className="group"
               >
                 <div
-                  className={`p-6 bg-white rounded-xl border ${sColors.border} hover:shadow-lg transition-shadow duration-300 h-full`}
+                  className={`p-6 bg-white rounded-2xl border ${sColors.border} hover:shadow-lg transition-shadow duration-300 h-full`}
                 >
                   <div
-                    className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br ${sColors.gradient} mb-4`}
+                    className={`inline-flex items-center justify-center w-12 h-12 rounded-lg bg-linear-to-br ${sColors.gradient} mb-4`}
                   >
                     <service.icon className="w-6 h-6 text-white" />
                   </div>
@@ -302,16 +302,16 @@ export default function Services() {
                     onClick={() => setActiveService(index)}
                     onMouseEnter={() => setHoveredService(index)}
                     onMouseLeave={() => setHoveredService(null)}
-                    className={`group w-full text-left p-4 rounded-xl transition-colors duration-300 flex items-center gap-4 ${
+                    className={`group w-full text-left p-4 rounded-2xl transition-colors duration-300 flex items-center gap-4 ${
                       isActive
                         ? `${sColors.bg} ${sColors.border} border-2`
                         : "bg-white border border-transparent hover:border-steel-200"
                     }`}
                   >
                     <div
-                      className={`flex-shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors duration-300 ${
+                      className={`shrink-0 w-12 h-12 rounded-lg flex items-center justify-center transition-colors duration-300 ${
                         isActive || isHovered
-                          ? `bg-gradient-to-br ${sColors.gradient}`
+                          ? `bg-linear-to-br ${sColors.gradient}`
                           : "bg-steel-100"
                       }`}
                     >
@@ -336,7 +336,7 @@ export default function Services() {
                       </p>
                     </div>
                     <ChevronRight
-                      className={`w-5 h-5 flex-shrink-0 transition-colors duration-300 ${
+                      className={`w-5 h-5 shrink-0 transition-colors duration-300 ${
                         isActive
                           ? `${sColors.text} translate-x-1`
                           : "text-steel-400"
@@ -362,18 +362,18 @@ export default function Services() {
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
                   {/* Image Placeholder */}
                   <div
-                    className={`h-64 bg-gradient-to-br ${colors.gradient} relative overflow-hidden`}
+                    className={`h-64 bg-linear-to-br ${colors.gradient} relative overflow-hidden`}
                   >
                     <div className="absolute inset-0 flex items-center justify-center">
                       <currentService.icon className="w-32 h-32 text-white/20" />
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
                   </div>
 
                   {/* Content */}
                   <div className="p-8 -mt-16 relative z-10">
                     <div
-                      className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${colors.gradient} shadow-lg mb-6`}
+                      className={`inline-flex items-center justify-center w-16 h-16 rounded-lg bg-linear-to-br ${colors.gradient} shadow-lg mb-6`}
                     >
                       <currentService.icon className="w-8 h-8 text-white" />
                     </div>
@@ -393,7 +393,7 @@ export default function Services() {
                           className={`flex items-center gap-2 text-sm ${colors.text}`}
                         >
                           <div
-                            className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${colors.gradient}`}
+                            className={`w-1.5 h-1.5 rounded-full bg-linear-to-br ${colors.gradient}`}
                           />
                           {feature}
                         </div>
@@ -403,7 +403,7 @@ export default function Services() {
                     {/* CTA */}
                     <motion.a
                       href="#contact"
-                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r ${colors.gradient} text-white font-semibold transition-shadow hover:shadow-lg`}
+                      className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-linear-to-r ${colors.gradient} text-white font-semibold transition-shadow hover:shadow-lg`}
                       whileHover={{ scale: 1.02, x: 4 }}
                       whileTap={{ scale: 0.98 }}
                     >

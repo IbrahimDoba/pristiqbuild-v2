@@ -103,7 +103,7 @@ const mdxComponents = {
   ),
   pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
     <pre
-      className="bg-steel-900 text-steel-100 p-6 rounded-lg overflow-x-auto mb-8 shadow-lg text-sm leading-relaxed"
+      className="bg-steel-900 text-steel-100 p-6 rounded-2xl overflow-x-auto mb-8 shadow-lg text-sm leading-relaxed"
       {...props}
     />
   ),
@@ -149,7 +149,7 @@ const mdxComponents = {
         alt={alt || ''}
         width={800}
         height={500}
-        className="rounded-lg shadow-md w-full h-auto"
+        className="rounded-2xl shadow-md w-full h-auto"
       />
       {alt && (
         <figcaption className="text-center text-sm text-steel-500 mt-3 italic">

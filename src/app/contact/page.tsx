@@ -118,7 +118,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
           <div className="grid-pattern absolute inset-0" />
         </div>
@@ -142,7 +142,7 @@ export default function ContactPage() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
       {/* Contact Methods */}
@@ -156,7 +156,7 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white border-2 border-steel-100 rounded-xl p-6 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
+                className="bg-white border-2 border-steel-100 rounded-2xl p-6 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4 group-hover:bg-primary-700 group-hover:text-white transition-colors">
                   <method.icon size={28} />
@@ -233,9 +233,9 @@ export default function ContactPage() {
                   {error && (
                     <div
                       role="alert"
-                      className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800"
+                      className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
                     >
-                      <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                      <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                       <p className="text-sm">{error}</p>
                     </div>
                   )}
@@ -441,7 +441,7 @@ export default function ContactPage() {
               </div>
 
               {/* Location Info */}
-              <div className="bg-gradient-to-br from-primary-700 to-primary-900 rounded-2xl p-8 text-white">
+              <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-8 text-white">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
                     <Building2 className="text-white" size={24} />
@@ -454,7 +454,7 @@ export default function ContactPage() {
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-start gap-3">
-                    <MapPin className="flex-shrink-0 mt-1" size={20} />
+                    <MapPin className="shrink-0 mt-1" size={20} />
                     <div>
                       <p className="font-medium">Murjanatu House</p>
                       <p className="text-white/80 text-sm">
@@ -487,7 +487,7 @@ export default function ContactPage() {
                 <div className="space-y-3">
                   <a
                     href="tel:+2348130272706"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors group"
+                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
                   >
                     <Phone className="text-primary-700" size={20} />
                     <div className="flex-1">
@@ -502,7 +502,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     href="mailto:info@pristiqbuild.com"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors group"
+                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
                   >
                     <Mail className="text-primary-700" size={20} />
                     <div className="flex-1">
