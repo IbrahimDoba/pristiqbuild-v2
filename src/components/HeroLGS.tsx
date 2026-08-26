@@ -93,7 +93,7 @@ export default function HeroLGS() {
 
       {/* Text Content - Positioned Right */}
       <div className="hero-text-content relative z-20 container-custom px-4 py-20">
-        <div className="max-w-3xl ml-auto">
+        <div className="max-w-4xl ml-auto">
           {/* Eyebrow Badge */}
           <div className="hero-eyebrow inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 mb-6 border border-white/20">
             <Sparkles className="w-4 h-4 text-secondary-400" />
@@ -103,17 +103,15 @@ export default function HeroLGS() {
           </div>
 
           {/* Main Title */}
-          <h1 className="hero-title text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
+          <h1 className="hero-title text-[2.5rem] leading-[1.06] sm:text-5xl md:text-[3.25rem] lg:text-[3.6rem] font-display font-bold text-white mb-6 text-balance">
             Building Nigeria&apos;s Future,{" "}
             <span className="text-gradient-gold">One Module</span> at a Time
           </h1>
 
           {/* Description */}
           <p className="hero-description text-xl md:text-2xl text-white/90 leading-relaxed mb-8">
-            Leading the way in high-tech modular construction. We deliver
-            precision, sustainability, and cutting-edge technology using light
-            gauge steel framing. Transforming the construction industry with
-            innovative solutions that are faster, stronger, and smarter.
+            Precision modular construction in light gauge steel. Faster to
+            build, engineered to last, and made for Nigerian conditions.
           </p>
 
           {/* Primary conversion path.

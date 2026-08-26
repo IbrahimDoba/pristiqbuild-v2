@@ -151,7 +151,7 @@ export default function CoreValues() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <div className="section-header text-center max-w-4xl mx-auto mb-20">
+        <div className="section-header max-w-3xl mb-16">
           <h2 className="heading-xl text-steel-900 mb-6">
             What Sets{" "}
             <span className="text-gradient-gold">PristiqBuild</span> Apart

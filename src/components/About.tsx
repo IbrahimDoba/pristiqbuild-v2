@@ -91,7 +91,7 @@ export default function About() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="max-w-3xl mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -300,35 +300,14 @@ export default function About() {
           </div>
         </div>
 
-        {/* Awards & Recognition Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="text-center"
-        >
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-steel-200/50 border border-steel-100">
-            <h4 className="heading-sm text-steel-900 mb-4">
-              Awards & Certifications
-            </h4>
-            <p className="text-steel-600 mb-6">
-              Recognized for excellence in modular construction and sustainable
-              building practices.
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 items-center">
-              {[
-                "ISO 9001 Certified",
-                "Green Building Council",
-                "Construction Excellence Award",
-              ].map((award, i) => (
-                <div key={i} className="flex items-center gap-2 text-steel-500">
-                  <Award className="w-5 h-5 text-secondary-500" />
-                  <span className="font-medium">{award}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        {/* The awards block that sat here was marked a placeholder in the
+            source and asserted ISO 9001 certification, Green Building
+            Council membership and a Construction Excellence Award. None of
+            those are substantiated anywhere in this codebase, and an
+            unverified certification claim is the same class of problem as
+            the invented review rating removed from the structured data.
+            Restore it when the certificates exist, with issuing body and
+            date. */}
       </div>
     </section>
   );

@@ -6,110 +6,70 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Calendar, Maximize2 } from "lucide-react";
+import { MapPin, ArrowUpRight } from "lucide-react";
+
+/**
+ * One project carries the section, four support it.
+ *
+ * Previously six equal cards in a 3x2 grid, which gave a flagship estate the
+ * same weight as a roof replacement and said nothing about which work matters
+ * most. Two of those six also pointed at the same URL: "Opulence Heights" and
+ * "Opulence Heights Interiors" were one project split across two cards. The
+ * interiors photography now sits inside the featured project where it belongs,
+ * so every card leads somewhere different.
+ */
+const featured = {
+  slug: "opulence-heights",
+  title: "Opulence Heights",
+  category: "Smart Living Estate",
+  location: "Dawaki Hillside, Abuja",
+  description:
+    "Nigeria's first smart steel residential estate. Solar power with battery storage, app-controlled home automation, and a precision-engineered steel frame guaranteed for over fifty years.",
+  stats: [
+    { value: "18", label: "Villas" },
+    { value: "48kWh", label: "Battery per villa" },
+    { value: "50+", label: "Year frame guarantee" },
+  ],
+  cover: "/dawaki estate/1.png",
+  gallery: [
+    "/dawaki estate/PRISTIQ ESTATE_4 - Photo.png",
+    "/dawaki estate/PRISTIQ ESTATE_7 - Photo.png",
+    "/dawaki estate/2.png",
+  ],
+};
 
 const projects = [
   {
-    id: 1,
-    slug: "opulence-heights",
-    title: "Opulence Heights",
-    category: "Smart Living Estate",
-    location: "Dawaki Hillside, Abuja",
-    year: "2024",
-    size: "18 Villas",
-    description:
-      "Nigeria's first smart steel residential estate featuring solar power, home automation, and precision engineered steel frame construction.",
-    images: [
-      "/dawaki estate/1.png",
-      "/dawaki estate/2.png",
-      "/dawaki estate/7.png",
-    ],
-    featured: true,
-  },
-  {
-    id: 2,
     slug: "maitama-luxury-mansion",
     title: "Maitama Luxury Mansion",
     category: "Residential Roofing",
     location: "Colorado Street, Maitama",
-    year: "2024",
-    size: "288 sqm",
-    description:
-      "Precision engineered LGS roofing for a luxury mansion, completed in just 4 days with 60% faster installation than timber.",
-    images: [
-      "/maitama/dji_fly_20250305_140920_676_1741180573389_photo.jpg",
-      "/maitama/WhatsApp Image 2025-09-14 at 16.28.03_af538643.jpg",
-      "/maitama/WhatsApp Image 2025-09-14 at 16.28.32_5ae83e7e.jpg",
-    ],
-    featured: true,
+    year: "2025",
+    image: "/maitama/dji_fly_20250305_140920_676_1741180573389_photo.jpg",
   },
   {
-    id: 3,
     slug: "akure-lgs-roofing",
     title: "Akure Castle Residence",
     category: "Large Scale Roofing",
     location: "Akure, Ondo State",
     year: "2024",
-    size: "1,080 sqm",
-    description:
-      "One of our largest roofing projects featuring over 1,080 sqm of precision steel framework with 75% waste reduction.",
-    images: [
-      "/osun/osun1.jpg",
-      "/osun/osun2.jpg",
-      "/osun/osun3.jpg",
-    ],
-    featured: true,
+    image: "/LGS/1752987831787.jpeg",
   },
   {
-    id: 4,
     slug: "breeze-point-estate",
     title: "Breeze Point Estate",
     category: "Residential Development",
     location: "F01 Kubwa, Abuja",
     year: "2024",
-    size: "5 Units",
-    description:
-      "Exclusive luxury terrace homes with LGS roofing, smart home infrastructure, and premium finishes in Kubwa's F01 district.",
-    images: [
-      "/LGS/construction.jpg",
-      "/LGS/lgs4.jpeg",
-      "/LGS/lgs5.jpeg",
-    ],
-    featured: false,
+    image: "/breezepoint/breeze1.jpg",
   },
   {
-    id: 5,
     slug: "aso-grove-roofing",
-    title: "Aso Grove Roof Transformation",
+    title: "Aso Grove Roof",
     category: "Roof Replacement",
     location: "Aso Grove Estate, Abuja",
-    year: "2024",
-    size: "280 sqm",
-    description:
-      "Complete timber to LGS roof conversion in just 72 hours with advanced polyurethane waterproofing.",
-    images: [
-      "/aso/aso1.JPG",
-      "/aso/aso2.JPG",
-      "/aso/aso3.JPG",
-    ],
-    featured: false,
-  },
-  {
-    id: 6,
-    slug: "opulence-heights",
-    title: "Opulence Heights Interiors",
-    category: "Smart Living",
-    location: "Dawaki Hillside, Abuja",
-    year: "2024",
-    size: "Premium",
-    description:
-      "Designer interiors featuring smart home controls, double glazed windows, and thermal insulation for modern living.",
-    images: [
-      "/dawaki estate/PRISTIQ ESTATE_4 - Photo.png",
-      "/dawaki estate/PRISTIQ ESTATE_7 - Photo.png",
-      "/dawaki estate/PRISTIQ ESTATE_11 - Photo (1).png",
-    ],
-    featured: false,
+    year: "2025",
+    image: "/aso/aso1.JPG",
   },
 ];
 
@@ -118,162 +78,147 @@ export default function Projects() {
 
   useGSAP(
     () => {
-      // Set initial states
-      gsap.set(".projects-header", { opacity: 0, y: 50 });
-      gsap.set(".project-card", { opacity: 0, y: 80, scale: 0.9 });
+      // Entrance only. Reduced motion is handled globally in lib/gsap/config.
+      gsap.set(".proj-feature", { opacity: 0, y: 40 });
+      gsap.set(".proj-card", { opacity: 0, y: 30 });
 
-      // Header animation
-      gsap.to(".projects-header", {
+      gsap.to(".proj-feature", {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 0.7,
         ease: EASINGS.expo,
-        scrollTrigger: {
-          trigger: ".projects-header",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
+        scrollTrigger: { trigger: ".proj-feature", start: "top 85%" },
       });
 
-      // Project cards stagger animation
-      gsap.to(".project-card", {
+      gsap.to(".proj-card", {
         opacity: 1,
         y: 0,
-        scale: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: EASINGS.back,
-        scrollTrigger: {
-          trigger: ".projects-grid",
-          start: "top 75%",
-          toggleActions: "play none none none",
-        },
+        duration: 0.5,
+        stagger: 0.08,
+        ease: EASINGS.expo,
+        scrollTrigger: { trigger: ".proj-grid", start: "top 88%" },
       });
     },
     { scope: containerRef }
   );
 
   return (
-    <section
-      id="projects"
-      ref={containerRef}
-      className="section-padding relative bg-white overflow-hidden"
-    >
-      <div className="container-custom relative z-10">
-        {/* Section Header */}
-        <div className="projects-header text-center max-w-3xl mx-auto mb-16">
-          <h2 className="heading-xl text-steel-900 mb-6">
-            Featured <span className="text-gradient-gold">Projects</span>
-          </h2>
-          <p className="text-xl text-steel-600 leading-relaxed">
-            Explore our portfolio of completed projects showcasing the
-            versatility and quality of modular construction across Nigeria.
-          </p>
+    <section id="projects" ref={containerRef} className="section-padding bg-white">
+      <div className="container-custom">
+        {/* Left-aligned, with the secondary link on the heading's baseline. */}
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <h2 className="heading-lg text-steel-900 mb-4">
+              Work we have <span className="text-gradient">delivered</span>
+            </h2>
+            <p className="body-lg text-steel-600">
+              Estates, mansions and roof replacements across Abuja, Ondo and
+              beyond. Every one of them steel framed.
+            </p>
+          </div>
+          <Link
+            href="/case-studies"
+            className="inline-flex items-center gap-2 text-primary-700 font-semibold hover:text-primary-800 transition-colors shrink-0"
+          >
+            All case studies
+            <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
         </div>
 
-        {/* Projects Grid */}
-        <div className="projects-grid grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className="project-card group"
-            >
-              <div className="relative h-full bg-white rounded-2xl overflow-hidden shadow-xl border border-steel-100 transition-[color,background-color,border-color,box-shadow,transform] duration-700 hover:shadow-2xl hover:border-primary-300 hover:-translate-y-2">
-                {/* Image Container */}
-                <div className="relative overflow-hidden h-72">
+        {/* Featured: asymmetric split, deliberately not the card shape below. */}
+        <Link
+          href={`/projects/${featured.slug}`}
+          className="proj-feature group grid lg:grid-cols-12 rounded-2xl overflow-hidden border border-steel-100 bg-steel-950 text-white mb-6"
+        >
+          <div className="relative lg:col-span-7 aspect-[16/10] lg:aspect-auto lg:min-h-[420px] overflow-hidden">
+            <Image
+              src={featured.cover}
+              alt={featured.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 58vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+            />
+          </div>
+
+          <div className="lg:col-span-5 p-8 lg:p-10 flex flex-col justify-center">
+            <span className="text-xs uppercase tracking-wider text-secondary-400 font-semibold mb-3">
+              {featured.category}
+            </span>
+            <h3 className="font-display font-bold text-3xl lg:text-4xl mb-4 leading-tight">
+              {featured.title}
+            </h3>
+            <p className="text-white/70 leading-relaxed mb-7">
+              {featured.description}
+            </p>
+
+            <dl className="grid grid-cols-3 gap-4 mb-8 m-0">
+              {featured.stats.map((s) => (
+                <div key={s.label}>
+                  <dt className="font-display font-bold text-2xl tabular leading-none mb-1">
+                    {s.value}
+                  </dt>
+                  <dd className="text-xs text-white/50 m-0 leading-snug">
+                    {s.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+
+            <div className="flex items-center gap-3">
+              {featured.gallery.map((src) => (
+                <div
+                  key={src}
+                  className="relative w-16 h-12 rounded-lg overflow-hidden border border-white/15 shrink-0"
+                >
+                  <Image src={src} alt="" fill sizes="64px" className="object-cover" />
+                </div>
+              ))}
+              <span className="inline-flex items-center gap-1.5 text-sm font-semibold ml-auto group-hover:text-secondary-400 transition-colors">
+                View project
+                <ArrowUpRight
+                  className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </span>
+            </div>
+          </div>
+        </Link>
+
+        {/* Supporting row: smaller and denser, a different shape from the feature. */}
+        <ul className="proj-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none p-0 m-0">
+          {projects.map((project) => (
+            <li key={project.slug} className="proj-card">
+              <Link
+                href={`/projects/${project.slug}`}
+                className="group flex h-full flex-col rounded-2xl overflow-hidden border border-steel-100 bg-white transition-[box-shadow,transform] duration-300 hover:shadow-xl hover:-translate-y-1"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-steel-100">
                   <Image
-                    src={project.images[0]}
+                    src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-
-                  {/* Category Badge */}
-                  <div className="absolute top-6 left-6">
-                    <span className="px-4 py-2 bg-white/95 backdrop-blur-sm rounded-full text-xs font-bold text-primary-700 capitalize shadow-lg">
-                      {project.category}
-                    </span>
-                  </div>
-
-                  {/* Featured Badge */}
-                  {project.featured && (
-                    <div className="absolute top-6 right-6">
-                      <span className="px-4 py-2 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-full text-xs font-bold text-white shadow-lg">
-                        ⭐ Featured
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Bottom Info Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-2">
-                      {project.title}
-                    </h3>
-                    <div className="flex flex-wrap gap-4 text-sm text-white/90">
-                      <div className="flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4" />
-                        <span>{project.location}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Calendar className="w-4 h-4" />
-                        <span>{project.year}</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Maximize2 className="w-4 h-4" />
-                        <span>{project.size}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Hover Overlay with Button */}
-                  <div className="absolute inset-0 bg-primary-900/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <Link
-                      href={`/projects/${project.slug}`}
-                      className="px-8 py-4 bg-white text-primary-700 rounded-2xl font-bold text-lg shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 hover:bg-secondary-500 hover:text-white"
-                    >
-                      View Details
-                    </Link>
-                  </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <p className="text-steel-600 leading-relaxed mb-4">
-                    {project.description}
+                <div className="flex flex-1 flex-col p-5">
+                  <span className="text-xs uppercase tracking-wider text-primary-700 font-semibold mb-2">
+                    {project.category}
+                  </span>
+                  <h3 className="font-display font-semibold text-steel-900 leading-snug mb-3 group-hover:text-primary-700 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="mt-auto inline-flex items-center gap-1.5 text-xs text-steel-500">
+                    <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                    {project.location}
+                    <span className="ml-auto tabular">{project.year}</span>
                   </p>
-
-                  {/* Image Gallery Preview */}
-                  <div className="grid grid-cols-3 gap-2">
-                    {project.images.slice(1, 3).map((img, i) => (
-                      <div
-                        key={i}
-                        className="relative aspect-video rounded-2xl overflow-hidden border-2 border-steel-100 group/thumb"
-                      >
-                        <Image
-                          src={img}
-                          alt={`${project.title} view ${i + 2}`}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover/thumb:scale-110"
-                        />
-                      </div>
-                    ))}
-                    <Link
-                      href={`/projects/${project.slug}`}
-                      className="relative aspect-video rounded-2xl overflow-hidden border-2 border-primary-200 bg-linear-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white font-bold text-sm hover:from-primary-700 hover:to-secondary-700 transition-colors"
-                    >
-                      +More
-                    </Link>
-                  </div>
                 </div>
-
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-linear-to-br from-primary-400/30 to-secondary-400/30 rounded-2xl opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-40 -z-10" />
-              </div>
-            </div>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
