@@ -10,7 +10,8 @@
     "optimize-images": "node scripts/optimize-images.mjs",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "generate-assets": "node --env-file=.env scripts/generate-assets.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

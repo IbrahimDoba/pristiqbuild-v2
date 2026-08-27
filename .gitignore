@@ -42,3 +42,6 @@ next-env.d.ts
 
 # prisma
 /src/generated
+
+# generated imagery (regenerate with `pnpm generate-assets`)
+/public/generated/blog
