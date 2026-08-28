@@ -46,7 +46,7 @@ export function blogPostingSchema(post: BlogPost) {
       ...ORG,
       logo: {
         "@type": "ImageObject",
-        url: absolute("/optimized/Pristiq Build blacktext.webp"),
+        url: absolute("/logo-dark.png"),
       },
     },
     articleSection: post.category,

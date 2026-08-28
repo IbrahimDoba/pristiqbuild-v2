@@ -45,3 +45,6 @@ next-env.d.ts
 
 # generated imagery (regenerate with `pnpm generate-assets`)
 /public/generated/blog
+
+# Derived from public/ by `pnpm optimize-images`. Regenerate, do not commit.
+/public/optimized

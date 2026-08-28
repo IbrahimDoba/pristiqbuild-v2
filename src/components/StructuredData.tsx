@@ -17,7 +17,7 @@ export default function StructuredData() {
     name: 'PristiqBuild',
     legalName: 'PristiqBuild Nigeria Limited',
     url: 'https://www.pristiqbuild.com',
-    logo: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+    logo: 'https://www.pristiqbuild.com/logo-dark.png',
     foundingDate: '2020',
     description:
       "Building Nigeria's future, one module at a time. PristiqBuild delivers precision, sustainability, and cutting-edge technology in modular construction using light steel gauge framing.",
@@ -87,7 +87,7 @@ export default function StructuredData() {
     '@type': 'LocalBusiness',
     '@id': 'https://www.pristiqbuild.com/#business',
     name: 'PristiqBuild',
-    image: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+    image: 'https://www.pristiqbuild.com/logo-dark.png',
     telephone: '+234-813-027-2706',
     email: 'info@pristiqbuild.com',
     address: {
@@ -131,7 +131,7 @@ export default function StructuredData() {
       name: 'PristiqBuild',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+        url: 'https://www.pristiqbuild.com/logo-dark.png',
       },
     },
     potentialAction: {

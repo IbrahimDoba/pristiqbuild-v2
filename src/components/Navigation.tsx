@@ -170,7 +170,7 @@ export default function Navigation() {
               >
                 <div className="relative h-12 w-40">
                   <Image
-                    src="/optimized/Pristiq Build blacktext.webp"
+                    src="/logo-dark.png"
                     alt="PristiqBuild Logo"
                     fill
                     className="object-contain"

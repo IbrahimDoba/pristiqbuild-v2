@@ -66,7 +66,7 @@ export default function Footer() {
             <div className="mb-6">
               <div className="relative h-12 w-48">
                 <Image
-                  src="/optimized/Pristiq Build whiteText.webp"
+                  src="/logo-light.png"
                   alt="PristiqBuild Logo"
                   fill
                   className="object-contain object-left"
