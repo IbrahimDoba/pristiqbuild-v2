@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -116,6 +118,21 @@ const applications = [
 export default function ModularConstructionPage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "Modular Construction",
+          description: "Discover PristiqBuild's modular construction services. Faster, more efficient, and sustainable building solutions using Light Gauge Steel technology in Nigeria.",
+          path: "/services/modular-construction",
+          serviceType: "Modular building construction",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Modular Construction", path: "/services/modular-construction" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900">
         <SafeImage

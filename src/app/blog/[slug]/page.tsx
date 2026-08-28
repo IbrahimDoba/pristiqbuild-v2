@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPostBySlug, getAllSlugs, getAllPostSummaries } from '@/lib/mdx';
 import { relatedPosts } from '@/lib/blog-query';
+import JsonLd from '@/components/seo/JsonLd';
+import { blogPostingSchema, breadcrumbSchema } from '@/lib/seo/schema';
 import { Calendar, Clock, User, ArrowLeft, Tag } from 'lucide-react';
 import SafeImage from '@/components/SafeImage';
 import ShareButton from '@/components/ShareButton';
@@ -67,6 +69,15 @@ export default async function BlogPost({
 
   return (
     <article className="min-h-screen bg-white">
+      <JsonLd id="article-schema" data={blogPostingSchema(post)} />
+      <JsonLd
+        id="article-breadcrumb"
+        data={breadcrumbSchema([
+          { name: 'Blog', path: '/blog' },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
+      />
+
       {/* Back Buttons */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

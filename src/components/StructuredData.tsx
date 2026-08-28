@@ -1,4 +1,14 @@
-import Script from 'next/script';
+import JsonLd from '@/components/seo/JsonLd';
+
+/*
+ * These three used to render through next/script, which defaults to the
+ * afterInteractive strategy and therefore injects client-side. The result was
+ * that none of this markup existed in the served HTML: verified by fetching the
+ * homepage and finding zero application/ld+json script tags, while /faq (using
+ * the plain-script JsonLd component) emitted two.
+ *
+ * Structured data has to be in the initial response. Switched to JsonLd.
+ */
 
 export default function StructuredData() {
   const organizationData = {
@@ -133,21 +143,9 @@ export default function StructuredData() {
 
   return (
     <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
-      />
-      <Script
-        id="local-business-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessData) }}
-      />
-      <Script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
-      />
+      <JsonLd id="organization-schema" data={organizationData} />
+      <JsonLd id="local-business-schema" data={localBusinessData} />
+      <JsonLd id="website-schema" data={websiteData} />
     </>
   );
 }

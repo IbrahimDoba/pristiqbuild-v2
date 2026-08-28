@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -152,6 +154,21 @@ const integration = [
 export default function SmartBuildingPage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "Smart Building Systems",
+          description: "Intelligent building solutions in Nigeria. Integrate smart home technology, energy efficiency, IoT automation, and security into your construction project.",
+          path: "/services/smart-building",
+          serviceType: "Smart building integration",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Smart Building Systems", path: "/services/smart-building" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900 overflow-hidden">
         <SafeImage

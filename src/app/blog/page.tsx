@@ -11,6 +11,8 @@ import {
 import SafeImage from "@/components/SafeImage";
 import BlogFilters from "@/components/blog/BlogFilters";
 import BlogPagination from "@/components/blog/BlogPagination";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "Blog - Light Gauge Steel Construction Insights | PristiqBuild",
@@ -48,6 +50,10 @@ export default async function BlogPage({
 
   return (
     <div className="min-h-screen bg-white">
+      <JsonLd
+        id="blog-breadcrumb"
+        data={breadcrumbSchema([{ name: "Blog", path: "/blog" }])}
+      />
       <section className="relative bg-linear-to-r from-primary-700 to-primary-800 text-white py-16 md:py-20">
         <div className="container-custom">
           <div className="max-w-3xl">

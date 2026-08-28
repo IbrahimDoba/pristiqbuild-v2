@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title:
@@ -35,5 +37,16 @@ export default function OpulenceHeightsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd
+        id="project-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Projects", path: "/#projects" },
+          { name: "Opulence Heights", path: "/projects/opulence-heights" },
+        ])}
+      />
+      {children}
+    </>
+  );
 }

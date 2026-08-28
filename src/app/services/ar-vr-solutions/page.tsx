@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -156,6 +158,21 @@ const process = [
 export default function ARVRSolutionsPage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "AR and VR Construction Visualisation",
+          description: "Experience your project before it's built. Immersive AR/VR visualization technology for construction planning, design reviews, and client presentations in Nigeria.",
+          path: "/services/ar-vr-solutions",
+          serviceType: "Construction visualisation",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "AR and VR Construction Visualisation", path: "/services/ar-vr-solutions" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900 overflow-hidden">
         <SafeImage

@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title:
@@ -33,5 +35,16 @@ export default function MaitamaLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd
+        id="project-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Projects", path: "/#projects" },
+          { name: "Maitama Luxury Mansion", path: "/projects/maitama-luxury-mansion" },
+        ])}
+      />
+      {children}
+    </>
+  );
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -135,6 +137,21 @@ const comparisonData = [
 export default function LightSteelGaugePage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "Light Gauge Steel Construction",
+          description: "Expert Light Gauge Steel (LGS) construction services in Nigeria. Strong, durable, and cost-effective steel framing solutions for modern buildings.",
+          path: "/services/light-steel-gauge",
+          serviceType: "Light gauge steel framing",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Light Gauge Steel Construction", path: "/services/light-steel-gauge" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900">
         <SafeImage
