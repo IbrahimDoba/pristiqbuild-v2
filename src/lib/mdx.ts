@@ -31,6 +31,20 @@ export function getAllPosts(): BlogPost[] {
   });
 }
 
+/**
+ * Frontmatter only, without the article bodies.
+ *
+ * The listing page never renders the body, and carrying 100 full articles
+ * through it just to show 12 cards is wasted memory at build time.
+ */
+export function getAllPostSummaries(): Omit<BlogPost, 'content'>[] {
+  return getAllPosts().map((post) => {
+    const summary: Omit<BlogPost, 'content'> & { content?: string } = { ...post };
+    delete summary.content;
+    return summary;
+  });
+}
+
 export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.mdx`);

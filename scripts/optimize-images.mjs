@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +10,7 @@ const publicDir = path.join(__dirname, '../public');
 const optimizedDir = path.join(publicDir, 'optimized');
 
 // Image quality settings
-const QUALITY_SETTINGS = {
+export const QUALITY_SETTINGS = {
   jpeg: { quality: 85, progressive: true },
   webp: { quality: 85, effort: 6 },
   png: { quality: 85, compressionLevel: 9 },
@@ -153,5 +153,11 @@ async function optimizeAllImages() {
   console.log('💡 Update your image imports to use the optimized versions!');
 }
 
-// Run optimization
-optimizeAllImages().catch(console.error);
+// Run only when invoked directly. Without this guard, importing the shared
+// settings from another script would kick off a full public/ sweep.
+const invokedDirectly =
+  process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (invokedDirectly) {
+  optimizeAllImages().catch(console.error);
+}

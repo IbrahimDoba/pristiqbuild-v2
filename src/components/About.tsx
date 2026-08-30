@@ -91,15 +91,7 @@ export default function About() {
 
       <div className="container-custom relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="eyebrow inline-block mb-4"
-          >
-            About Us
-          </motion.span>
+        <div className="max-w-3xl mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -133,7 +125,7 @@ export default function About() {
               className="bg-white rounded-2xl p-8 shadow-lg shadow-steel-200/50 border border-steel-100"
             >
               <div className="flex items-start gap-5">
-                <div className="w-14 h-14 rounded-xl bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
+                <div className="w-14 h-14 rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shrink-0">
                   <value.icon className="w-7 h-7 text-white" />
                 </div>
                 <div>
@@ -152,7 +144,7 @@ export default function About() {
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-linear-to-br from-primary-700 via-primary-800 to-primary-900 rounded-3xl p-8 md:p-12 mb-20 relative overflow-hidden"
+          className="bg-linear-to-br from-primary-700 via-primary-800 to-primary-900 rounded-2xl p-8 md:p-12 mb-20 relative overflow-hidden"
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -172,7 +164,7 @@ export default function About() {
                 <p>
                   Founded with a vision to transform Nigeria&apos;s construction
                   landscape, PristiqBuild emerged from a recognition of the
-                  immense housing deficit facing our nation — a challenge
+                  immense housing deficit facing our nation: a challenge
                   requiring innovative solutions.
                 </p>
                 <p>
@@ -197,7 +189,7 @@ export default function About() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: 0.6 + index * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center border border-white/10"
+                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10"
                 >
                   <div className="text-3xl md:text-4xl font-display font-bold text-white mb-1">
                     {stat.value}
@@ -238,7 +230,7 @@ export default function About() {
                 }}
                 className="group"
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg shadow-steel-200/50 border border-steel-100 transition-all duration-500 hover:shadow-xl hover:border-primary-200">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg shadow-steel-200/50 border border-steel-100 transition-[color,background-color,border-color,box-shadow] duration-500 hover:shadow-xl hover:border-primary-200">
                   {/* Avatar Image */}
                   <div className="relative h-96 bg-steel-100 overflow-hidden">
                     <img
@@ -308,35 +300,14 @@ export default function About() {
           </div>
         </div>
 
-        {/* Awards & Recognition Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="text-center"
-        >
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-steel-200/50 border border-steel-100">
-            <h4 className="heading-sm text-steel-900 mb-4">
-              Awards & Certifications
-            </h4>
-            <p className="text-steel-600 mb-6">
-              Recognized for excellence in modular construction and sustainable
-              building practices.
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 items-center">
-              {[
-                "ISO 9001 Certified",
-                "Green Building Council",
-                "Construction Excellence Award",
-              ].map((award, i) => (
-                <div key={i} className="flex items-center gap-2 text-steel-500">
-                  <Award className="w-5 h-5 text-secondary-500" />
-                  <span className="font-medium">{award}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        {/* The awards block that sat here was marked a placeholder in the
+            source and asserted ISO 9001 certification, Green Building
+            Council membership and a Construction Excellence Award. None of
+            those are substantiated anywhere in this codebase, and an
+            unverified certification claim is the same class of problem as
+            the invented review rating removed from the structured data.
+            Restore it when the certificates exist, with issuing body and
+            date. */}
       </div>
     </section>
   );

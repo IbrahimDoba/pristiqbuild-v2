@@ -63,12 +63,12 @@ export default function ProjectFeatures({
       <div className="container-custom">
         {(title || subtitle) && (
           <div className="features-header text-center mb-8 sm:mb-12">
-            {subtitle && (
-              <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-                {subtitle}
-              </span>
-            )}
             {title && <h2 className="heading-lg text-steel-900">{title}</h2>}
+            {subtitle && (
+              <p className="body-lg text-steel-600 mt-4 max-w-2xl mx-auto">
+                {subtitle}
+              </p>
+            )}
           </div>
         )}
 
@@ -84,22 +84,22 @@ export default function ProjectFeatures({
               key={index}
               className={`feature-item group ${
                 layout === "grid"
-                  ? "p-4 sm:p-6 bg-steel-50 rounded-xl sm:rounded-2xl border border-steel-100 hover:border-primary-200 hover:bg-white hover:shadow-lg transition-all duration-300"
-                  : "flex items-start gap-4 p-5 bg-steel-50 rounded-xl border border-steel-100"
+                  ? "p-4 sm:p-6 bg-steel-50 rounded-2xl sm:rounded-2xl border border-steel-100 hover:border-primary-200 hover:bg-white hover:shadow-lg transition-[color,background-color,border-color,box-shadow] duration-300"
+                  : "flex items-start gap-4 p-5 bg-steel-50 rounded-2xl border border-steel-100"
               }`}
             >
               {feature.icon ? (
                 <div
                   className={`${
-                    layout === "grid" ? "mb-3 sm:mb-4" : "flex-shrink-0"
+                    layout === "grid" ? "mb-3 sm:mb-4" : "shrink-0"
                   }`}
                 >
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary-600 to-primary-700 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-lg bg-linear-to-br from-primary-600 to-primary-700 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
                     <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                 </div>
               ) : (
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <CheckCircle2 className="w-6 h-6 text-primary-600" />
                 </div>
               )}

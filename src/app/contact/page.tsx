@@ -1,10 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap/config";
-import Image from "next/image";
 import {
   Phone,
   Mail,
@@ -15,7 +12,11 @@ import {
   Calendar,
   Building2,
   CheckCircle,
+  AlertCircle,
 } from "lucide-react";
+import { useLeadForm } from "@/lib/leads/use-lead-form";
+import HoneypotField from "@/components/forms/HoneypotField";
+import FieldError from "@/components/forms/FieldError";
 
 const contactMethods = [
   {
@@ -68,29 +69,12 @@ export default function ContactPage() {
     budget: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
+    useLeadForm();
 
-  useGSAP(
-    () => {
-      const sections = gsap.utils.toArray<HTMLElement>(".fade-in-section");
-      sections.forEach((section) => {
-        gsap.from(section, {
-          opacity: 0,
-          y: 60,
-          duration: 1,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        });
-      });
-    },
-    { scope: containerRef }
-  );
+  // The scrubbed fade that used to live here made every section drift in as
+  // the visitor scrolled. It communicated nothing, delayed the contact details
+  // people came for, and tied paint work to the scroll position. Removed.
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -105,17 +89,20 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const form = e.currentTarget as HTMLFormElement;
+    const website = new FormData(form).get("website");
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    const sent = await submit({
+      source: "QUOTE_FORM",
+      ...formData,
+      website: typeof website === "string" ? website : "",
+    });
 
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
+    // Clear the fields but leave the confirmation on screen. The previous
+    // build reset it after three seconds, which wiped the message before a
+    // visitor had finished reading it.
+    if (sent) {
       setFormData({
         name: "",
         email: "",
@@ -125,13 +112,13 @@ export default function ContactPage() {
         budget: "",
         message: "",
       });
-    }, 3000);
+    }
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
           <div className="grid-pattern absolute inset-0" />
         </div>
@@ -155,12 +142,15 @@ export default function ContactPage() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
       {/* Contact Methods */}
-      <section className="section-padding bg-white fade-in-section">
+      <section className="section-padding bg-white" aria-labelledby="contact-methods">
         <div className="container-custom">
+          <h2 id="contact-methods" className="sr-only">
+            Ways to reach us
+          </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactMethods.map((method, index) => (
               <motion.div
@@ -169,7 +159,7 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white border-2 border-steel-100 rounded-xl p-6 hover:border-primary-300 hover:shadow-lg transition-all group"
+                className="bg-white border-2 border-steel-100 rounded-2xl p-6 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4 group-hover:bg-primary-700 group-hover:text-white transition-colors">
                   <method.icon size={28} />
@@ -199,7 +189,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content - Form & Info */}
-      <section className="section-padding bg-steel-50 fade-in-section">
+      <section className="section-padding bg-steel-50">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -228,13 +218,31 @@ export default function ContactPage() {
                   <h3 className="heading-sm text-steel-900 mb-2">
                     Thank You!
                   </h3>
-                  <p className="text-steel-600">
+                  <p className="text-steel-600 mb-6">
                     We&apos;ve received your message and will get back to you
                     within 24 hours.
                   </p>
+                  <button
+                    onClick={reset}
+                    className="text-primary-700 font-medium hover:text-primary-800"
+                  >
+                    Send another message
+                  </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <HoneypotField />
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
+                    >
+                      <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
+
                   {/* Name */}
                   <div>
                     <label
@@ -251,8 +259,10 @@ export default function ContactPage() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                      placeholder="John Doe"
-                    />
+                      placeholder="Adaeze Okonkwo"
+                        autoComplete="name"
+                      />
+                      <FieldError name="name" errors={fieldErrors} />
                   </div>
 
                   {/* Email & Phone */}
@@ -272,8 +282,10 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                        placeholder="john@example.com"
+                        placeholder="adaeze@example.com"
+                        autoComplete="email" spellCheck={false} inputMode="email"
                       />
+                        <FieldError name="email" errors={fieldErrors} />
                     </div>
                     <div>
                       <label
@@ -291,7 +303,9 @@ export default function ContactPage() {
                         required
                         className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                         placeholder="+234 XXX XXX XXXX"
+                        autoComplete="tel" inputMode="tel"
                       />
+                        <FieldError name="phone" errors={fieldErrors} />
                     </div>
                   </div>
 
@@ -338,7 +352,8 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
                       placeholder="e.g., Abuja, Lagos, Port Harcourt"
-                    />
+                        autoComplete="address-level2"
+                      />
                   </div>
 
                   {/* Budget */}
@@ -381,7 +396,7 @@ export default function ContactPage() {
                       required
                       rows={5}
                       className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors resize-none"
-                      placeholder="Tell us about your project, timeline, and any specific requirements..."
+                      placeholder="Tell us about your project, timeline, and any specific requirements…"
                     />
                   </div>
 
@@ -433,7 +448,7 @@ export default function ContactPage() {
               </div>
 
               {/* Location Info */}
-              <div className="bg-gradient-to-br from-primary-700 to-primary-900 rounded-2xl p-8 text-white">
+              <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-8 text-white">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
                     <Building2 className="text-white" size={24} />
@@ -446,7 +461,7 @@ export default function ContactPage() {
                 </p>
                 <div className="space-y-3 mb-6">
                   <div className="flex items-start gap-3">
-                    <MapPin className="flex-shrink-0 mt-1" size={20} />
+                    <MapPin className="shrink-0 mt-1" size={20} />
                     <div>
                       <p className="font-medium">Murjanatu House</p>
                       <p className="text-white/80 text-sm">
@@ -479,7 +494,7 @@ export default function ContactPage() {
                 <div className="space-y-3">
                   <a
                     href="tel:+2348130272706"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors group"
+                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
                   >
                     <Phone className="text-primary-700" size={20} />
                     <div className="flex-1">
@@ -494,7 +509,7 @@ export default function ContactPage() {
                   </a>
                   <a
                     href="mailto:info@pristiqbuild.com"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors group"
+                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
                   >
                     <Mail className="text-primary-700" size={20} />
                     <div className="flex-1">

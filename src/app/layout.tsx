@@ -1,14 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
+import MotionProvider from "@/components/MotionProvider";
+import Analytics from "@/components/Analytics";
 
-const inter = Inter({
+// Body face. Reads better than Inter at small sizes on mid-range Android,
+// which is most of this audience, and its slightly humanist shapes give the
+// geometric display face something to contrast against.
+const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-plex-sans",
 });
 
 const spaceGrotesk = Space_Grotesk({
@@ -102,6 +108,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: "#1A5F7A",
+  // Tells the browser which form controls, scrollbars and system UI to
+  // render. The site is light-only today, so it says so explicitly rather
+  // than leaving the UA to guess.
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -112,19 +122,27 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        {/* next/font self-hosts the faces, so there is no font CDN to reach.
+            These cover the Google Maps embed on /contact, which otherwise
+            pays full DNS, TCP and TLS cost on first paint. */}
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" crossOrigin="" />
         <StructuredData />
+        <Analytics />
       </head>
       <body
-        className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className={`${plexSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <Navigation />
-        <main id="main-content" className="pt-20">
-          {children}
-        </main>
-        <Footer />
+        <MotionProvider>
+          <Navigation />
+          <main id="main-content" className="pt-20">
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
       </body>
     </html>
   );

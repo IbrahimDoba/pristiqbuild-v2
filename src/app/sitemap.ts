@@ -71,6 +71,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: new Date('2026-08-25'),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/terms-of-service`,
+      lastModified: new Date('2026-08-25'),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
     // Service pages
     {
       url: `${baseUrl}/services/modular-construction`,

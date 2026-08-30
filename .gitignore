@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# prisma
+/src/generated
+
+# generated imagery (regenerate with `pnpm generate-assets`)
+/public/generated/blog
+
+# Derived from public/ by `pnpm optimize-images`. Regenerate, do not commit.
+/public/optimized

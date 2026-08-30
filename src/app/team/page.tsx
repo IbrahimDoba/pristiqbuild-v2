@@ -137,7 +137,7 @@ export default function TeamPage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 opacity-10">
           <div className="grid-pattern absolute inset-0" />
         </div>
@@ -162,7 +162,7 @@ export default function TeamPage() {
           </motion.div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
       {/* Leadership Team */}
@@ -189,7 +189,7 @@ export default function TeamPage() {
                 viewport={{ once: true }}
                 className="group"
               >
-                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
                   {/* Image */}
                   <div className="relative h-80 overflow-hidden">
                     <Image
@@ -198,7 +198,7 @@ export default function TeamPage() {
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900/80 via-steel-900/20 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-steel-900/80 via-steel-900/20 to-transparent" />
 
                     {/* Social Links */}
                     <div className="absolute bottom-4 left-4 right-4 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -272,7 +272,7 @@ export default function TeamPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-shadow"
+                className="bg-white rounded-2xl p-8 shadow-md hover:shadow-xl transition-shadow"
               >
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4">
                   <dept.icon size={28} />
@@ -292,7 +292,6 @@ export default function TeamPage() {
       <section className="section-padding bg-white fade-in-section">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <span className="eyebrow mb-4 block">Team Culture</span>
             <h2 className="heading-lg text-steel-900 mb-6">
               What Unites Us
             </h2>
@@ -306,7 +305,7 @@ export default function TeamPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-gradient-to-br from-primary-50 to-white rounded-xl p-8 border border-primary-100"
+                className="bg-linear-to-br from-primary-50 to-white rounded-2xl p-8 border border-primary-100"
               >
                 <h3 className="heading-sm text-steel-900 mb-3">{value.title}</h3>
                 <p className="text-steel-600">{value.description}</p>

@@ -6,7 +6,12 @@
 - [x] **Sitemap** (`src/app/sitemap.ts`) - Auto-generates sitemap with all pages and blog posts
 - [x] **Robots.txt** (`src/app/robots.ts`) - Configured for search engine crawlers
 - [x] **Manifest** (`src/app/manifest.ts`) - PWA manifest for better mobile experience
-- [x] **Structured Data** (`src/components/StructuredData.tsx`) - JSON-LD for Organization, LocalBusiness, and Website
+- [x] **Structured Data** - JSON-LD for Organization, LocalBusiness, Website, BlogPosting (100 posts),
+      FAQPage, BreadcrumbList and Service. Builders in `src/lib/seo/schema.ts`, rendered by
+      `src/components/seo/JsonLd.tsx`.
+      Note: these three previously rendered through `next/script`, which defaults to
+      `afterInteractive` and injects client-side, so none of the markup was in the served
+      HTML. Fixed 2026-08-28; verify with `curl <url> | grep 'application/ld+json'`.
 - [x] **Environment Variables** (`.env.example`) - Template for configuration
 
 ### Metadata Improvements
@@ -128,5 +133,5 @@ Track these metrics monthly:
 
 ---
 
-**Last Updated:** $(date +%Y-%m-%d)
+**Last Updated:** 2026-08-28
 **Status:** Ready for deployment and post-launch optimization

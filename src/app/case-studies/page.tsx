@@ -45,7 +45,7 @@ const caseStudies = [
     ],
     description: "Breeze Point Estate showcases smart luxury living in Kubwa's F01 district. With LGS roofing technology, energy-efficient design, and smart home readiness, this project demonstrates PristiqBuild's commitment to innovation and quality.",
     testimonial: {
-      quote: "The combination of classic construction with modern LGS roofing technology gives us the best of both worlds—durability and innovation.",
+      quote: "The combination of classic construction with modern LGS roofing technology gives us the best of both worlds, durability and innovation.",
       author: "Estate Developer",
       title: "Breeze Point Developments"
     }
@@ -73,7 +73,7 @@ const caseStudies = [
       { label: "Villas", value: "18", icon: Home },
       { label: "Battery", value: "48kWh", icon: TrendingUp }
     ],
-    description: "Opulence Heights represents the pinnacle of modern luxury living—combining Light Gauge Steel construction with cutting-edge smart technology, renewable energy, and premium amenities on stunning hillside terrain.",
+    description: "Opulence Heights represents the pinnacle of modern luxury living, combining Light Gauge Steel construction with cutting-edge smart technology, renewable energy, and premium amenities on stunning hillside terrain.",
     testimonial: {
       quote: "Living in Opulence Heights feels like living in the future. The solar system, smart controls, and build quality exceeded all expectations.",
       author: "Villa Owner",
@@ -91,7 +91,7 @@ const caseStudies = [
     size: "288 sqm roof area",
     image: "/maitama/dji_fly_20250305_140920_676_1741180573389_photo.jpg",
     challenge: "Replace existing roof with precision LGS system in upscale Maitama neighborhood with minimal disruption.",
-    solution: "Custom-designed and factory-fabricated 13 LGS trusses with zinc-coated galvanized steel, assembled using precision screw and bolt connections—no welding required.",
+    solution: "Custom-designed and factory-fabricated 13 LGS trusses with zinc-coated galvanized steel, assembled using precision screw and bolt connections, no welding required.",
     results: [
       "Completed in just 4 days",
       "60% faster than traditional timber",
@@ -133,7 +133,7 @@ const caseStudies = [
       { label: "Type", value: "Large-scale", icon: Building2 },
       { label: "Climate", value: "Optimized", icon: TrendingUp }
     ],
-    description: "Akure Castle Residence demonstrates LGS technology's advantages for large-scale residential roofing—rapid installation, excellent thermal performance, and long-term durability in varying climate conditions.",
+    description: "Akure Castle Residence demonstrates LGS technology's advantages for large-scale residential roofing, rapid installation, excellent thermal performance, and long-term durability in varying climate conditions.",
     testimonial: {
       quote: "The LGS roofing system performs exceptionally well in our climate. No maintenance issues, stays cooler, and looks great.",
       author: "Property Owner",
@@ -150,7 +150,7 @@ const caseStudies = [
     duration: "72 hours",
     size: "280 sqm roof area",
     image: "/aso/aso1.JPG",
-    challenge: "Complete roof replacement with minimal disruption—remove old timber trusses and install modern LGS system in just 3 days.",
+    challenge: "Complete roof replacement with minimal disruption, remove old timber trusses and install modern LGS system in just 3 days.",
     solution: "Full removal of existing timber system and replacement with G550 galvanized steel trusses, plus advanced polyurethane waterproofing membrane.",
     results: [
       "Completed in just 72 hours",
@@ -163,7 +163,7 @@ const caseStudies = [
       { label: "Roof Area", value: "280 sqm", icon: Building2 },
       { label: "Steel Grade", value: "G550", icon: TrendingUp }
     ],
-    description: "Aso Grove showcases our rapid roof transformation capability—complete removal and replacement with premium G550 steel trusses and advanced waterproofing in just three days.",
+    description: "Aso Grove showcases our rapid roof transformation capability, complete removal and replacement with premium G550 steel trusses and advanced waterproofing in just three days.",
     testimonial: {
       quote: "I couldn't believe they completed the entire roof replacement in 3 days. The house is cooler now and I have zero worries about leaks.",
       author: "Homeowner",
@@ -178,7 +178,7 @@ export default function CaseStudiesPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-20">
+      <section className="relative bg-linear-to-r from-primary-600 to-primary-700 text-white py-20">
         <div className="absolute inset-0 opacity-10">
           <div
             className="absolute inset-0"
@@ -195,7 +195,7 @@ export default function CaseStudiesPage() {
               Case Studies
             </h1>
             <p className="text-xl md:text-2xl text-primary-100 leading-relaxed">
-              Real projects. Real results. See how we've transformed construction
+              Real projects. Real results. See how we&apos;ve transformed construction
               timelines and delivered exceptional buildings across Nigeria.
             </p>
           </div>
@@ -237,7 +237,7 @@ export default function CaseStudiesPage() {
               }`}
             >
               {/* Case Study Card */}
-              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-[color,background-color,border-color,box-shadow]">
                 {/* Image */}
                 <div className="relative h-96 md:h-[500px] overflow-hidden">
                   <SafeImage
@@ -246,7 +246,7 @@ export default function CaseStudiesPage() {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
 
                   {/* Overlay Content */}
                   <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
@@ -282,7 +282,7 @@ export default function CaseStudiesPage() {
                   <div className="grid md:grid-cols-3 gap-6 mb-10 pb-10 border-b border-gray-200">
                     {study.stats.map((stat, sIndex) => (
                       <div key={sIndex} className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
                           <stat.icon className="w-6 h-6 text-primary-600" />
                         </div>
                         <div>
@@ -318,7 +318,7 @@ export default function CaseStudiesPage() {
                     <div className="grid md:grid-cols-2 gap-4">
                       {study.results.map((result, rIndex) => (
                         <div key={rIndex} className="flex items-start gap-3">
-                          <CheckCircle className="w-6 h-6 text-primary-600 flex-shrink-0 mt-1" />
+                          <CheckCircle className="w-6 h-6 text-primary-600 shrink-0 mt-1" />
                           <span className="text-steel-700 leading-relaxed">{result}</span>
                         </div>
                       ))}
@@ -326,9 +326,9 @@ export default function CaseStudiesPage() {
                   </div>
 
                   {/* Testimonial */}
-                  <div className="bg-gradient-to-r from-primary-50 to-blue-50 p-8 rounded-xl border-l-4 border-primary-600 mb-8">
+                  <div className="bg-linear-to-r from-primary-50 to-primary-50 p-8 rounded-2xl border-l-4 border-primary-600 mb-8">
                     <p className="text-lg text-steel-800 italic mb-6 leading-relaxed">
-                      "{study.testimonial.quote}"
+                      &quot;{study.testimonial.quote}&quot;
                     </p>
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center">
@@ -344,7 +344,7 @@ export default function CaseStudiesPage() {
                   {/* View Full Project Button */}
                   <Link
                     href={`/projects/${study.slug}`}
-                    className="flex items-center justify-center gap-3 w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-bold rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all"
+                    className="flex items-center justify-center gap-3 w-full py-4 bg-linear-to-r from-primary-600 to-primary-700 text-white font-bold rounded-lg hover:from-primary-700 hover:to-primary-800 transition-[color,background-color,border-color,box-shadow]"
                   >
                     View Full Project Details
                     <ArrowRight className="w-5 h-5" />
@@ -357,27 +357,27 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Ready to Write Your Success Story?
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Let's discuss how we can deliver the same exceptional results for your project.
+              Let&apos;s discuss how we can deliver the same exceptional results for your project.
               Get in touch for a consultation and quote.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Briefcase className="w-6 h-6" />
                 Start Your Project
               </Link>
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Get a Quote
                 <ArrowRight className="w-6 h-6" />

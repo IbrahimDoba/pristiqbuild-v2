@@ -1,4 +1,14 @@
-import Script from 'next/script';
+import JsonLd from '@/components/seo/JsonLd';
+
+/*
+ * These three used to render through next/script, which defaults to the
+ * afterInteractive strategy and therefore injects client-side. The result was
+ * that none of this markup existed in the served HTML: verified by fetching the
+ * homepage and finding zero application/ld+json script tags, while /faq (using
+ * the plain-script JsonLd component) emitted two.
+ *
+ * Structured data has to be in the initial response. Switched to JsonLd.
+ */
 
 export default function StructuredData() {
   const organizationData = {
@@ -7,7 +17,7 @@ export default function StructuredData() {
     name: 'PristiqBuild',
     legalName: 'PristiqBuild Nigeria Limited',
     url: 'https://www.pristiqbuild.com',
-    logo: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+    logo: 'https://www.pristiqbuild.com/logo-dark.png',
     foundingDate: '2020',
     description:
       "Building Nigeria's future, one module at a time. PristiqBuild delivers precision, sustainability, and cutting-edge technology in modular construction using light steel gauge framing.",
@@ -77,7 +87,7 @@ export default function StructuredData() {
     '@type': 'LocalBusiness',
     '@id': 'https://www.pristiqbuild.com/#business',
     name: 'PristiqBuild',
-    image: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+    image: 'https://www.pristiqbuild.com/logo-dark.png',
     telephone: '+234-813-027-2706',
     email: 'info@pristiqbuild.com',
     address: {
@@ -103,13 +113,10 @@ export default function StructuredData() {
         closes: '18:00',
       },
     ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '150',
-      bestRating: '5',
-      worstRating: '1',
-    },
+    // No aggregateRating here on purpose. The previous build published
+    // "4.9 from 150 reviews" with no review system anywhere on the site.
+    // Unverifiable review markup risks a manual action, and misrepresents
+    // ratings to anyone reading the search result.
   };
 
   const websiteData = {
@@ -124,7 +131,7 @@ export default function StructuredData() {
       name: 'PristiqBuild',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.pristiqbuild.com/optimized/Pristiq Build blacktext.webp',
+        url: 'https://www.pristiqbuild.com/logo-dark.png',
       },
     },
     potentialAction: {
@@ -136,21 +143,9 @@ export default function StructuredData() {
 
   return (
     <>
-      <Script
-        id="organization-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
-      />
-      <Script
-        id="local-business-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessData) }}
-      />
-      <Script
-        id="website-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
-      />
+      <JsonLd id="organization-schema" data={organizationData} />
+      <JsonLd id="local-business-schema" data={localBusinessData} />
+      <JsonLd id="website-schema" data={websiteData} />
     </>
   );
 }

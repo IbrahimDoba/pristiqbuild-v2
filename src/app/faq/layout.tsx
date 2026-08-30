@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { faqPageSchema, breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title: "FAQs | PristiqBuild - Modular Construction Questions Answered",
@@ -11,5 +13,14 @@ export default function FAQLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd id="faq-schema" data={faqPageSchema()} />
+      <JsonLd
+        id="faq-breadcrumb"
+        data={breadcrumbSchema([{ name: 'FAQ', path: '/faq' }])}
+      />
+      {children}
+    </>
+  );
 }

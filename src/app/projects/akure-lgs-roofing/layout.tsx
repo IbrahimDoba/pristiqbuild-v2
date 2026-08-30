@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
   title:
@@ -33,5 +35,16 @@ export default function AkureLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <JsonLd
+        id="project-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Projects", path: "/#projects" },
+          { name: "Akure Castle Residence", path: "/projects/akure-lgs-roofing" },
+        ])}
+      />
+      {children}
+    </>
+  );
 }

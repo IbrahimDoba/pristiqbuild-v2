@@ -182,7 +182,7 @@ export default function BreezePointProject() {
         />
 
         {/* Premium Finishes Section */}
-        <section className="py-16 sm:py-20 bg-gradient-to-b from-white to-steel-50">
+        <section className="py-16 sm:py-20 bg-linear-to-b from-white to-steel-50">
           <div className="container-custom">
             <div className="text-center mb-10 sm:mb-12">
               <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
@@ -194,7 +194,7 @@ export default function BreezePointProject() {
               {premiumFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300"
+                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-300"
                 >
                   <h3 className="font-display font-bold text-steel-900 text-base sm:text-lg mb-2">
                     {feature.title}
@@ -230,7 +230,7 @@ export default function BreezePointProject() {
                     "Clean finish and long term structural integrity",
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary-500 flex items-center justify-center shrink-0 mt-0.5">
                         <svg
                           className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                           fill="none"
@@ -308,7 +308,7 @@ export default function BreezePointProject() {
                   </div>
                   <div className="text-steel-600 text-sm sm:text-base">Remaining Available</div>
                 </div>
-                <div className="text-center p-5 sm:p-6 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl text-white sm:col-span-2 lg:col-span-1">
+                <div className="text-center p-5 sm:p-6 bg-linear-to-br from-secondary-500 to-secondary-600 rounded-2xl text-white sm:col-span-2 lg:col-span-1">
                   <div className="text-xl sm:text-3xl font-display font-bold mb-2">
                     Flexible
                   </div>
@@ -327,13 +327,13 @@ export default function BreezePointProject() {
         </section>
 
         {/* CEO Quote */}
-        <section className="py-16 sm:py-20 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 sm:py-20 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-secondary-500 to-secondary-600 mx-auto mb-6 sm:mb-8" />
+              <div className="w-16 sm:w-20 h-1 bg-linear-to-r from-secondary-500 to-secondary-600 mx-auto mb-6 sm:mb-8" />
               <blockquote className="text-xl sm:text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-6 sm:mb-8">
                 &ldquo;We are excited to bring Breeze Point Estate to life in
-                Kubwa's most sought after district. Every detail from foundation
+                Kubwa&apos;s most sought after district. Every detail from foundation
                 to final finish reflects our dedication to building homes that
                 last, function smartly, and stand out in value and
                 beauty.&rdquo;

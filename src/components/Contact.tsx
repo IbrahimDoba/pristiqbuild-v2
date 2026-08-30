@@ -8,11 +8,13 @@ import {
   MapPin,
   Clock,
   Send,
-  MessageSquare,
   Calendar,
   Glasses,
   CheckCircle2,
+  AlertCircle,
 } from "lucide-react";
+import { useLeadForm } from "@/lib/leads/use-lead-form";
+import HoneypotField from "@/components/forms/HoneypotField";
 
 const contactInfo = [
   {
@@ -63,16 +65,20 @@ export default function Contact() {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
+    useLeadForm();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+
+    const form = e.currentTarget as HTMLFormElement;
+    const website = new FormData(form).get("website");
+
+    await submit({
+      source: "CONTACT_FORM",
+      ...formData,
+      website: typeof website === "string" ? website : "",
+    });
   };
 
   const handleChange = (
@@ -93,7 +99,7 @@ export default function Contact() {
       className="section-padding relative bg-white overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-steel-50 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-96 bg-linear-to-b from-steel-50 to-transparent" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-50 rounded-full blur-3xl opacity-50" />
 
       <div className="container-custom relative z-10">
@@ -153,7 +159,7 @@ export default function Contact() {
                   </p>
                   <button
                     onClick={() => {
-                      setIsSubmitted(false);
+                      reset();
                       setFormData({
                         name: "",
                         email: "",
@@ -168,7 +174,19 @@ export default function Contact() {
                   </button>
                 </motion.div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <HoneypotField />
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
+                    >
+                      <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
+
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label
@@ -184,9 +202,21 @@ export default function Contact() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
-                        placeholder="John Doe"
+                        aria-invalid={Boolean(fieldErrors.name)}
+                        aria-describedby={fieldErrors.name ? "name-error" : undefined}
+                        className={`w-full px-4 py-3 rounded-lg border outline-none transition-colors focus:ring-2 ${
+                          fieldErrors.name
+                            ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                            : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
+                        }`}
+                        placeholder="Adaeze Okonkwo"
+                        autoComplete="name"
                       />
+                      {fieldErrors.name && (
+                        <p id="name-error" className="mt-2 text-sm text-red-700">
+                          {fieldErrors.name}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -202,9 +232,21 @@ export default function Contact() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
-                        placeholder="john@example.com"
+                        aria-invalid={Boolean(fieldErrors.email)}
+                        aria-describedby={fieldErrors.email ? "email-error" : undefined}
+                        className={`w-full px-4 py-3 rounded-lg border outline-none transition-colors focus:ring-2 ${
+                          fieldErrors.email
+                            ? "border-red-400 focus:border-red-500 focus:ring-red-500/20"
+                            : "border-steel-200 focus:border-primary-500 focus:ring-primary-500/20"
+                        }`}
+                        placeholder="adaeze@example.com"
+                        autoComplete="email" spellCheck={false} inputMode="email"
                       />
+                      {fieldErrors.email && (
+                        <p id="email-error" className="mt-2 text-sm text-red-700">
+                          {fieldErrors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -222,8 +264,9 @@ export default function Contact() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all"
+                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors"
                         placeholder="+234 xxx xxx xxxx"
+                        autoComplete="tel" inputMode="tel"
                       />
                     </div>
                     <div>
@@ -238,7 +281,7 @@ export default function Contact() {
                         name="service"
                         value={formData.service}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all bg-white"
+                        className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors bg-white"
                       >
                         <option value="">Select a service</option>
                         {serviceTypes.map((service) => (
@@ -264,15 +307,15 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-all resize-none"
-                      placeholder="Tell us about your project..."
+                      className="w-full px-4 py-3 rounded-lg border border-steel-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 outline-none transition-colors resize-none"
+                      placeholder="Tell us about your project…"
                     />
                   </div>
 
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-all disabled:opacity-70"
+                    className="w-full bg-linear-to-r from-primary-700 to-primary-600 text-white py-4 rounded-lg font-semibold flex items-center justify-center gap-2 hover:from-primary-800 hover:to-primary-700 transition-colors disabled:opacity-70"
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
                   >
@@ -312,7 +355,7 @@ export default function Contact() {
                   {info.href ? (
                     <a
                       href={info.href}
-                      className="block bg-steel-50 rounded-xl p-5 hover:bg-primary-50 transition-colors group"
+                      className="block bg-steel-50 rounded-2xl p-5 hover:bg-primary-50 transition-colors group"
                     >
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center group-hover:bg-primary-600 transition-colors">
@@ -329,7 +372,7 @@ export default function Contact() {
                       </div>
                     </a>
                   ) : (
-                    <div className="bg-steel-50 rounded-xl p-5">
+                    <div className="bg-steel-50 rounded-2xl p-5">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center">
                           <info.icon className="w-5 h-5 text-primary-600" />
@@ -354,7 +397,7 @@ export default function Contact() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: 0.9 }}
-              className="bg-gradient-to-br from-primary-100 to-primary-200 rounded-2xl h-64 flex items-center justify-center relative overflow-hidden"
+              className="bg-linear-to-br from-primary-100 to-primary-200 rounded-2xl h-64 flex items-center justify-center relative overflow-hidden"
             >
               <div className="absolute inset-0 opacity-30">
                 <div
@@ -388,7 +431,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-all"
+                className="flex items-center gap-4 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-2xl p-5 text-white hover:from-secondary-600 hover:to-secondary-700 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -406,7 +449,7 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 1.1 }}
-                className="flex items-center gap-4 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-all"
+                className="flex items-center gap-4 bg-linear-to-r from-primary-700 to-primary-800 rounded-2xl p-5 text-white hover:from-primary-800 hover:to-primary-900 transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >

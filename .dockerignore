@@ -1,0 +1,17 @@
+# Build context hygiene. Anything here is either rebuilt in the image, huge, or
+# must never enter it.
+.git
+.next
+node_modules
+.env
+.env.*
+!.env.example
+public/optimized
+npm-debug.log*
+pnpm-debug.log*
+.DS_Store
+*.md
+!runbook.md
+.vercel
+coverage
+src/generated

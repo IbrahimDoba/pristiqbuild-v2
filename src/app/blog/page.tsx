@@ -1,201 +1,199 @@
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { getAllPosts } from '@/lib/mdx';
-import { Calendar, Clock, ArrowRight, ArrowLeft } from 'lucide-react';
-import SafeImage from '@/components/SafeImage';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Calendar, Clock, ArrowRight, SearchX } from "lucide-react";
+import { getAllPostSummaries } from "@/lib/mdx";
+import {
+  parseBlogQuery,
+  queryPosts,
+  blogHref,
+  POSTS_PER_PAGE,
+} from "@/lib/blog-query";
+import SafeImage from "@/components/SafeImage";
+import BlogFilters from "@/components/blog/BlogFilters";
+import BlogPagination from "@/components/blog/BlogPagination";
+import JsonLd from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: 'Blog - Light Gauge Steel Construction Insights | PristiqBuild',
+  title: "Blog - Light Gauge Steel Construction Insights | PristiqBuild",
   description:
-    'Expert insights, guides, and articles on light gauge steel construction in Nigeria. Learn about LGS technology, costs, applications, and best practices.',
+    "Expert insights, guides, and articles on light gauge steel construction in Nigeria. Learn about LGS technology, costs, applications, and best practices.",
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
-  // Group posts by category
-  const categories = Array.from(new Set(posts.map((post) => post.category)));
+/**
+ * The listing renders one page of results, not the whole archive.
+ *
+ * It previously rendered all 100 posts at once: 402KB of HTML and 106 images
+ * on a single page, none of them lazy, which never finished loading on a
+ * Nigerian mobile connection. Filtering happens here on the server so each
+ * result set stays crawlable and shareable.
+ */
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const all = getAllPostSummaries();
+  const query = parseBlogQuery(await searchParams);
+  const { posts, total, page, totalPages, isFiltered } = queryPosts(all, query);
+
+  const categories = Object.entries(
+    all.reduce<Record<string, number>>((acc, post) => {
+      acc[post.category] = (acc[post.category] ?? 0) + 1;
+      return acc;
+    }, {})
+  )
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Back Button */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center text-gray-600 hover:text-primary-600 transition-colors group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Back to Home
-          </Link>
-        </div>
-      </div>
-
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-600 to-primary-700 text-white py-20">
-        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white">
+      <JsonLd
+        id="blog-breadcrumb"
+        data={breadcrumbSchema([{ name: "Blog", path: "/blog" }])}
+      />
+      <section className="relative bg-linear-to-r from-primary-700 to-primary-800 text-white py-16 md:py-20">
+        <div className="container-custom">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="heading-lg mb-5">
               Light Gauge Steel Construction Insights
             </h1>
-            <p className="text-xl md:text-2xl text-primary-100 leading-relaxed">
-              Expert knowledge on light gauge steel technology, applications, and best practices for
-              Nigerian construction projects.
+            <p className="body-lg text-primary-100">
+              Practical guidance on light gauge steel technology, costs and
+              applications for Nigerian construction projects.
             </p>
-            <div className="mt-8 flex items-center gap-4 text-primary-100">
-              <span className="font-semibold">{posts.length} Articles</span>
-              <span>•</span>
-              <span>{categories.length} Categories</span>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Posts */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Articles</h2>
-          <div className="h-1 w-20 bg-primary-600"></div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.slice(0, 6).map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
-              className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="relative h-48 bg-gray-200 overflow-hidden">
-                <SafeImage
-                  src={post.coverImage}
-                  alt={post.coverImageAlt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-primary-600 text-white text-xs font-semibold rounded-full">
-                    {post.category}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 mb-4 line-clamp-3">{post.description}</p>
-
-                <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-4 h-4" />
-                    <time dateTime={post.publishDate}>
-                      {new Date(post.publishDate).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                      })}
-                    </time>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    {post.readTime}
-                  </div>
-                </div>
-
-                <div className="flex items-center text-primary-600 font-semibold group-hover:gap-2 transition-all">
-                  Read Article
-                  <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            </Link>
-          ))}
+      <section className="border-b border-steel-100 bg-steel-50 py-6">
+        <div className="container-custom">
+          <BlogFilters
+            categories={categories}
+            activeCategory={query.category}
+            activeQuery={query.q}
+            resultCount={total}
+            totalCount={all.length}
+          />
         </div>
       </section>
 
-      {/* All Posts by Category */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Browse by Category</h2>
-            <div className="h-1 w-20 bg-primary-600"></div>
-          </div>
+      <section className="container-custom py-12 md:py-16">
+        {posts.length === 0 ? (
+          <EmptyState query={query.q} category={query.category} />
+        ) : (
+          <>
+            <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 list-none p-0 m-0">
+              {posts.map((post, index) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group flex h-full flex-col bg-white rounded-2xl overflow-hidden border border-steel-100 shadow-sm transition-[box-shadow,transform] duration-300 hover:shadow-xl hover:-translate-y-1"
+                  >
+                    <div className="relative h-48 bg-steel-100 overflow-hidden">
+                      <SafeImage
+                        src={post.coverImage}
+                        alt={post.coverImageAlt}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        // Only the first row is above the fold on a laptop.
+                        priority={index < 3}
+                      />
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-white/95 text-primary-800 text-xs font-semibold">
+                        {post.category}
+                      </span>
+                    </div>
 
-          {categories.map((category) => {
-            const categoryPosts = posts.filter((post) => post.category === category);
+                    <div className="flex flex-1 flex-col p-6">
+                      <h2 className="font-display font-semibold text-lg text-steel-900 leading-snug mb-2 group-hover:text-primary-700 transition-colors">
+                        {post.title}
+                      </h2>
+                      <p className="text-sm text-steel-600 leading-relaxed line-clamp-3 mb-5">
+                        {post.description}
+                      </p>
 
-            return (
-              <div key={category} className="mb-16">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                  <span className="w-2 h-2 bg-primary-600 rounded-full"></span>
-                  {category}
-                  <span className="text-sm font-normal text-gray-500">
-                    ({categoryPosts.length})
-                  </span>
-                </h3>
-
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {categoryPosts.map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group bg-white rounded-lg p-6 shadow hover:shadow-lg transition-all hover:border-primary-500 border border-transparent"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-200">
-                          <SafeImage
-                            src={post.coverImage}
-                            alt={post.coverImageAlt}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors">
-                            {post.title}
-                          </h4>
-                          <div className="flex items-center gap-2 text-xs text-gray-500">
-                            <Clock className="w-3 h-3" />
-                            {post.readTime}
-                          </div>
-                        </div>
+                      <div className="mt-auto flex items-center gap-4 text-xs text-steel-500">
+                        <span className="inline-flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+                          <time dateTime={post.publishDate}>
+                            {new Date(post.publishDate).toLocaleDateString(
+                              "en-NG",
+                              { year: "numeric", month: "short", day: "numeric" }
+                            )}
+                          </time>
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" aria-hidden="true" />
+                          {post.readTime}
+                        </span>
+                        <ArrowRight
+                          className="w-4 h-4 ml-auto text-primary-600 transition-transform group-hover:translate-x-1"
+                          aria-hidden="true"
+                        />
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Start Your LGS Project?
-          </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Get expert guidance and accurate cost estimates for your light gauge steel construction
-            project in Nigeria.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/cost-calculator"
-              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-100 transition-all hover:scale-105 inline-flex items-center justify-center gap-2"
-            >
-              Calculate Project Cost
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-all hover:scale-105 inline-flex items-center justify-center"
-            >
-              Contact Us
-            </Link>
-          </div>
-        </div>
+            <BlogPagination query={query} page={page} totalPages={totalPages} />
+
+            {totalPages > 1 && (
+              <p className="mt-6 text-center text-sm text-steel-500 tabular">
+                Showing {(page - 1) * POSTS_PER_PAGE + 1} to{" "}
+                {Math.min(page * POSTS_PER_PAGE, total)} of {total}
+                {isFiltered ? " matching" : ""} articles
+              </p>
+            )}
+          </>
+        )}
       </section>
+    </div>
+  );
+}
+
+function EmptyState({ query, category }: { query: string; category: string }) {
+  return (
+    <div className="max-w-md mx-auto text-center py-16">
+      <div className="w-14 h-14 rounded-lg bg-steel-100 flex items-center justify-center mx-auto mb-5">
+        <SearchX className="w-7 h-7 text-steel-500" aria-hidden="true" />
+      </div>
+      <h2 className="font-display font-semibold text-xl text-steel-900 mb-2">
+        No articles match that
+      </h2>
+      <p className="text-steel-600 mb-6">
+        {query && category ? (
+          <>
+            Nothing for &ldquo;{query}&rdquo; in {category}. Try a different
+            term, or search across every category.
+          </>
+        ) : query ? (
+          <>Nothing for &ldquo;{query}&rdquo;. Try a shorter or more general term.</>
+        ) : (
+          <>There are no articles in {category} yet.</>
+        )}
+      </p>
+      <div className="flex flex-wrap justify-center gap-3">
+        {query && category && (
+          <Link
+            href={blogHref({ q: query })}
+            scroll={false}
+            className="px-5 py-2.5 rounded-lg border border-steel-200 text-steel-700 font-medium hover:border-primary-400 hover:text-primary-700 transition-colors"
+          >
+            Search all categories
+          </Link>
+        )}
+        <Link
+          href="/blog"
+          className="px-5 py-2.5 rounded-lg bg-primary-700 text-white font-semibold hover:bg-primary-800 active:translate-y-px transition-[background-color,transform]"
+        >
+          Browse all articles
+        </Link>
+      </div>
     </div>
   );
 }

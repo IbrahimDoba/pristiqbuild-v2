@@ -57,7 +57,7 @@ export default function Technology() {
     >
       {/* Animated Background */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-900 via-primary-800 to-steel-900" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary-900 via-primary-800 to-steel-900" />
         {/* Grid Pattern */}
         <div
           className="absolute inset-0 opacity-10"
@@ -82,7 +82,7 @@ export default function Technology() {
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-40 right-20 w-48 h-48 border border-secondary-400/20 rounded-lg"
+          className="absolute bottom-40 right-20 w-48 h-48 border border-secondary-400/20 rounded-2xl"
           animate={{
             rotate: [0, 45, 0],
             scale: [1, 1.1, 1],
@@ -149,12 +149,12 @@ export default function Technology() {
               }}
               className="group"
             >
-              <div className="relative h-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 transition-all duration-500 hover:bg-white/10 hover:border-white/20">
+              <div className="relative h-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 transition-colors duration-500 hover:bg-white/10 hover:border-white/20">
                 {/* Accent Line */}
-                <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary-400/50 to-transparent" />
+                <div className="absolute top-0 left-8 right-8 h-px bg-linear-to-r from-transparent via-primary-400/50 to-transparent" />
 
                 {/* Icon */}
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-secondary-500 to-secondary-600 mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-linear-to-br from-secondary-500 to-secondary-600 mb-6 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                   <tech.icon className="w-8 h-8 text-white" />
                 </div>
 
@@ -181,7 +181,7 @@ export default function Technology() {
                 </div>
 
                 {/* Hover Glow */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/10 to-secondary-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
+                <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-primary-500/10 to-secondary-500/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 -z-10 blur-xl" />
               </div>
             </motion.div>
           ))}
@@ -194,7 +194,7 @@ export default function Technology() {
           transition={{ duration: 0.5, delay: 0.9 }}
           className="mt-20"
         >
-          <div className="relative bg-gradient-to-r from-secondary-500/20 to-secondary-600/20 rounded-2xl p-8 md:p-12 border border-secondary-500/30 overflow-hidden">
+          <div className="relative bg-linear-to-r from-secondary-500/20 to-secondary-600/20 rounded-2xl p-8 md:p-12 border border-secondary-500/30 overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10">
               <div
@@ -207,8 +207,8 @@ export default function Technology() {
             </div>
 
             <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-              <div className="flex-shrink-0">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-secondary-500 to-secondary-600 flex items-center justify-center">
+              <div className="shrink-0">
+                <div className="w-20 h-20 rounded-lg bg-linear-to-br from-secondary-500 to-secondary-600 flex items-center justify-center">
                   <Users className="w-10 h-10 text-white" />
                 </div>
               </div>
@@ -218,14 +218,14 @@ export default function Technology() {
                   Client-Centric Design Process
                 </h3>
                 <p className="body-md text-white/70">
-                  Our technology isn&apos;t just about innovation — it&apos;s
+                  Our technology isn&apos;t just about innovation: it&apos;s
                   about putting you at the center of every decision. Experience
                   transparent collaboration, real-time updates, and complete
                   control over your project from concept to completion.
                 </p>
               </div>
 
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <motion.a
                   href="#contact"
                   className="inline-flex items-center gap-2 bg-secondary-500 hover:bg-secondary-600 text-white px-8 py-4 rounded-lg font-semibold transition-colors"

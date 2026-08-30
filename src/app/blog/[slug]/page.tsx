@@ -1,7 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getPostBySlug, getAllSlugs } from '@/lib/mdx';
+import { getPostBySlug, getAllSlugs, getAllPostSummaries } from '@/lib/mdx';
+import { relatedPosts } from '@/lib/blog-query';
+import JsonLd from '@/components/seo/JsonLd';
+import { blogPostingSchema, breadcrumbSchema } from '@/lib/seo/schema';
 import { Calendar, Clock, User, ArrowLeft, Tag } from 'lucide-react';
 import SafeImage from '@/components/SafeImage';
 import ShareButton from '@/components/ShareButton';
@@ -61,8 +64,20 @@ export default async function BlogPost({
     notFound();
   }
 
+  // Scored on shared tags, with a smaller bonus for the same category.
+  const related = relatedPosts(getAllPostSummaries(), post);
+
   return (
     <article className="min-h-screen bg-white">
+      <JsonLd id="article-schema" data={blogPostingSchema(post)} />
+      <JsonLd
+        id="article-breadcrumb"
+        data={breadcrumbSchema([
+          { name: 'Blog', path: '/blog' },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ])}
+      />
+
       {/* Back Buttons */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -94,7 +109,7 @@ export default async function BlogPost({
           className="object-cover opacity-90"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Title Overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
@@ -156,7 +171,7 @@ export default async function BlogPost({
       {/* Article Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Description / Lead */}
-        <div className="mb-10 p-6 md:p-8 bg-gradient-to-r from-primary-50 to-blue-50 border-l-4 border-primary-500 rounded-r-xl">
+        <div className="mb-10 p-6 md:p-8 bg-linear-to-r from-primary-50 to-primary-50 border-l-4 border-primary-500 rounded-r-xl">
           <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium">
             {post.description}
           </p>
@@ -189,7 +204,7 @@ export default async function BlogPost({
         <AuthorBio author={post.author} />
 
         {/* CTA */}
-        <div className="mt-12 p-8 md:p-10 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl text-white text-center shadow-xl">
+        <div className="mt-12 p-8 md:p-10 bg-linear-to-r from-primary-600 to-primary-700 rounded-2xl text-white text-center shadow-xl">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
             Ready to Start Your LGS Project?
           </h3>
@@ -200,13 +215,13 @@ export default async function BlogPost({
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/cost-calculator"
-              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-lg hover:bg-gray-50 transition-all hover:scale-105 shadow-lg"
+              className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-2xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-lg"
             >
               Calculate Your Project Cost
             </Link>
             <Link
               href="/contact"
-              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-lg hover:bg-primary-900 transition-all hover:scale-105 border border-primary-500"
+              className="px-8 py-4 bg-primary-800 text-white font-semibold rounded-2xl hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border border-primary-500"
             >
               Contact Us
             </Link>
@@ -215,26 +230,45 @@ export default async function BlogPost({
       </div>
 
       {/* Related Articles */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-steel-50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-8 text-gray-900">
-            Continue Reading
+          <h2 className="heading-sm text-steel-900 mb-8">
+            {related.length > 0 ? 'Related reading' : 'Keep reading'}
           </h2>
-          <div className="space-y-4">
-            <Link
-              href="/blog"
-              className="block p-6 bg-white rounded-xl border border-gray-200 hover:border-primary-500 hover:shadow-lg transition-all group"
-            >
-              <h3 className="text-xl font-semibold text-gray-900 group-hover:text-primary-600 transition-colors flex items-center gap-2">
-                Explore All Articles
-                <ArrowLeft className="w-5 h-5 rotate-180" />
-              </h3>
-              <p className="text-gray-600 mt-2">
-                Discover more insights on light gauge steel construction in
-                Nigeria
-              </p>
-            </Link>
-          </div>
+
+          {related.length > 0 ? (
+            <ul className="grid sm:grid-cols-3 gap-6 list-none p-0 m-0">
+              {related.map((item) => (
+                <li key={item.slug}>
+                  <Link
+                    href={`/blog/${item.slug}`}
+                    className="group flex h-full flex-col bg-white rounded-2xl border border-steel-100 p-5 transition-[box-shadow,transform] hover:shadow-lg hover:-translate-y-0.5"
+                  >
+                    <span className="text-xs font-semibold text-primary-700 mb-2">
+                      {item.category}
+                    </span>
+                    <h3 className="font-display font-semibold text-steel-900 leading-snug mb-2 group-hover:text-primary-700 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-steel-600 line-clamp-2">
+                      {item.description}
+                    </p>
+                    <span className="mt-auto pt-4 text-xs text-steel-500">
+                      {item.readTime}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <Link
+            href="/blog"
+            className="mt-8 inline-flex items-center gap-2 text-primary-700 font-semibold hover:text-primary-800 transition-colors"
+          >
+            Browse all articles
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </article>

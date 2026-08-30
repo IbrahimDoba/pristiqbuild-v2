@@ -6,8 +6,6 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { Clock, Bell, ArrowLeft, Mail } from "lucide-react";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
 
 interface ComingSoonProps {
   title: string;
@@ -105,7 +103,6 @@ export default function ComingSoon({
 
   return (
     <>
-      <Navigation />
       <main ref={containerRef} className="min-h-screen bg-secondary-50">
         {/* Hero Section */}
         <section className="relative pt-32 pb-20 overflow-hidden">
@@ -130,7 +127,7 @@ export default function ComingSoon({
               {/* Icon */}
               <div className="cs-icon mb-8">
                 <div className="inline-block relative">
-                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-br from-secondary-100 to-secondary-200 flex items-center justify-center shadow-xl">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-linear-to-br from-secondary-100 to-secondary-200 flex items-center justify-center shadow-xl">
                     <Clock className="pulse-clock w-12 h-12 sm:w-16 sm:h-16 text-secondary-600" />
                   </div>
                   {/* Decorative elements */}
@@ -151,7 +148,7 @@ export default function ComingSoon({
 
               {/* ETA Badge */}
               <div className="cs-eta mb-12">
-                <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-100 to-primary-200 text-primary-800 rounded-full font-semibold text-lg">
+                <span className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-primary-100 to-primary-200 text-primary-800 rounded-full font-semibold text-lg">
                   <Bell className="w-5 h-5" />
                   {eta}
                 </span>
@@ -171,12 +168,12 @@ export default function ComingSoon({
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full pl-12 pr-4 py-4 bg-steel-50 border border-steel-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all"
+                      className="w-full pl-12 pr-4 py-4 bg-steel-50 border border-steel-200 rounded-2xl focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-colors"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-6 py-4 bg-gradient-to-r from-primary-700 to-primary-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-all duration-300 whitespace-nowrap"
+                    className="px-6 py-4 bg-linear-to-r from-primary-700 to-primary-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl hover:from-primary-600 hover:to-primary-500 transition-[color,background-color,border-color,box-shadow] duration-300 whitespace-nowrap"
                   >
                     Notify Me
                   </button>
@@ -198,7 +195,7 @@ export default function ComingSoon({
         </section>
 
         {/* Features Preview Section */}
-        <section className="py-16 bg-gradient-to-b from-steel-50 to-white">
+        <section className="py-16 bg-linear-to-b from-steel-50 to-white">
           <div className="container-custom">
             <div className="text-center mb-12">
               <span className="eyebrow inline-block mb-4 text-secondary-600">
@@ -232,7 +229,7 @@ export default function ComingSoon({
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-all duration-300 text-center"
+                  className="p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-300 text-center"
                 >
                   <div className="text-4xl mb-4">{feature.icon}</div>
                   <h3 className="font-display font-bold text-lg text-steel-900 mb-2">
@@ -247,7 +244,6 @@ export default function ComingSoon({
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

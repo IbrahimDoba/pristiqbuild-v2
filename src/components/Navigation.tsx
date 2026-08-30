@@ -7,13 +7,25 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * Hrefs are absolute (`/#section`), not bare fragments.
+ *
+ * A bare `#process` only resolves against whatever page you are already on, so
+ * on /blog, /faq, /contact, /careers, /team, /about, /case-studies,
+ * /cost-calculator and the four /services routes these links did nothing at
+ * all: the click handler cancelled the default and then failed to find an
+ * element that only exists on the homepage. Twelve routes had a dead navbar.
+ */
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Why PristiqBuild", href: "#why-pristiqbuild" },
-  { name: "Process", href: "#process" },
-  { name: "Projects", href: "#projects", hasDropdown: true },
-  { name: "About", href: "#about" },
+  { name: "Home", href: "/#home" },
+  { name: "Why PristiqBuild", href: "/#why-pristiqbuild" },
+  { name: "Process", href: "/#process" },
+  { name: "Projects", href: "/#projects", hasDropdown: true },
+  { name: "About", href: "/#about" },
 ];
+
+/** Section id a nav href points at, e.g. "/#process" -> "process". */
+const sectionId = (href: string) => href.split("#")[1] ?? "";
 
 const projectsList = [
   {
@@ -44,57 +56,72 @@ const projectsList = [
 ];
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
+  const [observedSection, setActiveSection] = useState("home");
   const [isProjectsDropdownOpen, setIsProjectsDropdownOpen] = useState(false);
   const pathname = usePathname();
-  const isOnProjectPage = pathname?.startsWith("/projects/");
+  const isHome = pathname === "/";
 
+  // Derived, not stored. Writing "" into state from the effect when leaving
+  // the homepage would be a synchronous setState inside an effect, which
+  // React 19 flags as a cascading render.
+  const activeSection = isHome ? observedSection : "";
+
+  // Active-section highlight.
+  //
+  // Replaces a scroll listener that ran getBoundingClientRect over every
+  // section on every scroll frame. IntersectionObserver does the same work off
+  // the main thread and only wakes when a boundary is actually crossed.
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    if (!isHome) return;
 
-      // Update active section based on scroll position
-      const sections = navLinks.map((link) => link.href.slice(1));
-      const currentSection = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 150 && rect.bottom >= 150;
+    const ids = navLinks.map((link) => sectionId(link.href)).filter(Boolean);
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    // The callback only reports sections whose state changed, so track the
+    // full visible set here rather than recomputing from each batch.
+    const visible = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
         }
-        return false;
-      });
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-    };
+        // First in document order wins, so the highlight moves down the page
+        // rather than jumping to whichever section reported last.
+        const current = ids.find((id) => visible.has(id));
+        if (current) setActiveSection(current);
+      },
+      // Discount the fixed header at the top and the lower half of the
+      // viewport, so a section counts as active once it reaches reading height.
+      { rootMargin: "-140px 0px -55% 0px" }
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    for (const element of elements) observer.observe(element);
+    return () => observer.disconnect();
+  }, [isHome]);
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string
   ) => {
-    // If we're on a project page, navigate to homepage first
-    if (isOnProjectPage) {
-      // Let the link navigate naturally to /{href}
-      setIsMobileMenuOpen(false);
-      setIsProjectsDropdownOpen(false);
-      return;
-    }
+    setIsMobileMenuOpen(false);
+    setIsProjectsDropdownOpen(false);
 
-    // Otherwise, smooth scroll on same page
+    // Off the homepage, let the browser navigate to /#section normally.
+    // `scroll-padding-top` in globals.css keeps the target clear of the header.
+    if (!isHome) return;
+
+    const element = document.getElementById(sectionId(href));
+    if (!element) return;
+
     e.preventDefault();
-    const targetId = href.slice(1);
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
-      setIsProjectsDropdownOpen(false);
-    }
+    element.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -130,7 +157,7 @@ export default function Navigation() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className="fixed top-0 lg:top-8 left-0 right-0 z-40 transition-all duration-500 bg-white/95 backdrop-blur-md shadow-lg"
+        className="fixed top-0 lg:top-8 left-0 right-0 z-40 transition-colors duration-500 bg-white/95 backdrop-blur-md shadow-lg"
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-20">
@@ -143,7 +170,7 @@ export default function Navigation() {
               >
                 <div className="relative h-12 w-40">
                   <Image
-                    src="/optimized/Pristiq Build blacktext.webp"
+                    src="/logo-dark.png"
                     alt="PristiqBuild Logo"
                     fill
                     className="object-contain"
@@ -166,10 +193,10 @@ export default function Navigation() {
                       onMouseLeave={() => setIsProjectsDropdownOpen(false)}
                     >
                       <a
-                        href={isOnProjectPage ? `/${link.href}` : link.href}
+                        href={link.href}
                         onClick={(e) => handleNavClick(e, link.href)}
                         className={`relative px-4 py-2 font-medium text-sm transition-colors flex items-center gap-1 ${
-                          activeSection === link.href.slice(1)
+                          activeSection === sectionId(link.href)
                             ? "text-primary-700"
                             : "text-steel-700 hover:text-primary-700"
                         }`}
@@ -181,7 +208,7 @@ export default function Navigation() {
                             isProjectsDropdownOpen ? "rotate-180" : ""
                           }`}
                         />
-                        {activeSection === link.href.slice(1) && (
+                        {activeSection === sectionId(link.href) && (
                           <motion.div
                             layoutId="activeSection"
                             className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary-600"
@@ -202,10 +229,10 @@ export default function Navigation() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
                             transition={{ duration: 0.2 }}
-                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-2xl overflow-hidden z-50"
+                            className="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-2xl overflow-hidden z-50"
                           >
                             <div className="p-2">
-                              {projectsList.map((project, index) => (
+                              {projectsList.map((project) => (
                                 <Link
                                   key={project.slug}
                                   href={`/projects/${project.slug}`}
@@ -213,7 +240,7 @@ export default function Navigation() {
                                     setIsProjectsDropdownOpen(false);
                                     setIsMobileMenuOpen(false);
                                   }}
-                                  className="block px-4 py-3 rounded-md hover:bg-primary-50 transition-colors group"
+                                  className="block px-4 py-3 rounded-lg hover:bg-primary-50 transition-colors group"
                                 >
                                   <div className="font-medium text-steel-900 group-hover:text-primary-700 transition-colors">
                                     {project.name}
@@ -244,16 +271,16 @@ export default function Navigation() {
                 return (
                   <a
                     key={link.name}
-                    href={isOnProjectPage ? `/${link.href}` : link.href}
+                    href={link.href}
                     onClick={(e) => handleNavClick(e, link.href)}
                     className={`relative px-4 py-2 font-medium text-sm transition-colors ${
-                      activeSection === link.href.slice(1)
+                      activeSection === sectionId(link.href)
                         ? "text-primary-700"
                         : "text-steel-700 hover:text-primary-700"
                     }`}
                   >
                     {link.name}
-                    {activeSection === link.href.slice(1) && (
+                    {activeSection === sectionId(link.href) && (
                       <motion.div
                         layoutId="activeSection"
                         className="absolute bottom-0 left-4 right-4 h-0.5 bg-primary-600"
@@ -273,7 +300,7 @@ export default function Navigation() {
             <div className="hidden lg:block">
               <Link href="/contact">
                 <motion.div
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all bg-primary-700 text-white hover:bg-primary-800 cursor-pointer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-colors bg-primary-700 text-white hover:bg-primary-800 cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -332,7 +359,7 @@ export default function Navigation() {
                                 setIsProjectsDropdownOpen(!isProjectsDropdownOpen)
                               }
                               className={`w-full flex items-center justify-between py-3 px-4 rounded-lg text-lg font-medium transition-colors ${
-                                activeSection === link.href.slice(1)
+                                activeSection === sectionId(link.href)
                                   ? "bg-primary-50 text-primary-700"
                                   : "text-steel-700 hover:bg-steel-50"
                               }`}
@@ -402,10 +429,10 @@ export default function Navigation() {
                           transition={{ delay: index * 0.05 }}
                         >
                           <a
-                            href={isOnProjectPage ? `/${link.href}` : link.href}
+                            href={link.href}
                             onClick={(e) => handleNavClick(e, link.href)}
                             className={`block py-3 px-4 rounded-lg text-lg font-medium transition-colors ${
-                              activeSection === link.href.slice(1)
+                              activeSection === sectionId(link.href)
                                 ? "bg-primary-50 text-primary-700"
                                 : "text-steel-700 hover:bg-steel-50"
                             }`}

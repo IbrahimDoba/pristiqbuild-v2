@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -152,6 +154,21 @@ const integration = [
 export default function SmartBuildingPage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "Smart Building Systems",
+          description: "Intelligent building solutions in Nigeria. Integrate smart home technology, energy efficiency, IoT automation, and security into your construction project.",
+          path: "/services/smart-building",
+          serviceType: "Smart building integration",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Smart Building Systems", path: "/services/smart-building" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900 overflow-hidden">
         <SafeImage
@@ -161,7 +178,7 @@ export default function SmartBuildingPage() {
           className="object-cover opacity-25"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-steel-900/95 to-primary-900/70" />
+        <div className="absolute inset-0 bg-linear-to-r from-steel-900/95 to-primary-900/70" />
 
         {/* Animated circuit pattern */}
         <div className="absolute inset-0 opacity-10">
@@ -215,7 +232,7 @@ export default function SmartBuildingPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-6">
-                What Makes a Building "Smart"?
+                What Makes a Building &quot;Smart&quot;?
               </h2>
               <div className="space-y-4 text-lg text-steel-700 leading-relaxed">
                 <p>
@@ -225,21 +242,21 @@ export default function SmartBuildingPage() {
                 </p>
                 <p>
                   At PristiqBuild, we integrate smart technology directly into the construction
-                  process—not as an afterthought. From intelligent climate control to advanced
+                  process, not as an afterthought. From intelligent climate control to advanced
                   security systems, we build connectivity and automation into the foundation
                   of your project.
                 </p>
                 <p>
-                  In Nigeria's challenging climate and energy landscape, smart buildings offer
+                  In Nigeria&apos;s challenging climate and energy landscape, smart buildings offer
                   tangible benefits: lower energy bills, enhanced security, remote monitoring,
-                  and increased property value. It's not luxury—it's practical innovation for
+                  and increased property value. It&apos;s not luxury, it&apos;s practical innovation for
                   modern living and working.
                 </p>
               </div>
 
-              <div className="mt-8 p-6 bg-gradient-to-r from-primary-50 to-blue-50 border-l-4 border-primary-600 rounded-r-lg">
+              <div className="mt-8 p-6 bg-linear-to-r from-primary-50 to-primary-50 border-l-4 border-primary-600 rounded-r-lg">
                 <div className="flex items-start gap-4">
-                  <Zap className="w-8 h-8 text-primary-600 flex-shrink-0" />
+                  <Zap className="w-8 h-8 text-primary-600 shrink-0" />
                   <div>
                     <p className="text-steel-800 font-semibold mb-2">
                       Save up to 40% on energy costs
@@ -262,11 +279,11 @@ export default function SmartBuildingPage() {
                   className="object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-xl shadow-xl max-w-xs">
+              <div className="absolute -bottom-6 -right-6 bg-primary-600 text-white p-6 rounded-2xl shadow-xl max-w-xs">
                 <Smartphone className="w-10 h-10 mb-3" />
                 <div className="text-2xl font-bold mb-2">Total Control</div>
                 <div className="text-sm text-primary-100">
-                  Manage your entire building from your smartphone—anywhere, anytime
+                  Manage your entire building from your smartphone, anywhere, anytime
                 </div>
               </div>
             </div>
@@ -275,7 +292,7 @@ export default function SmartBuildingPage() {
       </section>
 
       {/* Smart Systems */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -290,9 +307,9 @@ export default function SmartBuildingPage() {
             {smartSystems.map((system, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 border border-gray-100"
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-[box-shadow,transform] hover:-translate-y-1 border border-gray-100"
               >
-                <div className="w-14 h-14 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl flex items-center justify-center mb-6">
+                <div className="w-14 h-14 bg-linear-to-br from-primary-600 to-primary-700 rounded-lg flex items-center justify-center mb-6">
                   <system.icon className="w-7 h-7 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-steel-900 mb-3">
@@ -304,7 +321,7 @@ export default function SmartBuildingPage() {
                 <ul className="space-y-2">
                   {system.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center gap-2 text-sm text-steel-700">
-                      <CheckCircle className="w-4 h-4 text-primary-600 flex-shrink-0" />
+                      <CheckCircle className="w-4 h-4 text-primary-600 shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -331,9 +348,9 @@ export default function SmartBuildingPage() {
             {benefits.map((benefit, index) => (
               <div
                 key={index}
-                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-all border border-gray-200"
+                className="flex gap-4 items-start p-6 bg-linear-to-br from-gray-50 to-white rounded-2xl hover:shadow-lg transition-[box-shadow,transform] border border-gray-200"
               >
-                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center shrink-0">
                   <benefit.icon className="w-6 h-6 text-primary-600" />
                 </div>
                 <div>
@@ -351,7 +368,7 @@ export default function SmartBuildingPage() {
       </section>
 
       {/* Applications */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -366,7 +383,7 @@ export default function SmartBuildingPage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
+                className="group bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-[box-shadow,transform]"
               >
                 <div className="relative h-72 overflow-hidden">
                   <SafeImage
@@ -375,7 +392,7 @@ export default function SmartBuildingPage() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
                       {app.title}
@@ -392,7 +409,7 @@ export default function SmartBuildingPage() {
                         key={sIndex}
                         className="flex items-center gap-2 text-sm text-steel-700 bg-gray-50 px-3 py-2 rounded-lg"
                       >
-                        <CheckCircle className="w-4 h-4 text-primary-600 flex-shrink-0" />
+                        <CheckCircle className="w-4 h-4 text-primary-600 shrink-0" />
                         {system}
                       </div>
                     ))}
@@ -420,9 +437,9 @@ export default function SmartBuildingPage() {
             {integration.map((item, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-primary-50 to-white p-6 rounded-xl border border-primary-100"
+                className="bg-linear-to-br from-primary-50 to-white p-6 rounded-2xl border border-primary-100"
               >
-                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-4">
                   <item.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-bold text-steel-900 mb-4">
@@ -443,27 +460,27 @@ export default function SmartBuildingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
               Build Smart from the Start
             </h2>
             <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Don't retrofit intelligence—integrate it. Let's design a smart building
+              Don&apos;t retrofit intelligence, integrate it. Let&apos;s design a smart building
               solution tailored to your needs and budget.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Smartphone className="w-6 h-6" />
                 Schedule Consultation
               </Link>
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Estimate Smart Costs
                 <ArrowRight className="w-6 h-6" />

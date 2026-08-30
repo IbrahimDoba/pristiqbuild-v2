@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/seo/JsonLd";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo/schema";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import {
@@ -135,6 +137,21 @@ const comparisonData = [
 export default function LightSteelGaugePage() {
   return (
     <main className="min-h-screen bg-white">
+      <JsonLd
+        id="service-schema"
+        data={serviceSchema({
+          name: "Light Gauge Steel Construction",
+          description: "Expert Light Gauge Steel (LGS) construction services in Nigeria. Strong, durable, and cost-effective steel framing solutions for modern buildings.",
+          path: "/services/light-steel-gauge",
+          serviceType: "Light gauge steel framing",
+        })}
+      />
+      <JsonLd
+        id="service-breadcrumb"
+        data={breadcrumbSchema([
+          { name: "Light Gauge Steel Construction", path: "/services/light-steel-gauge" },
+        ])}
+      />
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] bg-steel-900">
         <SafeImage
@@ -144,7 +161,7 @@ export default function LightSteelGaugePage() {
           className="object-cover opacity-30"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-steel-900/95 to-steel-900/40" />
+        <div className="absolute inset-0 bg-linear-to-r from-steel-900/95 to-steel-900/40" />
 
         <div className="relative h-full flex items-center">
           <div className="container-custom">
@@ -190,7 +207,7 @@ export default function LightSteelGaugePage() {
               </h2>
               <div className="space-y-4 text-lg text-steel-700 leading-relaxed">
                 <p>
-                  <strong>Light Gauge Steel (LGS)</strong> is thin, cold-formed steel that's shaped
+                  <strong>Light Gauge Steel (LGS)</strong> is thin, cold-formed steel that&apos;s shaped
                   into precise structural profiles for building construction. Unlike heavy structural
                   steel, LGS is lightweight, easy to work with, and optimized for modern building needs.
                 </p>
@@ -201,18 +218,18 @@ export default function LightSteelGaugePage() {
                   ensuring consistent quality and precision.
                 </p>
                 <p>
-                  This technology is ideal for Nigeria's construction industry—it resists termites,
-                  won't rot in humid conditions, withstands coastal corrosion, and assembles rapidly
+                  This technology is ideal for Nigeria&apos;s construction industry, it resists termites,
+                  won&apos;t rot in humid conditions, withstands coastal corrosion, and assembles rapidly
                   even in challenging weather.
                 </p>
               </div>
 
               <div className="mt-8 grid grid-cols-2 gap-6">
-                <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100">
+                <div className="p-6 bg-linear-to-br from-primary-50 to-white rounded-2xl border border-primary-100">
                   <div className="text-3xl font-bold text-primary-600 mb-2">50+</div>
                   <div className="text-sm text-steel-600">Years Lifespan</div>
                 </div>
-                <div className="p-6 bg-gradient-to-br from-primary-50 to-white rounded-xl border border-primary-100">
+                <div className="p-6 bg-linear-to-br from-primary-50 to-white rounded-2xl border border-primary-100">
                   <div className="text-3xl font-bold text-primary-600 mb-2">100%</div>
                   <div className="text-sm text-steel-600">Recyclable</div>
                 </div>
@@ -242,7 +259,7 @@ export default function LightSteelGaugePage() {
       </section>
 
       {/* Technical Specifications */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -257,7 +274,7 @@ export default function LightSteelGaugePage() {
             {specifications.map((spec, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-xl border-2 border-gray-200 hover:border-primary-500 transition-all"
+                className="bg-white p-6 rounded-2xl border-2 border-gray-200 hover:border-primary-500 transition-[color,background-color,border-color,box-shadow]"
               >
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mb-4">
                   <spec.icon className="w-6 h-6 text-primary-600" />
@@ -289,9 +306,9 @@ export default function LightSteelGaugePage() {
             {advantages.map((advantage, index) => (
               <div
                 key={index}
-                className="flex gap-4 items-start p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl hover:shadow-lg transition-all"
+                className="flex gap-4 items-start p-6 bg-linear-to-br from-gray-50 to-white rounded-2xl hover:shadow-lg transition-[color,background-color,border-color,box-shadow]"
               >
-                <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center shrink-0">
                   <advantage.icon className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -309,7 +326,7 @@ export default function LightSteelGaugePage() {
       </section>
 
       {/* Comparison Table */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-linear-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-4">
@@ -323,7 +340,7 @@ export default function LightSteelGaugePage() {
           <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+                <thead className="bg-linear-to-r from-primary-600 to-primary-700 text-white">
                   <tr>
                     <th className="px-6 py-4 text-left font-semibold">Feature</th>
                     <th className="px-6 py-4 text-left font-semibold">Light Gauge Steel</th>
@@ -375,7 +392,7 @@ export default function LightSteelGaugePage() {
             {applications.map((app, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all"
+                className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-shadow"
               >
                 <div className="relative h-80">
                   <SafeImage
@@ -384,7 +401,7 @@ export default function LightSteelGaugePage() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
                       {app.title}
@@ -401,7 +418,7 @@ export default function LightSteelGaugePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-primary-600 to-primary-700 text-white">
+      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
@@ -414,14 +431,14 @@ export default function LightSteelGaugePage() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="/cost-calculator"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-50 transition-all hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Ruler className="w-6 h-6" />
                 Calculate Your Project
               </Link>
               <Link
                 href="/blog"
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-xl hover:bg-primary-900 transition-all hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
+                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 Read Our Blog
                 <ArrowRight className="w-6 h-6" />

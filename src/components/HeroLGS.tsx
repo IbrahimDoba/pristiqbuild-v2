@@ -5,60 +5,31 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroLGS() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      // Set initial states
-      gsap.set(".hero-bg-image", { scale: 1.2, opacity: 0 });
+      // Only the decorative layers are animated from JS.
+      //
+      // The copy entrance lives in CSS (globals.css, "Hero entrance"). Driving
+      // it from here meant setting opacity to 0 at hydration, which on a
+      // throttled connection blanked the headline about four seconds after it
+      // had already painted. The headline itself now has no entrance at all:
+      // it is the LCP element and carries the value proposition.
+      gsap.set(".hero-bg-image", { scale: 1.12, opacity: 0 });
       gsap.set(".hero-overlay", { opacity: 0 });
-      gsap.set(".hero-eyebrow", { opacity: 0, y: -30 });
-      gsap.set(".hero-title", { opacity: 0, y: 50 });
-      gsap.set(".hero-description", { opacity: 0, y: 50 });
 
-      // Main entry timeline
-      const tl = gsap.timeline({ delay: 0.3 });
+      const tl = gsap.timeline({ delay: 0.05 });
 
-      // 1. Background image zooms in and fades in
-      tl.to(".hero-bg-image", {
-        scale: 1,
-        opacity: 1,
-        duration: 1.5,
-        ease: EASINGS.expo,
-      });
-
-      // 2. Overlay fades in
-      tl.to(".hero-overlay", {
-        opacity: 1,
-        duration: 1,
-      }, "-=1");
-
-      // 3. Eyebrow badge flies in
-      tl.to(".hero-eyebrow", {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: EASINGS.back,
-      }, "-=0.5");
-
-      // 4. Title slides up and fades in
-      tl.to(".hero-title", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.expo,
-      }, "-=0.4");
-
-      // 5. Description fades in
-      tl.to(".hero-description", {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: EASINGS.smoothOut,
-      }, "-=0.5");
+      tl.to(
+        ".hero-bg-image",
+        { scale: 1, opacity: 1, duration: 1.6, ease: EASINGS.expo },
+        0
+      ).to(".hero-overlay", { opacity: 1, duration: 0.6 }, 0);
 
       // Parallax effect on scroll - background moves slower
       gsap.to(".hero-bg-image", {
@@ -106,7 +77,7 @@ export default function HeroLGS() {
       </div>
 
       {/* Dark Overlay for text readability */}
-      <div className="hero-overlay absolute inset-0 bg-gradient-to-r from-primary-900/95 via-primary-900/85 to-primary-900/70 z-10" />
+      <div className="hero-overlay absolute inset-0 bg-linear-to-r from-primary-900/95 via-primary-900/85 to-primary-900/70 z-10" />
 
       {/* Grid Pattern Overlay */}
       <div
@@ -122,7 +93,7 @@ export default function HeroLGS() {
 
       {/* Text Content - Positioned Right */}
       <div className="hero-text-content relative z-20 container-custom px-4 py-20">
-        <div className="max-w-3xl ml-auto">
+        <div className="max-w-4xl ml-auto">
           {/* Eyebrow Badge */}
           <div className="hero-eyebrow inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 mb-6 border border-white/20">
             <Sparkles className="w-4 h-4 text-secondary-400" />
@@ -132,26 +103,41 @@ export default function HeroLGS() {
           </div>
 
           {/* Main Title */}
-          <h1 className="hero-title text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-            Building Nigeria's Future,{" "}
+          <h1 className="hero-title text-[2.5rem] leading-[1.06] sm:text-5xl md:text-[3.25rem] lg:text-[3.6rem] font-display font-bold text-white mb-6 text-balance">
+            Building Nigeria&apos;s Future,{" "}
             <span className="text-gradient-gold">One Module</span> at a Time
           </h1>
 
           {/* Description */}
           <p className="hero-description text-xl md:text-2xl text-white/90 leading-relaxed mb-8">
-            Leading the way in high-tech modular construction. We deliver
-            precision, sustainability, and cutting-edge technology using light
-            gauge steel framing. Transforming the construction industry with
-            innovative solutions that are faster, stronger, and smarter.
+            Precision modular construction in light gauge steel. Faster to
+            build, engineered to last, and made for Nigerian conditions.
           </p>
 
-          {/* Decorative line */}
-          <div className="w-32 h-1 bg-gradient-to-r from-secondary-400 to-transparent rounded-full" />
+          {/* Primary conversion path.
+              The hero previously contained no link or button at all, so the
+              most-visited section of the site asked for nothing. "Get a Quote"
+              matches the nav label deliberately: one label per intent. */}
+          <div className="hero-actions flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-primary-600 text-white font-semibold shadow-lg shadow-primary-900/30 hover:bg-primary-500 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Get a Quote
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/cost-calculator"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg border border-white/40 bg-white/10 text-white font-semibold backdrop-blur-sm hover:bg-white/20 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Estimate Your Cost
+            </Link>
+          </div>
         </div>
       </div>
 
       {/* Bottom fade to white */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent z-30" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent z-30" />
     </section>
   );
 }

@@ -11,6 +11,7 @@ import {
   Linkedin,
   ArrowUp,
 } from "lucide-react";
+import NewsletterForm from "@/components/forms/NewsletterForm";
 
 const footerLinks = {
   company: [
@@ -65,7 +66,7 @@ export default function Footer() {
             <div className="mb-6">
               <div className="relative h-12 w-48">
                 <Image
-                  src="/optimized/Pristiq Build whiteText.webp"
+                  src="/logo-light.png"
                   alt="PristiqBuild Logo"
                   fill
                   className="object-contain object-left"
@@ -96,7 +97,7 @@ export default function Footer() {
                 <span>info@pristiqbuild.com</span>
               </a>
               <div className="flex items-start gap-3 text-steel-400">
-                <MapPin className="w-4 h-4 flex-shrink-0 mt-1" />
+                <MapPin className="w-4 h-4 shrink-0 mt-1" />
                 <span>
                   Murjanatu House, 1 Zambezi Crescent,
                   <br />
@@ -108,7 +109,7 @@ export default function Footer() {
 
           {/* Links Columns */}
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Company</h4>
+            <h2 className="font-display font-semibold text-lg mb-6">Company</h2>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
@@ -124,7 +125,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">Services</h4>
+            <h2 className="font-display font-semibold text-lg mb-6">Services</h2>
             <ul className="space-y-3">
               {footerLinks.services.map((link) => (
                 <li key={link.name}>
@@ -140,9 +141,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold text-lg mb-6">
+            <h2 className="font-display font-semibold text-lg mb-6">
               Resources
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
@@ -162,29 +163,15 @@ export default function Footer() {
         <div className="bg-steel-800/50 rounded-2xl p-6 sm:p-8 mb-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="text-center lg:text-left w-full lg:w-auto">
-              <h4 className="font-display font-semibold text-lg mb-2">
+              <h2 className="font-display font-semibold text-lg mb-2">
                 Stay Updated
-              </h4>
+              </h2>
               <p className="text-steel-400 text-sm sm:text-base">
                 Subscribe to our newsletter for construction insights and
                 updates.
               </p>
             </div>
-            <form className="flex flex-col sm:flex-row w-full lg:w-auto gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 sm:flex-initial lg:w-72 px-4 sm:px-5 py-3 rounded-lg bg-steel-700 border border-steel-600 text-white placeholder-steel-400 focus:border-primary-500 focus:outline-none transition-colors text-sm sm:text-base"
-              />
-              <motion.button
-                type="submit"
-                className="w-full sm:w-auto px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-semibold transition-colors whitespace-nowrap text-sm sm:text-base"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Subscribe
-              </motion.button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
 
@@ -202,7 +189,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="w-10 h-10 rounded-lg bg-steel-800 flex items-center justify-center text-steel-400 hover:bg-primary-600 hover:text-white transition-all"
+                className="w-10 h-10 rounded-lg bg-steel-800 flex items-center justify-center text-steel-400 hover:bg-primary-600 hover:text-white transition-colors"
               >
                 <social.icon className="w-5 h-5" />
               </a>

@@ -71,7 +71,13 @@ export default function SafeImage({
           setLoading(false);
         }}
         onLoad={() => setLoading(false)}
-        unoptimized={true} // Skip Next.js optimization for external images to avoid timeouts
+        // Optimisation was disabled for everything, to dodge timeouts when the
+        // Next optimiser fetches a slow third-party host. That reasoning only
+        // applies to remote images. Local files were being served unresized and
+        // unconverted for no reason, so they are optimised again here.
+        //
+        // The remote exemption disappears once the blog covers are self-hosted.
+        unoptimized={/^https?:\/\//.test(src)}
       />
     </>
   );

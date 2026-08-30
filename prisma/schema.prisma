@@ -1,0 +1,103 @@
+// PristiqBuild data layer.
+// Phase 2 scope: lead capture only. User/Note are here because the CRM in
+// Phase 5 reads from them and adding the relations later would mean a
+// second migration over live lead data.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Every enquiry the site collects, whatever form it came from.
+model Lead {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Who
+  name    String
+  email   String
+  phone   String?
+  company String?
+
+  // What they want
+  source      LeadSource
+  projectType String?
+  location    String?
+  budgetBand  String?
+  message     String?    @db.Text
+
+  /// Form-specific extras: calculator inputs, UTM params, referrer, user agent.
+  /// Keeps new forms from needing a migration.
+  payload Json?
+
+  // Pipeline. Unused until Phase 5, defaulted so Phase 2 does not care.
+  stage        LeadStage @default(NEW)
+  ownerId      String?
+  owner        User?     @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  notes        Note[]
+  nextActionAt DateTime?
+
+  // Delivery tracking, so a failed notification is visible rather than silent.
+  notifiedAt DateTime?
+
+  @@index([stage, createdAt])
+  @@index([source, createdAt])
+  @@index([email])
+}
+
+enum LeadSource {
+  CONTACT_FORM
+  QUOTE_FORM
+  CALCULATOR
+  NEWSLETTER
+  WHATSAPP
+}
+
+enum LeadStage {
+  NEW
+  CONTACTED
+  QUOTED
+  WON
+  LOST
+}
+
+/// Internal team member. Auth.js wires into this in Phase 5.
+model User {
+  id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
+  email         String    @unique
+  name          String?
+  image         String?
+  role          UserRole  @default(SALES)
+  emailVerified DateTime?
+
+  leads Lead[]
+  notes Note[]
+}
+
+enum UserRole {
+  ADMIN
+  SALES
+  EDITOR
+}
+
+/// Follow-up log against a lead.
+model Note {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  leadId String
+  lead   Lead   @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  body String @db.Text
+
+  @@index([leadId, createdAt])
+}
