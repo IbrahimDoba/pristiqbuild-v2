@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Traced, self-contained server build for the Docker image. Without this
+  // the container has to carry all of node_modules.
+  output: "standalone",
+
   /**
    * Security headers. The site previously sent none.
    *
