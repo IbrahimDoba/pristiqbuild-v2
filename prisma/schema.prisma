@@ -66,18 +66,31 @@ enum LeadStage {
   LOST
 }
 
-/// Internal team member. Auth.js wires into this in Phase 5.
+/// Internal team member. Signs in to /admin.
 model User {
-  id            String    @id @default(cuid())
-  createdAt     DateTime  @default(now())
-  email         String    @unique
-  name          String?
-  image         String?
-  role          UserRole  @default(SALES)
-  emailVerified DateTime?
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String  @unique
+  name  String?
+  image String?
+  role  UserRole @default(SALES)
+
+  /// bcrypt. Null means the account cannot sign in yet, which is how an
+  /// invited-but-not-activated user is represented.
+  passwordHash String?
+
+  /// Set on every successful sign-in, so a dormant account is visible.
+  lastLoginAt DateTime?
+
+  /// Lets an account be revoked without deleting it and orphaning its notes.
+  isActive Boolean @default(true)
 
   leads Lead[]
   notes Note[]
+
+  @@index([email])
 }
 
 enum UserRole {

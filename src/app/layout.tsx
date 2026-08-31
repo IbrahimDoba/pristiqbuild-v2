@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import StructuredData from "@/components/StructuredData";
-import MotionProvider from "@/components/MotionProvider";
 import Analytics from "@/components/Analytics";
 
 // Body face. Reads better than Inter at small sizes on mid-range Android,
@@ -133,16 +130,7 @@ export default function RootLayout({
       <body
         className={`${plexSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <MotionProvider>
-          <Navigation />
-          <main id="main-content" className="pt-20">
-            {children}
-          </main>
-          <Footer />
-        </MotionProvider>
+        {children}
       </body>
     </html>
   );
