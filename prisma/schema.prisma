@@ -87,8 +87,10 @@ model User {
   /// Lets an account be revoked without deleting it and orphaning its notes.
   isActive Boolean @default(true)
 
-  leads Lead[]
-  notes Note[]
+  leads    Lead[]
+  notes    Note[]
+  projects ProjectMember[]
+  expenses Expense[]
 
   @@index([email])
 }
@@ -121,4 +123,127 @@ model Note {
   body String @db.Text
 
   @@index([leadId, createdAt])
+}
+
+/// An internal job we are spending money on.
+///
+/// Deliberately unrelated to the five public project pages, which are
+/// hardcoded marketing pages with bespoke layouts. Most internal work never
+/// goes public, and finance should not depend on marketing copy.
+model Project {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  client   String?
+  location String?
+  status   ProjectStatus @default(ACTIVE)
+
+  startedAt DateTime?
+  endedAt   DateTime?
+
+  /// Total planned spend. Per-category planning lives in Budget.
+  /// numeric(14,2) rather than a float: binary floating point cannot represent
+  /// most decimal amounts exactly, and money must not drift.
+  budget Decimal? @db.Decimal(14, 2)
+
+  notes String? @db.Text
+
+  members  ProjectMember[]
+  expenses Expense[]
+  budgets  Budget[]
+
+  @@index([status, name])
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+/// Which managers may see a project's costs. Co-founders and admins see every
+/// project regardless and are not listed here.
+model ProjectMember {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+/// Money that has actually gone out.
+model Expense {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  amount   Decimal @db.Decimal(14, 2)
+  currency String  @default("NGN")
+
+  category    ExpenseCategory
+  vendor      String?
+  description String          @db.Text
+
+  /// When the money was spent, which is not when it was typed in.
+  spentAt DateTime
+
+  recordedById String?
+  recordedBy   User?   @relation(fields: [recordedById], references: [id], onDelete: SetNull)
+
+  receiptUrl String?
+
+  /// How the record was created. Kept so an AI-assisted entry can be found and
+  /// reviewed later if its parsing turns out to be wrong.
+  entryMethod EntryMethod @default(MANUAL)
+  /// The sentence the AI parsed, when it was one.
+  sourceText String? @db.Text
+
+  @@index([projectId, spentAt])
+  @@index([category, spentAt])
+  @@index([spentAt])
+}
+
+enum ExpenseCategory {
+  MATERIALS
+  LABOUR
+  EQUIPMENT
+  TRANSPORT
+  PERMITS
+  SUBCONTRACTOR
+  PROFESSIONAL_FEES
+  UTILITIES
+  OTHER
+}
+
+enum EntryMethod {
+  MANUAL
+  AI_ASSISTED
+}
+
+/// Planned spend for one category on one project.
+model Budget {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  category ExpenseCategory
+  amount   Decimal         @db.Decimal(14, 2)
+
+  @@unique([projectId, category])
 }
