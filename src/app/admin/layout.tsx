@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
-import { LayoutDashboard, Inbox, LogOut } from "lucide-react";
+import { LayoutDashboard, Inbox, LogOut, FolderKanban, Wallet, Users } from "lucide-react";
+import { sectionsFor, ROLES } from "@/lib/admin/permissions";
 
 export const metadata: Metadata = {
   title: "Admin | PristiqBuild",
@@ -32,19 +33,18 @@ export default async function AdminLayout({
           </Link>
 
           <nav className="flex items-center gap-1">
-            <NavLink href="/admin" icon={<LayoutDashboard className="w-4 h-4" />}>
-              Overview
-            </NavLink>
-            <NavLink href="/admin/leads" icon={<Inbox className="w-4 h-4" />}>
-              Leads
-            </NavLink>
+            {sectionsFor(session.user.role).map((section) => (
+              <NavLink key={section.href} href={section.href} icon={ICONS[section.href]}>
+                {section.label}
+              </NavLink>
+            ))}
           </nav>
 
           <div className="ml-auto flex items-center gap-4">
             <span className="hidden sm:block text-sm text-steel-600">
               {session.user.name ?? session.user.email}
               <span className="ml-2 text-xs uppercase tracking-wider text-steel-400">
-                {session.user.role}
+                {ROLES[session.user.role].label}
               </span>
             </span>
             <form
@@ -69,6 +69,14 @@ export default async function AdminLayout({
     </div>
   );
 }
+
+const ICONS: Record<string, React.ReactNode> = {
+  "/admin": <LayoutDashboard className="w-4 h-4" />,
+  "/admin/leads": <Inbox className="w-4 h-4" />,
+  "/admin/projects": <FolderKanban className="w-4 h-4" />,
+  "/admin/finance": <Wallet className="w-4 h-4" />,
+  "/admin/team": <Users className="w-4 h-4" />,
+};
 
 function NavLink({
   href,

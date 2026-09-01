@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import { authConfig } from "@/lib/auth.config";
+import { capabilityForPath, can } from "@/lib/admin/permissions";
 
 /**
  * Gate for /admin.
@@ -33,6 +34,14 @@ export default auth((req) => {
     // Send the visitor back where they were headed once they sign in.
     login.searchParams.set("from", pathname + req.nextUrl.search);
     return NextResponse.redirect(login);
+  }
+
+  // Signed in is not the same as allowed. A content specialist who types
+  // /admin/finance is authenticated and must still be turned away.
+  const needed = capabilityForPath(pathname);
+  const role = req.auth.user?.role;
+  if (needed && role && !can(role, needed)) {
+    return NextResponse.redirect(new URL("/admin?denied=1", req.url));
   }
 
   return NextResponse.next();

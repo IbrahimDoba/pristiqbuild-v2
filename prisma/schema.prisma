@@ -75,7 +75,7 @@ model User {
   email String  @unique
   name  String?
   image String?
-  role  UserRole @default(SALES)
+  role  UserRole @default(MANAGER)
 
   /// bcrypt. Null means the account cannot sign in yet, which is how an
   /// invited-but-not-activated user is represented.
@@ -93,10 +93,18 @@ model User {
   @@index([email])
 }
 
+/// Who someone is in the company. Capabilities are derived from this in
+/// lib/admin/permissions.ts rather than stored per user, so there is one place
+/// to read and change the rules.
 enum UserRole {
+  /// Full access, including the books and the team.
+  CO_FOUNDER
+  /// Same operational reach as a co-founder. Runs the business day to day.
   ADMIN
-  SALES
-  EDITOR
+  /// Leads and delivery. Sees costs only for projects they are assigned to.
+  MANAGER
+  /// Blog and site content. Never sees leads or money.
+  CONTENT_SPECIALIST
 }
 
 /// Follow-up log against a lead.

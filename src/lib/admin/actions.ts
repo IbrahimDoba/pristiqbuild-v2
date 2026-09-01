@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import { getDb } from "@/lib/db";
 import { LeadStage } from "@/generated/prisma/client";
 import { STAGES } from "@/lib/admin/leads";
+import { can, type Capability } from "@/lib/admin/permissions";
 
 /**
  * Every action re-checks the session.
@@ -13,14 +14,17 @@ import { STAGES } from "@/lib/admin/leads";
  * endpoint and is reachable independently of the page that rendered the form.
  * Relying on the middleware alone would leave these callable while signed out.
  */
-async function requireUser() {
+async function requireUser(capability: Capability) {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Not authenticated");
+  if (!can(session.user.role, capability)) {
+    throw new Error(`Not permitted: ${capability}`);
+  }
   return session.user;
 }
 
 export async function setLeadStage(leadId: string, stage: string) {
-  await requireUser();
+  await requireUser("leads:write");
 
   if (!STAGES.includes(stage as LeadStage)) {
     throw new Error(`Unknown stage: ${stage}`);
@@ -37,7 +41,7 @@ export async function setLeadStage(leadId: string, stage: string) {
 }
 
 export async function claimLead(leadId: string) {
-  const user = await requireUser();
+  const user = await requireUser("leads:write");
   await getDb().lead.update({
     where: { id: leadId },
     data: { ownerId: user.id },
@@ -47,7 +51,7 @@ export async function claimLead(leadId: string) {
 }
 
 export async function releaseLead(leadId: string) {
-  await requireUser();
+  await requireUser("leads:write");
   await getDb().lead.update({
     where: { id: leadId },
     data: { ownerId: null },
@@ -57,7 +61,7 @@ export async function releaseLead(leadId: string) {
 }
 
 export async function addNote(leadId: string, formData: FormData) {
-  const user = await requireUser();
+  const user = await requireUser("leads:write");
 
   const body = String(formData.get("body") ?? "").trim();
   if (!body) return;

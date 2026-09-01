@@ -21,8 +21,11 @@ if (!email || !email.includes("@")) {
   console.error("usage: node --env-file=.env scripts/create-admin.mjs <email> [name] [role]");
   process.exit(1);
 }
-if (!["ADMIN", "SALES", "EDITOR"].includes(role)) {
-  console.error(`role must be ADMIN, SALES or EDITOR (got "${role}")`);
+// Mirrors the UserRole enum in prisma/schema.prisma. This script cannot
+// import the generated TypeScript client, so the list is repeated here.
+const ROLES = ["CO_FOUNDER", "ADMIN", "MANAGER", "CONTENT_SPECIALIST"];
+if (!ROLES.includes(role)) {
+  console.error(`role must be one of ${ROLES.join(", ")} (got "${role}")`);
   process.exit(1);
 }
 if (!process.env.DATABASE_URL) {
