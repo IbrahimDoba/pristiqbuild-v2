@@ -4,7 +4,7 @@ export {
   CATEGORY_LABEL, CATEGORIES, STATUS_LABEL, STATUSES, naira, matchProject,
 } from "@/lib/admin/finance-constants";
 import { financeScope } from "@/lib/admin/permissions";
-import { ExpenseCategory, ProjectStatus, Prisma } from "@/generated/prisma/client";
+import { ExpenseCategory, Prisma } from "@/generated/prisma/client";
 import type { UserRole } from "@/generated/prisma/client";
 
 /** Prisma Decimal to a plain number, for display only. */

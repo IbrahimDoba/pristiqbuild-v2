@@ -22,7 +22,7 @@ export default async function FinancePage() {
   ]);
 
   const scoped = financeScope(user.role) === "assigned";
-  const aiAvailable = Boolean(process.env.ANTHROPIC_API_KEY);
+  const aiAvailable = Boolean(process.env.OPENAI_API_KEY);
   const remaining = summary.totalBudget - summary.totalSpend;
 
   return (
@@ -40,7 +40,7 @@ export default async function FinancePage() {
         <p className="flex items-start gap-3 rounded-2xl border border-steel-200 bg-white p-4 text-sm text-steel-600">
           <Sparkles className="w-4 h-4 text-steel-400 shrink-0 mt-0.5" aria-hidden="true" />
           <span>
-            The assistant is off because <code className="text-steel-800">ANTHROPIC_API_KEY</code> is
+            The assistant is off because <code className="text-steel-800">OPENAI_API_KEY</code> is
             not set. Expenses can still be entered by hand.
           </span>
         </p>

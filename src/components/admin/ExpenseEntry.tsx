@@ -103,8 +103,19 @@ export default function ExpenseEntry({
         </form>
       )}
 
-      <form key={formKey} action={runSave} className="grid sm:grid-cols-2 gap-4">
+      <form action={runSave} className="grid sm:grid-cols-2 gap-4">
         <input type="hidden" name="sourceText" value={draftState?.ok ? sourceText : ""} />
+
+        {/*
+          The key sits on the fields, never on the form.
+
+          Remounting is how a new draft, or a successful save, resets these
+          inputs in a single pass. Putting the key on the <form> would do that
+          too, but it would also tear down the element mid-submission and take
+          the in-flight action state with it. `contents` keeps the wrapper out
+          of the grid layout.
+        */}
+        <div key={formKey} className="contents">
 
         <Field label="Project" htmlFor="projectId">
           <select id="projectId" name="projectId" required defaultValue={initial.projectId} className={inputCls}>
@@ -135,6 +146,7 @@ export default function ExpenseEntry({
         <Field label="What it was for" htmlFor="description">
           <input id="description" name="description" required defaultValue={initial.description} className={inputCls} />
         </Field>
+        </div>
 
         <div className="sm:col-span-2 flex items-center gap-4">
           <button type="submit" disabled={saving} className="px-4 py-2 rounded-lg bg-primary-700 text-white text-sm font-semibold hover:bg-primary-800 disabled:opacity-70 active:translate-y-px transition-[background-color,transform]">
