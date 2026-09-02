@@ -20,5 +20,13 @@ else
   (cd "$PRISMA_DIR" && node node_modules/prisma/build/index.js migrate deploy)
 fi
 
+# Auth.js throws on a missing secret rather than degrading, so without this
+# every /admin request is a 500 with nothing in the response explaining why.
+# The public site is unaffected, which is exactly what makes it easy to miss.
+if [ -z "$AUTH_SECRET" ]; then
+  echo "==> AUTH_SECRET is not set. The public site will serve, but /admin will"
+  echo "    return 500 on every request. Generate one with: openssl rand -base64 32"
+fi
+
 echo "==> starting next"
 exec "$@"

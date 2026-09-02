@@ -21,9 +21,17 @@ Required:
 | Variable | Note |
 |---|---|
 | `DATABASE_URL` | The internal URL. Without it the app starts but lead capture fails. |
+| `AUTH_SECRET` | Signs the admin session. `openssl rand -base64 32`. Without it the public site serves normally and every `/admin` request is a 500. Changing it signs everyone out. |
 | `LEAD_NOTIFY_TO` | Who receives lead emails. Comma-separated for several. |
 | `LEAD_NOTIFY_FROM` | Must be on a domain verified in Resend. |
 | `RESEND_API_KEY` | Omit and lead emails are logged to stdout instead of sent. |
+
+Optional:
+
+| Variable | Note |
+|---|---|
+| `OPENAI_API_KEY` | Turns on the assisted expense entry box. Without it the finance tab hides the box and says why; expenses are still entered by hand. |
+| `OPENAI_MODEL` | Defaults to `gpt-5-mini`, which is the right class for extraction. |
 
 The `NEXT_PUBLIC_*` variables are read at **build** time, so changing one needs
 a rebuild, not just a restart.
@@ -38,6 +46,26 @@ serving its first request. If `DATABASE_URL` is missing the entrypoint says so
 and still starts, rather than crash-looping.
 
 Health check is built in and hits `/robots.txt`.
+
+## 4. The first admin account
+
+Migrations create the `User` table; they do not put anyone in it. On a fresh
+database nobody can sign in, and the login page gives the same "those details
+did not match an active account" answer it gives a stranger, so this looks like
+a broken password rather than an empty table.
+
+`scripts/create-admin.mjs` is not in the image. Run it from a laptop against
+the database, which needs 5432 exposed as in section 1:
+
+```
+DATABASE_URL="postgresql://postgres:PASSWORD@SERVER_IP:MAPPED_PORT/postgres" \
+  pnpm admin:create you@example.com "Your Name" CO_FOUNDER
+```
+
+It prints a generated password once and stores only the bcrypt hash. Running it
+again for the same email resets that account rather than failing. Roles are
+`CO_FOUNDER`, `ADMIN`, `MANAGER`, `CONTENT_SPECIALIST`; what each one can reach
+is in `src/lib/admin/permissions.ts`. Close the exposed port afterwards.
 
 ## Notes for whoever maintains this
 
