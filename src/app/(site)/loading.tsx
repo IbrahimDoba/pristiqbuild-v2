@@ -1,5 +1,12 @@
 /**
- * Route-level loading state.
+ * Route-level loading state for the marketing site.
+ *
+ * This must stay inside (site) and never move up to src/app. At the root it
+ * wraps /admin too, and a Suspense boundary above an admin route breaks every
+ * server action that revalidates the page it was called from: in a production
+ * build the action's result reaches the browser and is never applied, so the
+ * form sits on "Saving…" for ever while the row is written. None of it
+ * reproduces in `next dev`.
  *
  * A skeleton in the shape of the page that is arriving, rather than a spinner:
  * it keeps the layout stable while the route streams in, which is the

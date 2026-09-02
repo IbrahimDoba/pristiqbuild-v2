@@ -1,9 +1,14 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
-// One client per process. Next.js reloads modules on every edit in dev, so
-// without the global cache each save would open a fresh connection pool and
-// eventually exhaust Postgres.
+// One client per process, in every environment.
+//
+// The familiar Next.js snippet caches only in development, because there the
+// concern is module reloading on each edit. That snippet also instantiates the
+// client once at module scope. This one resolves it through a function, which
+// callers invoke per query, so skipping the cache in production meant a new
+// PrismaClient and a new pg pool on every single call. Rendering the finance
+// page opens nine of them, none ever closed.
 const globalForPrisma = globalThis as unknown as {
   prisma?: ReturnType<typeof createClient>;
 };
@@ -33,11 +38,6 @@ function createClient() {
  * `next build`, which fails on any machine that builds without DATABASE_URL set.
  */
 export function getDb() {
-  const client = globalForPrisma.prisma ?? createClient();
-
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.prisma = client;
-  }
-
-  return client;
+  globalForPrisma.prisma ??= createClient();
+  return globalForPrisma.prisma;
 }
