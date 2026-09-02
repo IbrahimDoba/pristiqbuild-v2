@@ -3,7 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Traced, self-contained server build for the Docker image. Without this
   // the container has to carry all of node_modules.
-  output: "standalone",
+  //
+  // Off on Vercel, which builds and packages the app its own way and does not
+  // support this mode: it sets VERCEL=1 in the build environment. The repo has
+  // to satisfy both targets while the domain is still served from Vercel and
+  // Dokploy is being brought up, and every production deploy since this option
+  // was introduced has failed.
+  output: process.env.VERCEL ? undefined : "standalone",
 
   /**
    * Security headers. The site previously sent none.
