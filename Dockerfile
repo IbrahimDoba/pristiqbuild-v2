@@ -34,6 +34,14 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 FROM base AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
+
+# Analytics is a server component, so this looks like a runtime variable, but
+# most of the site is prerendered: with a value set it is baked into 482 files
+# of HTML and RSC payload during the build. Setting it on the running service
+# would only reach whatever renders on demand. It has to be a build argument.
+# Left empty the component returns null, which is the intended default.
+ARG NEXT_PUBLIC_GA_MEASUREMENT_ID=""
+ENV NEXT_PUBLIC_GA_MEASUREMENT_ID=$NEXT_PUBLIC_GA_MEASUREMENT_ID
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # No DATABASE_URL here. The build must not need one: verified by building with

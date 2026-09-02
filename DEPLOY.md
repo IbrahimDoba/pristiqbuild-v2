@@ -33,8 +33,12 @@ Optional:
 | `OPENAI_API_KEY` | Turns on the assisted expense entry box. Without it the finance tab hides the box and says why; expenses are still entered by hand. |
 | `OPENAI_MODEL` | Defaults to `gpt-5-mini`, which is the right class for extraction. |
 
-The `NEXT_PUBLIC_*` variables are read at **build** time, so changing one needs
-a rebuild, not just a restart.
+`NEXT_PUBLIC_*` variables are resolved at **build** time, and in a container the
+build happens inside the image. The only one the code reads is
+`NEXT_PUBLIC_GA_MEASUREMENT_ID`; most of the site is prerendered, so a value set
+at build time is baked into 482 files of HTML and RSC payload. It is wired as a
+Docker build argument — set it under the service's **build arguments**, not its
+environment, and redeploy. Setting it on the running service does nothing.
 
 ## 3. Deploy
 
@@ -66,6 +70,100 @@ It prints a generated password once and stores only the bcrypt hash. Running it
 again for the same email resets that account rather than failing. Roles are
 `CO_FOUNDER`, `ADMIN`, `MANAGER`, `CONTENT_SPECIALIST`; what each one can reach
 is in `src/lib/admin/permissions.ts`. Close the exposed port afterwards.
+
+## 5. Cutting over from Vercel
+
+Where things stand: DNS is at Namecheap, the apex is an `A` to `76.76.21.21`
+and `www` is a `CNAME` to `cname.vercel-dns.com`, both Vercel. Vercel's
+production deploys have failed on every push since 30 August, so the live site
+is a build from February and none of the lead capture, admin or finance work is
+on it.
+
+The order below matters. Prove Dokploy on a URL nobody depends on, then move
+DNS, then switch Vercel off. Doing the last step first takes the site down.
+
+### 5.1 Lower the TTL, ideally a day ahead
+
+`www` is on a 30 minute TTL, so without this a mistake takes 30 minutes to walk
+back. In Namecheap: **Domain List → Manage → Advanced DNS**, set TTL to 1 min on
+both records and leave it. Wait out the old 30 minutes before cutting over.
+
+### 5.2 Prove the app on Dokploy first
+
+Create the app service from GitHub, branch `master`, build type Dockerfile. Set
+the variables from section 2, and the build argument from section 2 if you want
+analytics. Deploy, and watch the logs for:
+
+```
+==> applying migrations
+==> starting next
+```
+
+If `AUTH_SECRET` or `DATABASE_URL` are missing the entrypoint says so there.
+
+Dokploy gives the service a URL of its own before any domain is attached. On
+that URL check three things: `/` loads, `/robots.txt` returns 200, and
+`/admin/login` shows the sign-in form. Then create the first account with
+section 4 and sign in.
+
+**Do not touch DNS until `/admin/login` works on that URL.**
+
+### 5.3 Attach the domains in Dokploy before changing DNS
+
+Service → **Domains** → add `pristiqbuild.com` and `www.pristiqbuild.com`, port
+3000, HTTPS on, Let's Encrypt.
+
+Add them first. Traefik answers the certificate challenge on the domain itself,
+so the route has to already exist when DNS starts pointing here; otherwise the
+first visitors arrive to a certificate error rather than a site.
+
+### 5.4 Change the records
+
+Namecheap → Advanced DNS. `SERVER_IP` is the Dokploy host's public IPv4, shown
+on its server page.
+
+Remove:
+
+| Type | Host | Value |
+|---|---|---|
+| A | @ | 76.76.21.21 |
+| CNAME | www | cname.vercel-dns.com |
+
+Add:
+
+| Type | Host | Value | TTL |
+|---|---|---|---|
+| A | @ | SERVER_IP | 1 min |
+| A | www | SERVER_IP | 1 min |
+
+`www` is a CNAME today, which is what answers both IPv4 and IPv6 lookups.
+Replacing it with an `A` record leaves no IPv6 answer at all, which is fine —
+what you must not do is leave the CNAME in place beside a new `A`.
+
+### 5.5 Watch it move
+
+```
+dig +short www.pristiqbuild.com
+curl -s -o /dev/null -w '%{http_code}\n' https://www.pristiqbuild.com/admin/login
+```
+
+`/admin/login` answering **200 instead of 404** is the signal that traffic is on
+the new build — that route does not exist in the February one. `curl -vI` should
+show a Let's Encrypt certificate.
+
+To roll back, put the two original records back. That is the whole rollback.
+
+### 5.6 Switch Vercel off, once traffic has moved
+
+Two Vercel projects, `pristiqbuild-v2` and `pristique-build`, are both building
+this repo and both failing on every push.
+
+1. Each project → **Settings → Domains** → remove `pristiqbuild.com` and `www`.
+2. Each project → **Settings → Git** → disconnect the repository. This stops the
+   failed deploys and their emails.
+
+Leave the projects themselves in place for a few days, until the new site has
+proven itself.
 
 ## Notes for whoever maintains this
 
