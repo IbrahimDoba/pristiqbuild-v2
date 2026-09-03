@@ -1,4 +1,111 @@
-# Deploying to Dokploy
+# Deploying
+
+Production is **Vercel for the app, Neon for the database**, decided 3 September
+2026. Part two keeps the Dokploy container path working, because it is built and
+tested and worth having if this ever needs to move onto a server.
+
+Whatever you are setting up, the outstanding credentials and decisions are
+tracked in [NEEDED-FROM-YOU.md](NEEDED-FROM-YOU.md).
+
+---
+
+# Part one: Vercel and Neon
+
+## 1. The database
+
+Neon, using the **pooled** connection string, the one with `-pooler` in the
+hostname and `?sslmode=require` on the end. Vercel runs the app as serverless
+functions, so connections are opened and dropped constantly; the pooled endpoint
+is what makes that survivable.
+
+Prisma talks to it through `@prisma/adapter-pg` over plain TCP, so no Neon
+specific driver is needed.
+
+## 2. Environment variables
+
+Vercel project → Settings → Environment Variables.
+
+| Variable | Scope | Note |
+|---|---|---|
+| `DATABASE_URL` | Production | The Neon pooled URL. Missing: the site serves, and every form answers "please call or email" instead of saving. |
+| `AUTH_SECRET` | Production | `openssl rand -base64 32`. Missing: the public site is perfect and every `/admin` request is a 500. Changing it signs everyone out. |
+| `LEAD_NOTIFY_TO` | Production | Who receives lead emails. Comma-separated for several. |
+| `LEAD_NOTIFY_FROM` | Production | Must be on a domain verified in Resend. |
+| `RESEND_API_KEY` | Production | Omit and lead emails are logged rather than sent. Leads are saved either way. |
+| `OPENAI_API_KEY` | Production | Turns on assisted expense entry. Without it the finance tab hides that box and explains why. |
+| `OPENAI_MODEL` | Production | Defaults to `gpt-5-mini`. Only set it for something larger. |
+
+**Set `DATABASE_URL` for Production only, at least to start.** Ticking Preview
+as well points every pull request build at the live database, which is how test
+records end up in real ones. Give previews their own Neon branch if you want
+them working.
+
+`NEXT_PUBLIC_GA_MEASUREMENT_ID` is the exception: most of the site is
+prerendered, so it is resolved during the build. On Vercel it works as a normal
+environment variable because Vercel builds on every deploy; in Docker it has to
+be a build argument.
+
+## 3. Migrations
+
+Vercel has no startup hook, and running migrations from the build command is a
+trap: every preview deploy would migrate whichever database it points at, and
+concurrent builds would race each other.
+
+Run them yourself, from this repository, once at setup and again whenever a
+migration is added:
+
+```
+DATABASE_URL="<neon pooled url>" pnpm db:deploy
+```
+
+`pnpm db:status` shows what has and has not been applied.
+
+## 4. The first admin account
+
+Migrations create the `User` table; they do not put anyone in it. On an empty
+table the login page answers a valid owner exactly as it answers a stranger, so
+this looks like a wrong password rather than an empty database.
+
+```
+DATABASE_URL="<neon pooled url>" \
+  pnpm admin:create you@example.com "Your Name" CO_FOUNDER
+```
+
+It prints a generated password once and stores only its bcrypt hash. Running it
+again for the same address resets that account rather than failing. Roles are
+`CO_FOUNDER`, `ADMIN`, `MANAGER` and `CONTENT_SPECIALIST`; what each reaches is
+in `src/lib/admin/permissions.ts`. Add everyone else from the Team tab.
+
+## 5. Check it
+
+```
+curl -s -o /dev/null -w '%{http_code}\n' https://www.pristiqbuild.com/admin/login
+```
+
+Then submit one real enquiry through the contact form and confirm it appears
+under Leads. That exercises the database, the migrations and the notification
+path together, which no amount of reading the config will.
+
+## Notes for whoever maintains this
+
+**`next.config.ts` disables `output: "standalone"` when `VERCEL` is set.** Vercel
+packages the app its own way and does not support that mode; the Dockerfile in
+part two needs it. One repository, both targets, keyed off the `VERCEL=1` that
+Vercel sets during its build.
+
+**Builds fail on dependency advisories.** Every deploy between 30 August and
+2 September 2026 failed on a single line: a vulnerable `next-mdx-remote`. The
+site served a build from February throughout, and nothing in the Vercel status
+API said why. If a build fails for no visible reason, run `pnpm audit` before
+assuming it is the code.
+
+---
+
+# Part two: Dokploy
+
+Not in use. Kept working, and verified as far as a machine without Docker
+allows. The runbook for moving the domain onto it is in the git history of this
+file, at the commit "Document the Vercel cutover".
 
 ## 1. Database
 
@@ -71,101 +178,8 @@ again for the same email resets that account rather than failing. Roles are
 `CO_FOUNDER`, `ADMIN`, `MANAGER`, `CONTENT_SPECIALIST`; what each one can reach
 is in `src/lib/admin/permissions.ts`. Close the exposed port afterwards.
 
-## 5. Cutting over from Vercel
 
-Where things stand: DNS is at Namecheap, the apex is an `A` to `76.76.21.21`
-and `www` is a `CNAME` to `cname.vercel-dns.com`, both Vercel. Vercel's
-production deploys have failed on every push since 30 August, so the live site
-is a build from February and none of the lead capture, admin or finance work is
-on it.
-
-The order below matters. Prove Dokploy on a URL nobody depends on, then move
-DNS, then switch Vercel off. Doing the last step first takes the site down.
-
-### 5.1 Lower the TTL, ideally a day ahead
-
-`www` is on a 30 minute TTL, so without this a mistake takes 30 minutes to walk
-back. In Namecheap: **Domain List → Manage → Advanced DNS**, set TTL to 1 min on
-both records and leave it. Wait out the old 30 minutes before cutting over.
-
-### 5.2 Prove the app on Dokploy first
-
-Create the app service from GitHub, branch `master`, build type Dockerfile. Set
-the variables from section 2, and the build argument from section 2 if you want
-analytics. Deploy, and watch the logs for:
-
-```
-==> applying migrations
-==> starting next
-```
-
-If `AUTH_SECRET` or `DATABASE_URL` are missing the entrypoint says so there.
-
-Dokploy gives the service a URL of its own before any domain is attached. On
-that URL check three things: `/` loads, `/robots.txt` returns 200, and
-`/admin/login` shows the sign-in form. Then create the first account with
-section 4 and sign in.
-
-**Do not touch DNS until `/admin/login` works on that URL.**
-
-### 5.3 Attach the domains in Dokploy before changing DNS
-
-Service → **Domains** → add `pristiqbuild.com` and `www.pristiqbuild.com`, port
-3000, HTTPS on, Let's Encrypt.
-
-Add them first. Traefik answers the certificate challenge on the domain itself,
-so the route has to already exist when DNS starts pointing here; otherwise the
-first visitors arrive to a certificate error rather than a site.
-
-### 5.4 Change the records
-
-Namecheap → Advanced DNS. `SERVER_IP` is the Dokploy host's public IPv4, shown
-on its server page.
-
-Remove:
-
-| Type | Host | Value |
-|---|---|---|
-| A | @ | 76.76.21.21 |
-| CNAME | www | cname.vercel-dns.com |
-
-Add:
-
-| Type | Host | Value | TTL |
-|---|---|---|---|
-| A | @ | SERVER_IP | 1 min |
-| A | www | SERVER_IP | 1 min |
-
-`www` is a CNAME today, which is what answers both IPv4 and IPv6 lookups.
-Replacing it with an `A` record leaves no IPv6 answer at all, which is fine —
-what you must not do is leave the CNAME in place beside a new `A`.
-
-### 5.5 Watch it move
-
-```
-dig +short www.pristiqbuild.com
-curl -s -o /dev/null -w '%{http_code}\n' https://www.pristiqbuild.com/admin/login
-```
-
-`/admin/login` answering **200 instead of 404** is the signal that traffic is on
-the new build — that route does not exist in the February one. `curl -vI` should
-show a Let's Encrypt certificate.
-
-To roll back, put the two original records back. That is the whole rollback.
-
-### 5.6 Switch Vercel off, once traffic has moved
-
-Two Vercel projects, `pristiqbuild-v2` and `pristique-build`, are both building
-this repo and both failing on every push.
-
-1. Each project → **Settings → Domains** → remove `pristiqbuild.com` and `www`.
-2. Each project → **Settings → Git** → disconnect the repository. This stops the
-   failed deploys and their emails.
-
-Leave the projects themselves in place for a few days, until the new site has
-proven itself.
-
-## Notes for whoever maintains this
+## Notes on the container build
 
 **`--node-linker=hoisted` in the deps stage is load-bearing.** With pnpm's
 default symlinked layout, Next's standalone tracer picked up 6 packages and
