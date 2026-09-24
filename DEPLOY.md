@@ -1,73 +1,105 @@
 # Deploying
 
-Production is **Vercel for the app, Neon for the database**, decided 3 September
-2026. Part two keeps the Dokploy container path working, because it is built and
-tested and worth having if this ever needs to move onto a server.
+Production is **Vercel for the app, the Dokploy Postgres for the database**.
+Part two keeps the whole-app container path, which is built and tested and is
+the better shape if this ever moves entirely onto the server.
 
-Whatever you are setting up, the outstanding credentials and decisions are
-tracked in [NEEDED-FROM-YOU.md](NEEDED-FROM-YOU.md).
+Outstanding credentials and decisions live in
+[NEEDED-FROM-YOU.md](NEEDED-FROM-YOU.md).
 
 ---
 
-# Part one: Vercel and Neon
+# Part one: Vercel, with the database on Dokploy
 
-## 1. The database
+Vercel runs outside Dokploy's network, so the database has to be reachable from
+the public internet. That is a real change in exposure, and the first two
+sections are what make it safe rather than merely working. Do them before
+pointing anything at it.
 
-Neon, using the **pooled** connection string, the one with `-pooler` in the
-hostname and `?sslmode=require` on the end. Vercel runs the app as serverless
-functions, so connections are opened and dropped constantly; the pooled endpoint
-is what makes that survivable.
+## 1. Give Postgres a certificate
 
-Prisma talks to it through `@prisma/adapter-pg` over plain TCP, so no Neon
-specific driver is needed.
+A `Lead` row holds a name, an email, a phone number and whatever the enquirer
+typed into the message box. Across the open internet that has to be encrypted,
+and the stock Postgres image ships with SSL **off**.
 
-## 2. Environment variables
+On the Dokploy host, generate a self-signed certificate. `CN` must match the
+hostname Vercel will connect to:
+
+```
+openssl req -new -x509 -days 3650 -nodes -text \
+  -out server.crt -keyout server.key \
+  -subj "/CN=db.pristiqbuild.com"
+
+chmod 600 server.key
+chown 999:999 server.key server.crt      # 999 is postgres inside the image
+```
+
+Mount both into the database service, then set its command:
+
+```
+postgres -c ssl=on \
+         -c ssl_cert_file=/var/lib/postgresql/server.crt \
+         -c ssl_key_file=/var/lib/postgresql/server.key
+```
+
+Keep `server.crt`. It is self-signed, so it is also its own CA, and it becomes
+`DATABASE_CA_CERT` below. Without that variable the app still encrypts but
+cannot verify what it is talking to, and it logs a warning saying exactly that.
+
+## 2. Publish the port, and pick a real password
+
+Expose 5432 on the host in the database service.
+
+Vercel does not offer fixed egress addresses on Hobby or Pro, so there is no
+useful IP allowlist to write: the password and the certificate are the whole
+defence. Set a long random one, and **do not reuse the current password** — it
+was pasted into a chat and should be treated as public.
+
+```
+openssl rand -base64 24
+```
+
+## 3. Environment variables
 
 Vercel project → Settings → Environment Variables.
 
 | Variable | Scope | Note |
 |---|---|---|
-| `DATABASE_URL` | Production | The Neon pooled URL. Missing: the site serves, and every form answers "please call or email" instead of saving. |
-| `AUTH_SECRET` | Production | `openssl rand -base64 32`. Missing: the public site is perfect and every `/admin` request is a 500. Changing it signs everyone out. |
+| `DATABASE_URL` | Production | `postgresql://postgres:PASSWORD@db.pristiqbuild.com:5432/postgres?sslmode=require` |
+| `DATABASE_CA_CERT` | Production | The full contents of `server.crt`, `BEGIN`/`END` lines included. Omit and the connection is encrypted but unauthenticated. |
+| `AUTH_SECRET` | Production | `openssl rand -base64 32`. Missing: the public site is perfect and every `/admin` request is a 500. |
 | `LEAD_NOTIFY_TO` | Production | Who receives lead emails. Comma-separated for several. |
 | `LEAD_NOTIFY_FROM` | Production | Must be on a domain verified in Resend. |
 | `RESEND_API_KEY` | Production | Omit and lead emails are logged rather than sent. Leads are saved either way. |
 | `OPENAI_API_KEY` | Production | Turns on assisted expense entry. Without it the finance tab hides that box and explains why. |
-| `OPENAI_MODEL` | Production | Defaults to `gpt-5-mini`. Only set it for something larger. |
+| `DATABASE_POOL_MAX` | Production | Optional. Connections per serverless instance, default 3. See section 6. |
 
-**Set `DATABASE_URL` for Production only, at least to start.** Ticking Preview
-as well points every pull request build at the live database, which is how test
-records end up in real ones. Give previews their own Neon branch if you want
-them working.
+**Set `DATABASE_URL` for Production only.** Ticking Preview points every pull
+request build at the live database, which is how test records end up in real
+ones.
 
-`NEXT_PUBLIC_GA_MEASUREMENT_ID` is the exception: most of the site is
-prerendered, so it is resolved during the build. On Vercel it works as a normal
-environment variable because Vercel builds on every deploy; in Docker it has to
-be a build argument.
-
-## 3. Migrations
+## 4. Migrations
 
 Vercel has no startup hook, and running migrations from the build command is a
-trap: every preview deploy would migrate whichever database it points at, and
-concurrent builds would race each other.
-
-Run them yourself, from this repository, once at setup and again whenever a
+trap: preview deploys would migrate whichever database they point at, and
+concurrent builds would race. Run them yourself, at setup and whenever a
 migration is added:
 
 ```
-DATABASE_URL="<neon pooled url>" pnpm db:deploy
+DATABASE_URL="postgresql://postgres:PASSWORD@db.pristiqbuild.com:5432/postgres?sslmode=require" \
+  pnpm db:deploy
 ```
 
 `pnpm db:status` shows what has and has not been applied.
 
-## 4. The first admin account
+## 5. The first admin account
 
 Migrations create the `User` table; they do not put anyone in it. On an empty
 table the login page answers a valid owner exactly as it answers a stranger, so
 this looks like a wrong password rather than an empty database.
 
 ```
-DATABASE_URL="<neon pooled url>" \
+DATABASE_URL="<same url>" \
   pnpm admin:create you@example.com "Your Name" CO_FOUNDER
 ```
 
@@ -76,28 +108,44 @@ again for the same address resets that account rather than failing. Roles are
 `CO_FOUNDER`, `ADMIN`, `MANAGER` and `CONTENT_SPECIALIST`; what each reaches is
 in `src/lib/admin/permissions.ts`. Add everyone else from the Team tab.
 
-## 5. Check it
+## 6. Connection limits
+
+Every concurrent serverless invocation is its own process with its own pool, so
+the ceiling is instances × `DATABASE_POOL_MAX`, against a Postgres default of
+`max_connections=100`. The app caps each pool at 3 and drops idle connections
+after ten seconds, which is comfortable at this site's traffic.
+
+If `too many clients already` ever appears in the logs, that is the signal to
+put PgBouncer in front rather than to raise the cap. Run it in **session** mode:
+transaction mode multiplexes better but breaks prepared statements, which the
+pg driver adapter uses.
+
+## 7. Check it
 
 ```
 curl -s -o /dev/null -w '%{http_code}\n' https://www.pristiqbuild.com/admin/login
 ```
 
 Then submit one real enquiry through the contact form and confirm it appears
-under Leads. That exercises the database, the migrations and the notification
-path together, which no amount of reading the config will.
+under Leads. That exercises TLS, the migrations, the connection path and the
+notification together, which no amount of reading config will.
 
 ## Notes for whoever maintains this
 
 **`next.config.ts` disables `output: "standalone"` when `VERCEL` is set.** Vercel
 packages the app its own way and does not support that mode; the Dockerfile in
-part two needs it. One repository, both targets, keyed off the `VERCEL=1` that
-Vercel sets during its build.
+part two needs it. One repository, both targets.
 
 **Builds fail on dependency advisories.** Every deploy between 30 August and
-2 September 2026 failed on a single line: a vulnerable `next-mdx-remote`. The
-site served a build from February throughout, and nothing in the Vercel status
-API said why. If a build fails for no visible reason, run `pnpm audit` before
+2 September 2026 failed on one line: a vulnerable `next-mdx-remote`. The site
+served a build from February throughout, and nothing in the Vercel status API
+said why. If a build fails for no visible reason, run `pnpm audit` before
 assuming it is the code.
+
+**`src/lib/db.ts` refuses to send a remote connection in clear text.** Anything
+that is not loopback or a dotless Docker service name gets TLS. That is why part
+two's internal `pristiqbuild-database-xxxx` hostname still works unencrypted
+inside Dokploy's own network, and why a public host does not.
 
 ---
 

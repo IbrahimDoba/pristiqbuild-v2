@@ -3,9 +3,11 @@
 Everything blocked on a decision, a credential or a fact only you have. Ordered
 by what it blocks, not by effort. Tick things off as they land.
 
-Deployment target, decided 3 September 2026: **frontend on Vercel, database on
-Neon.** The Dokploy container work stays in the repo and still builds, but
-nothing below assumes it.
+Deployment target: **frontend on Vercel, database on the Dokploy Postgres.**
+Because Vercel sits outside Dokploy's network, that database has to be published
+to the internet, which is why A1 and A2 below are about a certificate and a
+password rather than a connection string. The whole-app container path stays in
+the repo and still builds; see part two of DEPLOY.md.
 
 ---
 
@@ -16,14 +18,25 @@ The site is live and serving, but every contact form currently answers
 info@pristiqbuild.com." That is the fallback doing its job, not a crash. It
 stops the moment there is a database.
 
-- [ ] **A1. Create a Neon project and send me nothing.**
-  Copy the **pooled** connection string, the one with `-pooler` in the host. It
-  ends `?sslmode=require`. Keep it out of chat, email and screenshots.
+- [ ] **A1. Put a certificate on the Postgres container, and publish 5432.**
+  The stock Postgres image has SSL off, and a `Lead` row carries a name, an
+  email, a phone number and whatever the enquirer wrote. Unencrypted across the
+  open internet that is an NDPA problem, not just an untidy one. Exact commands
+  are in DEPLOY.md part one, section 1.
 
-- [ ] **A2. Set `DATABASE_URL` in Vercel.**
-  Project → Settings → Environment Variables. Set it for **Production** only to
-  begin with. If you also tick Preview, every pull request build points at the
-  live database, which is how test data ends up in real records.
+- [ ] **A1b. Set a new database password.** The current one was pasted into a
+  chat, and the database is about to be reachable from anywhere. With no fixed
+  Vercel egress addresses to allowlist, that password and the certificate are
+  the entire defence. `openssl rand -base64 24`.
+
+- [ ] **A2. Set `DATABASE_URL` and `DATABASE_CA_CERT` in Vercel.**
+  Project → Settings → Environment Variables, **Production** only. Ticking
+  Preview points every pull request build at the live database, which is how
+  test data ends up in real records.
+
+  `DATABASE_CA_CERT` is the contents of `server.crt` from A1. Without it the
+  connection is still encrypted, but the server is unverified and the app logs
+  a warning saying so on every cold start.
 
 - [ ] **A3. Set `AUTH_SECRET` in Vercel.**
   Generate it locally, never reuse one from anywhere else:
@@ -39,7 +52,7 @@ stops the moment there is a database.
   trap: preview deploys would migrate whatever database they point at. Run it
   yourself once, from this repo, and again whenever I add a migration:
   ```
-  DATABASE_URL="<your neon pooled url>" pnpm db:deploy
+  DATABASE_URL="postgresql://postgres:PASSWORD@db.pristiqbuild.com:5432/postgres?sslmode=require" pnpm db:deploy
   ```
 
 - [ ] **A5. Redeploy** in Vercel so the app picks up the new variables, then
@@ -88,7 +101,7 @@ Without these the finance tab is a working demo rather than your books.
 
   Yours gets created from your laptop, once:
   ```
-  DATABASE_URL="<your neon pooled url>" \
+  DATABASE_URL="<the same url as A4>" \
     pnpm admin:create you@example.com "Your Name" CO_FOUNDER
   ```
   It prints a password once and stores only a bcrypt hash. Everyone else you
@@ -124,21 +137,22 @@ Without these the finance tab is a working demo rather than your books.
   suggest Umami or Cloudflare Web Analytics instead: no cookie banner, no
   consent burden, and they do not slow the page down.
 
-  Note this one is set as a **build argument**, not an environment variable,
-  because the pages are prerendered.
+  On Vercel this is an ordinary environment variable, because Vercel rebuilds
+  on every deploy and the pages are prerendered during it. In the container path
+  it has to be a Docker build argument instead.
 
 ---
 
 ## E. Small decisions
 
 - [ ] **E1. The `feat/lead-capture` branch on GitHub is stale.** It still has
-  the vulnerable `next-mdx-remote` 5.0.0 that broke every build from 30 August
-  until yesterday. Anything built from it fails the same way. Delete it, or I
-  bring it up to master?
+  the vulnerable `next-mdx-remote` 5.0.0 that broke every build between
+  30 August and 2 September. Anything built from it fails the same way. Delete
+  it, or I bring it up to master?
 
-- [ ] **E2. Rotate the Postgres password** from the Dokploy database, if you
-  keep that server for anything. It was pasted into a chat and should be treated
-  as public.
+- [ ] **E2. Rotate the Higgsfield keys** in `.env`, if that account still
+  matters. They have been sitting in a working file for weeks. The Postgres
+  password is covered by A1b, which is now blocking rather than optional.
 
 ---
 
