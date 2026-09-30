@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { Home, ArrowLeft, Search, HardHat, Mail } from "lucide-react";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 export default function NotFound() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -230,7 +231,7 @@ export default function NotFound() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <a
-                    href="tel:+2348130272706"
+                    href={PHONE_HREF}
                     className="flex items-center gap-4 p-5 bg-steel-50 rounded-2xl hover:bg-primary-50 transition-colors group"
                   >
                     <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
@@ -251,7 +252,7 @@ export default function NotFound() {
                     <div>
                       <div className="text-sm text-steel-500">Call Us</div>
                       <div className="font-semibold text-steel-900">
-                        +234 813 027 2706
+                        {PHONE_DISPLAY}
                       </div>
                     </div>
                   </a>

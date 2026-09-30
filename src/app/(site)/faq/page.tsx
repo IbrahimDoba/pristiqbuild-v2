@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { ChevronDown, Search, MessageCircle, Phone, Mail } from "lucide-react";
 import Link from "next/link";
+import { PHONE_HREF } from "@/lib/site-config";
 
 
 export default function FAQPage() {
@@ -211,7 +212,7 @@ export default function FAQPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="tel:+2348130272706"
+                href={PHONE_HREF}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-700 rounded-lg font-semibold hover:bg-steel-50 transition-colors"
               >
                 <Phone size={20} />

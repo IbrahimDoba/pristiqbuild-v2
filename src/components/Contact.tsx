@@ -15,13 +15,14 @@ import {
 } from "lucide-react";
 import { useLeadForm } from "@/lib/leads/use-lead-form";
 import HoneypotField from "@/components/forms/HoneypotField";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    value: "+234 813 027 2706",
-    href: "tel:+2348130272706",
+    value: PHONE_DISPLAY,
+    href: PHONE_HREF,
   },
   {
     icon: Mail,

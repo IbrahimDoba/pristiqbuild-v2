@@ -13,6 +13,7 @@ import {
   FileText,
   Phone
 } from "lucide-react";
+import { PHONE_HREF } from "@/lib/site-config";
 
 export default function CostCalculatorPage() {
   const [projectType, setProjectType] = useState<string>("");
@@ -414,7 +415,7 @@ export default function CostCalculatorPage() {
                 Request Detailed Quote
               </Link>
               <Link
-                href="tel:+2348130272706"
+                href={PHONE_HREF}
                 className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
               >
                 <Phone className="w-6 h-6" />

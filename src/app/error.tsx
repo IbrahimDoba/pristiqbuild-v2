@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { AlertTriangle, RotateCcw, Phone } from "lucide-react";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 /**
  * Route-level error boundary.
@@ -49,11 +50,11 @@ export default function Error({
             Try again
           </button>
           <a
-            href="tel:+2348130272706"
+            href={PHONE_HREF}
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-primary-700 text-primary-700 font-semibold hover:bg-primary-700 hover:text-white active:translate-y-px transition-[color,background-color,transform]"
           >
             <Phone className="w-4 h-4" />
-            Call +234 813 027 2706
+            Call {PHONE_DISPLAY}
           </a>
         </div>
 

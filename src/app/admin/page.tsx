@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getDb } from "@/lib/db";
+import { auth } from "@/lib/auth";
+import { can } from "@/lib/admin/permissions";
 import {
   leadStats,
   STAGES,
@@ -12,6 +14,21 @@ import { AlertTriangle, ArrowRight } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function AdminOverview() {
+  // The proxy lets every signed-in role reach /admin, so the lead data on this
+  // page has to be gated here. A content specialist sees no names or emails.
+  const session = await auth();
+  const role = session?.user?.role;
+  if (!role || !can(role, "leads:read")) {
+    return (
+      <div className="space-y-2">
+        <h1 className="font-display font-bold text-2xl text-steel-900">Overview</h1>
+        <p className="text-steel-600">
+          Use the sections above. Lead data is only visible to roles that handle enquiries.
+        </p>
+      </div>
+    );
+  }
+
   const [stats, recent] = await Promise.all([
     leadStats(),
     getDb().lead.findMany({

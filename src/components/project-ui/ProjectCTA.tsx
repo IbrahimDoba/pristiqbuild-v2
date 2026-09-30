@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { Phone, Mail, ArrowRight } from "lucide-react";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 interface ProjectCTAProps {
   title?: string;
@@ -85,11 +86,11 @@ export default function ProjectCTA({
           {showContact && (
             <div className="flex flex-col sm:flex-row gap-6 justify-center text-white/80">
               <a
-                href="tel:+2348130272706"
+                href={PHONE_HREF}
                 className="inline-flex items-center gap-2 hover:text-white transition-colors"
               >
                 <Phone className="w-5 h-5 text-secondary-400" />
-                <span>+234 813 027 2706</span>
+                <span>{PHONE_DISPLAY}</span>
               </a>
               <a
                 href="mailto:info@pristiqbuild.com"

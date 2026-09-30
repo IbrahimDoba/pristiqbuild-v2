@@ -159,7 +159,7 @@ export async function POST(request: Request) {
       {
         ok: false,
         error:
-          "We could not save your message. Please call +234 813 027 2706 or email info@pristiqbuild.com.",
+          "We could not save your message. Please call +234 708 718 3815 or email info@pristiqbuild.com.",
       },
       { status: 500 }
     );

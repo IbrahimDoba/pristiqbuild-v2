@@ -12,6 +12,7 @@ import {
   ArrowUp,
 } from "lucide-react";
 import NewsletterForm from "@/components/forms/NewsletterForm";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 const footerLinks = {
   company: [
@@ -83,11 +84,11 @@ export default function Footer() {
             {/* Contact Info */}
             <div className="space-y-3">
               <a
-                href="tel:+2348130272706"
+                href={PHONE_HREF}
                 className="flex items-center gap-3 text-steel-400 hover:text-white transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span>+234 813 027 2706</span>
+                <span>{PHONE_DISPLAY}</span>
               </a>
               <a
                 href="mailto:info@pristiqbuild.com"

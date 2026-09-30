@@ -6,6 +6,7 @@ import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 /**
  * Hrefs are absolute (`/#section`), not bare fragments.
@@ -131,11 +132,11 @@ export default function Navigation() {
         <div className="container-custom flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
             <a
-              href="tel:+2348130272706"
+              href={PHONE_HREF}
               className="flex items-center gap-2 hover:text-primary-300 transition-colors"
             >
               <Phone size={14} />
-              <span>+234 813 027 2706</span>
+              <span>{PHONE_DISPLAY}</span>
             </a>
             <a
               href="mailto:info@pristiqbuild.com"
@@ -448,11 +449,11 @@ export default function Navigation() {
                 {/* Mobile Contact Info */}
                 <div className="border-t border-steel-200 pt-6 space-y-4">
                   <a
-                    href="tel:+2348130272706"
+                    href={PHONE_HREF}
                     className="flex items-center gap-3 text-steel-600 hover:text-primary-700"
                   >
                     <Phone size={18} />
-                    <span>+234 813 027 2706</span>
+                    <span>{PHONE_DISPLAY}</span>
                   </a>
                   <a
                     href="mailto:info@pristiqbuild.com"

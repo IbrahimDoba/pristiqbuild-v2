@@ -1,90 +1,79 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   Phone,
   Mail,
   MapPin,
   Clock,
   Send,
-  MessageSquare,
-  Calendar,
-  Building2,
+  MessageCircle,
   CheckCircle,
   AlertCircle,
 } from "lucide-react";
 import { useLeadForm } from "@/lib/leads/use-lead-form";
 import HoneypotField from "@/components/forms/HoneypotField";
 import FieldError from "@/components/forms/FieldError";
+import {
+  EMAIL,
+  LOCATION,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  RESPONSE_TIME,
+  WA,
+  whatsappLink,
+} from "@/lib/site-config";
 
-const contactMethods = [
-  {
-    icon: Phone,
-    title: "Call Us",
-    details: "+234 813 027 2706",
-    description: "Mon-Fri from 8am to 6pm",
-    action: "tel:+2348130272706",
-    actionText: "Call Now",
-  },
-  {
-    icon: Mail,
-    title: "Email Us",
-    details: "info@pristiqbuild.com",
-    description: "We'll respond within 24 hours",
-    action: "mailto:info@pristiqbuild.com",
-    actionText: "Send Email",
-  },
-  {
-    icon: MapPin,
-    title: "Visit Our Office",
-    details: "Murjanatu House, 1 Zambezi Crescent",
-    description: "Wuse, Abuja, Nigeria",
-    action: "https://maps.google.com/?q=Zambezi+Crescent+Wuse+Abuja",
-    actionText: "Get Directions",
-  },
-  {
-    icon: Calendar,
-    title: "Schedule a Meeting",
-    details: "Book a consultation",
-    description: "Meet with our experts",
-    action: "#schedule",
-    actionText: "Book Now",
-  },
+const PROJECT_TYPES = [
+  "LGS Roofing",
+  "Steel-Frame Construction",
+  "Modular Construction",
+  "Property Development",
+  "Not sure yet",
 ];
 
-const officeHours = [
-  { day: "Monday - Friday", hours: "8:00 AM - 6:00 PM" },
-  { day: "Saturday", hours: "9:00 AM - 2:00 PM" },
-  { day: "Sunday", hours: "Closed" },
+const STAGES = [
+  "Just exploring",
+  "Have drawings",
+  "Ready to start",
+  "Site in progress",
 ];
+
+const BUDGETS = [
+  { value: "under-10m", label: "Under ₦10M" },
+  { value: "10m-25m", label: "₦10M - ₦25M" },
+  { value: "25m-50m", label: "₦25M - ₦50M" },
+  { value: "50m-100m", label: "₦50M - ₦100M" },
+  { value: "over-100m", label: "Over ₦100M" },
+];
+
+const EMPTY = {
+  name: "",
+  email: "",
+  phone: "",
+  location: "",
+  projectType: "",
+  stage: "",
+  scope: "",
+  budget: "",
+  message: "",
+};
+
+const inputClass =
+  "w-full px-4 py-3 rounded-lg border border-steel-300 bg-white focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors";
+const labelClass = "block text-sm font-medium text-steel-700 mb-2";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    projectType: "",
-    location: "",
-    budget: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState(EMPTY);
   const { submit, reset, isSubmitting, isSubmitted, error, fieldErrors } =
     useLeadForm();
-
-  // The scrubbed fade that used to live here made every section drift in as
-  // the visitor scrolled. It communicated nothing, delayed the contact details
-  // people came for, and tied paint work to the scroll position. Removed.
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -99,451 +88,329 @@ export default function ContactPage() {
       website: typeof website === "string" ? website : "",
     });
 
-    // Clear the fields but leave the confirmation on screen. The previous
-    // build reset it after three seconds, which wiped the message before a
-    // visitor had finished reading it.
-    if (sent) {
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        projectType: "",
-        location: "",
-        budget: "",
-        message: "",
-      });
-    }
+    // Clear the fields but leave the confirmation on screen until the
+    // visitor chooses to send another.
+    if (sent) setFormData(EMPTY);
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
-        <div className="absolute inset-0 opacity-10">
-          <div className="grid-pattern absolute inset-0" />
-        </div>
-
-        <div className="container-custom relative z-10 py-32 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+      {/* Intro */}
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
+          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+            Contact
+          </p>
+          <h1 className="heading-xl max-w-3xl mb-6">
+            Tell us the scope and the site.
+          </h1>
+          <p className="body-lg text-white/85 max-w-2xl mb-10">
+            WhatsApp is usually the fastest way to reach us. We typically reply
+            within a few hours. Prefer email or a form? Use the one below
+            instead.
+          </p>
+          <a
+            href={whatsappLink(WA.general)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
           >
-            <h1 className="heading-xl text-white mb-6">
-              Let&apos;s Build Your
-              <br />
-              <span className="text-secondary-400">Dream Project Together</span>
-            </h1>
-            <p className="body-lg text-white/90 max-w-3xl mx-auto">
-              Ready to experience the future of construction? Get in touch with
-              our team and let&apos;s discuss how we can bring your vision to
-              life.
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
-      </section>
-
-      {/* Contact Methods */}
-      <section className="section-padding bg-white" aria-labelledby="contact-methods">
-        <div className="container-custom">
-          <h2 id="contact-methods" className="sr-only">
-            Ways to reach us
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactMethods.map((method, index) => (
-              <motion.div
-                key={method.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white border-2 border-steel-100 rounded-2xl p-6 hover:border-primary-300 hover:shadow-lg transition-[color,background-color,border-color,box-shadow] group"
-              >
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4 group-hover:bg-primary-700 group-hover:text-white transition-colors">
-                  <method.icon size={28} />
-                </div>
-                <h3 className="font-display font-semibold text-lg text-steel-900 mb-2">
-                  {method.title}
-                </h3>
-                <p className="text-primary-700 font-medium mb-1">
-                  {method.details}
-                </p>
-                <p className="text-steel-500 text-sm mb-4">
-                  {method.description}
-                </p>
-                <a
-                  href={method.action}
-                  className="text-primary-700 font-semibold text-sm hover:text-primary-800 transition-colors inline-flex items-center gap-2"
-                >
-                  {method.actionText}
-                  <span className="group-hover:translate-x-1 transition-transform">
-                    →
-                  </span>
-                </a>
-              </motion.div>
-            ))}
-          </div>
+            <MessageCircle size={20} aria-hidden="true" />
+            Chat on WhatsApp
+          </a>
         </div>
       </section>
 
-      {/* Main Content - Form & Info */}
       <section className="section-padding bg-steel-50">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl p-8 md:p-10 shadow-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-lg bg-primary-700 flex items-center justify-center">
-                  <MessageSquare className="text-white" size={24} />
-                </div>
-                <div>
-                  <h2 className="heading-md text-steel-900">Get a Quote</h2>
-                  <p className="text-steel-600 text-sm">
-                    Fill out the form below
-                  </p>
-                </div>
-              </div>
+        <div className="container-custom grid lg:grid-cols-[1fr_22rem] gap-10">
+          {/* Form */}
+          <div className="bg-white rounded-2xl border border-steel-200 p-6 md:p-10">
+            <h2 className="heading-md text-steel-900 mb-1">Project details</h2>
+            <p className="text-steel-600 text-sm mb-8">
+              Fields marked * are required.
+            </p>
 
-              {isSubmitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="py-16 text-center"
+            {isSubmitted ? (
+              <div className="py-16 text-center" role="status">
+                <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="text-green-600" size={40} aria-hidden="true" />
+                </div>
+                <h3 className="heading-sm text-steel-900 mb-2">
+                  Thank you, we have your details.
+                </h3>
+                <p className="text-steel-600 mb-6">
+                  Someone from the team will get back to you, {RESPONSE_TIME}.
+                </p>
+                <button
+                  onClick={reset}
+                  className="text-primary-700 font-medium hover:text-primary-800"
                 >
-                  <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle className="text-green-600" size={40} />
-                  </div>
-                  <h3 className="heading-sm text-steel-900 mb-2">
-                    Thank You!
-                  </h3>
-                  <p className="text-steel-600 mb-6">
-                    We&apos;ve received your message and will get back to you
-                    within 24 hours.
-                  </p>
-                  <button
-                    onClick={reset}
-                    className="text-primary-700 font-medium hover:text-primary-800"
+                  Send another enquiry
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <HoneypotField />
+
+                {error && (
+                  <div
+                    role="alert"
+                    className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
                   >
-                    Send another message
-                  </button>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                  <HoneypotField />
+                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" aria-hidden="true" />
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
 
-                  {error && (
-                    <div
-                      role="alert"
-                      className="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-800"
-                    >
-                      <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-                      <p className="text-sm">{error}</p>
-                    </div>
-                  )}
+                <div>
+                  <label htmlFor="name" className={labelClass}>
+                    Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className={inputClass}
+                    placeholder="Adaeze Okonkwo…"
+                    autoComplete="name"
+                  />
+                  <FieldError name="name" errors={fieldErrors} />
+                </div>
 
-                  {/* Name */}
+                <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-steel-700 mb-2"
-                    >
-                      Full Name *
+                    <label htmlFor="phone" className={labelClass}>
+                      Phone *
                     </label>
                     <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                      placeholder="Adaeze Okonkwo"
-                        autoComplete="name"
-                      />
-                      <FieldError name="name" errors={fieldErrors} />
+                      className={inputClass}
+                      placeholder="+234 800 000 0000…"
+                      autoComplete="tel"
+                      inputMode="tel"
+                    />
+                    <FieldError name="phone" errors={fieldErrors} />
                   </div>
-
-                  {/* Email & Phone */}
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-medium text-steel-700 mb-2"
-                      >
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                        placeholder="adaeze@example.com"
-                        autoComplete="email" spellCheck={false} inputMode="email"
-                      />
-                        <FieldError name="email" errors={fieldErrors} />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="phone"
-                        className="block text-sm font-medium text-steel-700 mb-2"
-                      >
-                        Phone Number *
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                        placeholder="+234 XXX XXX XXXX"
-                        autoComplete="tel" inputMode="tel"
-                      />
-                        <FieldError name="phone" errors={fieldErrors} />
-                    </div>
-                  </div>
-
-                  {/* Project Type */}
                   <div>
-                    <label
-                      htmlFor="projectType"
-                      className="block text-sm font-medium text-steel-700 mb-2"
-                    >
-                      Project Type *
+                    <label htmlFor="email" className={labelClass}>
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={inputClass}
+                      placeholder="adaeze@example.com…"
+                      autoComplete="email"
+                      spellCheck={false}
+                      inputMode="email"
+                    />
+                    <FieldError name="email" errors={fieldErrors} />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="location" className={labelClass}>
+                    Location
+                  </label>
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    className={inputClass}
+                    placeholder="e.g. Maitama, Abuja…"
+                    autoComplete="address-level2"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="projectType" className={labelClass}>
+                      Project type
                     </label>
                     <select
                       id="projectType"
                       name="projectType"
                       value={formData.projectType}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
+                      className={inputClass}
                     >
-                      <option value="">Select project type</option>
-                      <option value="residential">Residential Building</option>
-                      <option value="commercial">Commercial Building</option>
-                      <option value="industrial">Industrial Facility</option>
-                      <option value="roofing">Roofing Project</option>
-                      <option value="estate">Estate Development</option>
-                      <option value="other">Other</option>
+                      <option value="">Select one</option>
+                      {PROJECT_TYPES.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
                     </select>
                   </div>
-
-                  {/* Location */}
                   <div>
-                    <label
-                      htmlFor="location"
-                      className="block text-sm font-medium text-steel-700 mb-2"
+                    <label htmlFor="stage" className={labelClass}>
+                      Current stage
+                    </label>
+                    <select
+                      id="stage"
+                      name="stage"
+                      value={formData.stage}
+                      onChange={handleChange}
+                      className={inputClass}
                     >
-                      Project Location *
+                      <option value="">Select one</option>
+                      {STAGES.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="scope" className={labelClass}>
+                      Approximate size / scope
                     </label>
                     <input
                       type="text"
-                      id="location"
-                      name="location"
-                      value={formData.location}
+                      id="scope"
+                      name="scope"
+                      value={formData.scope}
                       onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
-                      placeholder="e.g., Abuja, Lagos, Port Harcourt"
-                        autoComplete="address-level2"
-                      />
+                      className={inputClass}
+                      placeholder="e.g. 450 sqm roof, 4-bed duplex…"
+                    />
+                    <FieldError name="scope" errors={fieldErrors} />
                   </div>
-
-                  {/* Budget */}
                   <div>
-                    <label
-                      htmlFor="budget"
-                      className="block text-sm font-medium text-steel-700 mb-2"
-                    >
-                      Estimated Budget
+                    <label htmlFor="budget" className={labelClass}>
+                      Budget range
                     </label>
                     <select
                       id="budget"
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors"
+                      className={inputClass}
                     >
-                      <option value="">Select budget range</option>
-                      <option value="under-10m">Under ₦10M</option>
-                      <option value="10m-25m">₦10M - ₦25M</option>
-                      <option value="25m-50m">₦25M - ₦50M</option>
-                      <option value="50m-100m">₦50M - ₦100M</option>
-                      <option value="over-100m">Over ₦100M</option>
+                      <option value="">Select one</option>
+                      {BUDGETS.map((b) => (
+                        <option key={b.value} value={b.value}>
+                          {b.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
-
-                  {/* Message */}
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-medium text-steel-700 mb-2"
-                    >
-                      Project Details *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="w-full px-4 py-3 rounded-lg border border-steel-300 focus:border-primary-600 focus:ring-2 focus:ring-primary-100 outline-none transition-colors resize-none"
-                      placeholder="Tell us about your project, timeline, and any specific requirements…"
-                    />
-                  </div>
-
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full px-8 py-4 bg-primary-700 text-white rounded-lg font-semibold hover:bg-primary-800 transition-colors disabled:bg-steel-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send size={20} />
-                        Send Message
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-
-            {/* Additional Information */}
-            <div className="space-y-8">
-              {/* Office Hours */}
-              <div className="bg-white rounded-2xl p-8 shadow-lg">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-secondary-50 flex items-center justify-center">
-                    <Clock className="text-secondary-600" size={24} />
-                  </div>
-                  <h3 className="heading-sm text-steel-900">Office Hours</h3>
                 </div>
-                <div className="space-y-3">
-                  {officeHours.map((schedule) => (
-                    <div
-                      key={schedule.day}
-                      className="flex items-center justify-between py-2 border-b border-steel-100 last:border-0"
-                    >
-                      <span className="text-steel-700">{schedule.day}</span>
-                      <span className="font-semibold text-primary-700">
-                        {schedule.hours}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
-              {/* Location Info */}
-              <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-8 text-white">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center">
-                    <Building2 className="text-white" size={24} />
-                  </div>
-                  <h3 className="heading-sm">Visit Our Office</h3>
+                <div>
+                  <label htmlFor="message" className={labelClass}>
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    className={`${inputClass} resize-none`}
+                    placeholder="Anything else we should know: timeline, drawings, site access…"
+                  />
+                  <FieldError name="message" errors={fieldErrors} />
                 </div>
-                <p className="text-white/90 mb-6">
-                  Come see our showroom featuring sample modules, material
-                  selections, and AR/VR demonstrations of completed projects.
-                </p>
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="shrink-0 mt-1" size={20} />
-                    <div>
-                      <p className="font-medium">Murjanatu House</p>
-                      <p className="text-white/80 text-sm">
-                        1 Zambezi Crescent, Wuse
-                        <br />
-                        Abuja, Nigeria
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <a
-                  href="https://maps.google.com/?q=Zambezi+Crescent+Wuse+Abuja"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary-700 rounded-lg font-semibold hover:bg-steel-50 transition-colors"
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-4 bg-primary-700 text-white rounded-lg font-semibold hover:bg-primary-800 transition-colors disabled:bg-steel-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  <MapPin size={20} />
-                  Get Directions
-                </a>
-              </div>
-
-              {/* Quick Contact */}
-              <div className="bg-white rounded-2xl p-8 shadow-lg">
-                <h3 className="heading-sm text-steel-900 mb-4">
-                  Prefer to Talk?
-                </h3>
-                <p className="text-steel-600 mb-6">
-                  Speak directly with our team for immediate assistance.
-                </p>
-                <div className="space-y-3">
-                  <a
-                    href="tel:+2348130272706"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
-                  >
-                    <Phone className="text-primary-700" size={20} />
-                    <div className="flex-1">
-                      <p className="font-medium text-steel-900">Call Us</p>
-                      <p className="text-primary-700 text-sm">
-                        +234 813 027 2706
-                      </p>
-                    </div>
-                    <span className="text-primary-700 group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </a>
-                  <a
-                    href="mailto:info@pristiqbuild.com"
-                    className="flex items-center gap-3 p-4 bg-primary-50 rounded-2xl hover:bg-primary-100 transition-colors group"
-                  >
-                    <Mail className="text-primary-700" size={20} />
-                    <div className="flex-1">
-                      <p className="font-medium text-steel-900">Email Us</p>
-                      <p className="text-primary-700 text-sm">
-                        info@pristiqbuild.com
-                      </p>
-                    </div>
-                    <span className="text-primary-700 group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </a>
-                </div>
-              </div>
-            </div>
+                  {isSubmitting ? (
+                    <>
+                      <span
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"
+                        aria-hidden="true"
+                      />
+                      Sending…
+                    </>
+                  ) : (
+                    <>
+                      <Send size={20} aria-hidden="true" />
+                      Send enquiry
+                    </>
+                  )}
+                </button>
+              </form>
+            )}
           </div>
-        </div>
-      </section>
 
-      {/* Map Section */}
-      <section className="fade-in-section">
-        <div className="h-[500px] relative">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3939.9764826595364!2d7.487282!3d9.071948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMDQnMTkuMCJOIDfCsDI5JzE0LjIiRQ!5e0!3m2!1sen!2sng!4v1234567890"
-            width="100%"
-            height="100%"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="PristiqBuild Office Location"
-          />
+          {/* Info panel */}
+          <aside className="space-y-6">
+            <div className="bg-white rounded-2xl border border-steel-200 p-6">
+              <h2 className="heading-sm text-steel-900 mb-5">Reach us directly</h2>
+              <ul className="space-y-5 list-none p-0 m-0">
+                <InfoRow icon={Phone} label="Phone / WhatsApp">
+                  <a href={PHONE_HREF} className="text-primary-700 font-medium hover:text-primary-800">
+                    {PHONE_DISPLAY}
+                  </a>
+                </InfoRow>
+                <InfoRow icon={Mail} label="Email">
+                  <a href={`mailto:${EMAIL}`} className="text-primary-700 font-medium hover:text-primary-800">
+                    {EMAIL}
+                  </a>
+                </InfoRow>
+                <InfoRow icon={MapPin} label="Location">
+                  <span className="text-steel-900 font-medium">{LOCATION}</span>
+                </InfoRow>
+                <InfoRow icon={Clock} label="Response time">
+                  <span className="text-steel-900 font-medium">
+                    {RESPONSE_TIME.charAt(0).toUpperCase() + RESPONSE_TIME.slice(1)}
+                  </span>
+                </InfoRow>
+              </ul>
+            </div>
+            <a
+              href={whatsappLink(WA.general)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-primary-700 text-white rounded-lg font-semibold hover:bg-primary-800 transition-colors"
+            >
+              <MessageCircle size={20} aria-hidden="true" />
+              Chat on WhatsApp
+            </a>
+          </aside>
         </div>
       </section>
     </div>
+  );
+}
+
+function InfoRow({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <li className="flex items-start gap-3">
+      <Icon size={20} className="text-primary-700 shrink-0 mt-0.5" />
+      <div>
+        <p className="text-xs uppercase tracking-wider text-steel-500 mb-0.5">{label}</p>
+        {children}
+      </div>
+    </li>
   );
 }

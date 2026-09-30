@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import LegalPage from "@/components/legal/LegalPage";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 /*
  * DRAFT. Needs review by a Nigerian-qualified lawyer before launch.
@@ -37,7 +38,7 @@ export default function PrivacyPolicyPage() {
         House, 1 Zambezi Crescent, Wuse, Abuja, Federal Capital Territory,
         Nigeria. You can reach us at{" "}
         <a href="mailto:info@pristiqbuild.com">info@pristiqbuild.com</a> or{" "}
-        <a href="tel:+2348130272706">+234 813 027 2706</a>.
+        <a href={PHONE_HREF}>{PHONE_DISPLAY}</a>.
       </p>
       <p>
         We process personal data in line with the Nigeria Data Protection Act

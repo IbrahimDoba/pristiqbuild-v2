@@ -18,7 +18,7 @@ export default function StructuredData() {
     legalName: 'PristiqBuild Nigeria Limited',
     url: 'https://www.pristiqbuild.com',
     logo: 'https://www.pristiqbuild.com/logo-dark.png',
-    foundingDate: '2020',
+    foundingDate: '2023',
     description:
       "Building Nigeria's future, one module at a time. PristiqBuild delivers precision, sustainability, and cutting-edge technology in modular construction using light steel gauge framing.",
     address: {
@@ -32,7 +32,7 @@ export default function StructuredData() {
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+234-813-027-2706',
+        telephone: '+234-708-718-3815',
         contactType: 'customer service',
         email: 'info@pristiqbuild.com',
         areaServed: 'NG',
@@ -40,7 +40,7 @@ export default function StructuredData() {
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+234-813-027-2706',
+        telephone: '+234-708-718-3815',
         contactType: 'sales',
         email: 'info@pristiqbuild.com',
         areaServed: 'NG',
@@ -88,7 +88,7 @@ export default function StructuredData() {
     '@id': 'https://www.pristiqbuild.com/#business',
     name: 'PristiqBuild',
     image: 'https://www.pristiqbuild.com/logo-dark.png',
-    telephone: '+234-813-027-2706',
+    telephone: '+234-708-718-3815',
     email: 'info@pristiqbuild.com',
     address: {
       '@type': 'PostalAddress',

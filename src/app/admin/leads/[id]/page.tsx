@@ -59,6 +59,8 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               )}
               {lead.location && <Field icon={<MapPin className="w-4 h-4" />} label="Location">{lead.location}</Field>}
               {lead.projectType && <Field label="Project type">{lead.projectType}</Field>}
+              {typeof payload?.stage === "string" && <Field label="Current stage">{payload.stage}</Field>}
+              {typeof payload?.scope === "string" && <Field label="Size / scope">{payload.scope}</Field>}
               {lead.budgetBand && <Field label="Budget">{BUDGET_LABEL[lead.budgetBand] ?? lead.budgetBand}</Field>}
             </dl>
 

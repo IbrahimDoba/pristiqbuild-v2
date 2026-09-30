@@ -6,6 +6,7 @@ import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Link from "next/link";
 import { ArrowRight, Phone, Mail } from "lucide-react";
+import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
 
 export default function HomeCTA() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -126,11 +127,11 @@ export default function HomeCTA() {
           {/* Contact Info */}
           <div className="cta-contact flex flex-col sm:flex-row gap-6 justify-center items-center text-white/70">
             <a
-              href="tel:+2348130272706"
+              href={PHONE_HREF}
               className="flex items-center gap-2 hover:text-white transition-colors"
             >
               <Phone className="w-5 h-5 text-secondary-400" />
-              <span>+234 813 027 2706</span>
+              <span>{PHONE_DISPLAY}</span>
             </a>
             <span className="hidden sm:block text-white/30">|</span>
             <a

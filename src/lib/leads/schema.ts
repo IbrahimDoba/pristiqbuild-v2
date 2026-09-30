@@ -41,9 +41,19 @@ const quoteFormSchema = antiSpam.extend({
   source: z.literal("QUOTE_FORM"),
   name,
   email,
-  phone,
+  // Required here: the team follows up by phone or WhatsApp first.
+  phone: z
+    .string()
+    .trim()
+    .min(7, "Please enter a phone number we can reach you on")
+    .max(40)
+    .regex(/^[+()\d\s-]*$/, "Phone number contains unexpected characters"),
   projectType: z.string().trim().max(120).optional().or(z.literal("")),
   location: z.string().trim().max(200).optional().or(z.literal("")),
+  /** Where the enquirer is: just exploring, have drawings, and so on. */
+  stage: z.string().trim().max(60).optional().or(z.literal("")),
+  /** Free-text size or scope, e.g. "450 sqm roof". */
+  scope: z.string().trim().max(200).optional().or(z.literal("")),
   budget: z.string().trim().max(60).optional().or(z.literal("")),
   message,
 });
@@ -150,7 +160,11 @@ export function toLeadRecord(
         location: blank(input.location),
         budgetBand: blank(input.budget),
         message: blank(input.message),
-        payload,
+        payload: {
+          ...payload,
+          ...(blank(input.stage) ? { stage: blank(input.stage) } : {}),
+          ...(blank(input.scope) ? { scope: blank(input.scope) } : {}),
+        },
       };
 
     case "CALCULATOR":

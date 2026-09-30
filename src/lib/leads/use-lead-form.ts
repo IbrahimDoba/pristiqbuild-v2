@@ -70,7 +70,7 @@ export function useLeadForm() {
           }
           setError(
             data.error ??
-              "Something went wrong. Please try again, or call +234 813 027 2706."
+              "Something went wrong. Please try again, or call +234 708 718 3815."
           );
           setState("error");
           return false;
@@ -80,7 +80,7 @@ export function useLeadForm() {
         return true;
       } catch {
         setError(
-          "We could not reach our server. Check your connection, or call +234 813 027 2706."
+          "We could not reach our server. Check your connection, or call +234 708 718 3815."
         );
         setState("error");
         return false;

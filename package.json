@@ -9,12 +9,12 @@
     "lint": "eslint .",
     "optimize-images": "node scripts/optimize-images.mjs",
     "postinstall": "prisma generate",
-    "db:migrate": "node --env-file=.env node_modules/prisma/build/index.js migrate dev",
-    "db:studio": "node --env-file=.env node_modules/prisma/build/index.js studio",
-    "generate-assets": "node --env-file=.env scripts/generate-assets.mjs",
-    "db:deploy": "node --env-file=.env node_modules/prisma/build/index.js migrate deploy",
-    "db:status": "node --env-file=.env node_modules/prisma/build/index.js migrate status",
-    "admin:create": "node --env-file=.env scripts/create-admin.mjs"
+    "db:migrate": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js migrate dev",
+    "db:studio": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js studio",
+    "generate-assets": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/generate-assets.mjs",
+    "db:deploy": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js migrate deploy",
+    "db:status": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js migrate status",
+    "admin:create": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/create-admin.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
