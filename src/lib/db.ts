@@ -59,6 +59,27 @@ function sslFor(connectionString: string) {
   return { rejectUnauthorized: false };
 }
 
+/**
+ * The connection string with its TLS query parameters removed.
+ *
+ * node-postgres lets `sslmode` in the URL replace the `ssl` object passed in
+ * code, and it treats `require` as `verify-full` against the system CAs. With
+ * the self-signed certificate DEPLOY.md sets up, that rejects every connection
+ * and ignores DATABASE_CA_CERT entirely. The URL keeps `sslmode=require` for
+ * the Prisma CLI, which does honour it; sslFor() decides TLS for the app.
+ */
+function withoutSslParams(connectionString: string) {
+  try {
+    const url = new URL(connectionString);
+    for (const key of ["sslmode", "sslcert", "sslkey", "sslrootcert", "uselibpqcompat"]) {
+      url.searchParams.delete(key);
+    }
+    return url.toString();
+  } catch {
+    return connectionString;
+  }
+}
+
 function createClient() {
   const connectionString = process.env.DATABASE_URL;
 
@@ -77,7 +98,7 @@ function createClient() {
   const max = Number(process.env.DATABASE_POOL_MAX ?? 3);
 
   const adapter = new PrismaPg({
-    connectionString,
+    connectionString: withoutSslParams(connectionString),
     max: Number.isFinite(max) && max > 0 ? max : 3,
     idleTimeoutMillis: 10_000,
     connectionTimeoutMillis: 10_000,

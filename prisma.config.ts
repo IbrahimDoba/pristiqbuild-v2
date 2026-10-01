@@ -3,7 +3,7 @@
 // This file is loaded by the Prisma CLI, including inside the production
 // container, where env vars come from the environment rather than a file and
 // dotenv would be an extra dependency to resolve. Locally the package.json
-// scripts pass --env-file=.env instead.
+// scripts pass --env-file-if-exists for .env and .env.local instead.
 import { defineConfig } from "prisma/config";
 
 export default defineConfig({

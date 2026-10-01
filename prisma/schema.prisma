@@ -247,3 +247,45 @@ model Budget {
 
   @@unique([projectId, category])
 }
+
+/// A public portfolio entry, shown on /projects and the homepage strip.
+///
+/// Edited from /admin/portfolio so the list can change without a deploy.
+/// Separate from Project, which is internal cost tracking: most internal jobs
+/// never go public, and marketing copy should not live next to the books.
+model PortfolioItem {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  location String
+  tag      PortfolioTag
+  /// At most one is shown as the featured case study; the newest wins.
+  featured Boolean      @default(false)
+  desc     String       @db.Text
+
+  // Stat strings, printed as entered ("1,080 sqm", "6.8t", "75% less").
+  sqm   String?
+  steel String?
+  waste String?
+
+  /// Optional link to a bespoke page, e.g. /projects/akure-lgs-roofing.
+  href  String?
+  /// Optional photo, a path under public/, e.g. /LGS/1752987831787.jpeg.
+  image String?
+
+  published Boolean @default(true)
+  /// Lower first.
+  sortOrder Int     @default(0)
+
+  @@index([published, sortOrder])
+}
+
+enum PortfolioTag {
+  LGS_ROOFING
+  STRUCTURAL
+  CONVENTIONAL
+  IN_DEVELOPMENT
+  MODULAR_STYLE
+}

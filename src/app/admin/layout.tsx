@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
-import { LayoutDashboard, Inbox, LogOut, FolderKanban, Wallet, Users } from "lucide-react";
+import { LayoutDashboard, Inbox, LogOut, FolderKanban, Wallet, Users, Images } from "lucide-react";
 import { sectionsFor, ROLES } from "@/lib/admin/permissions";
 
 export const metadata: Metadata = {
@@ -76,6 +76,7 @@ const ICONS: Record<string, React.ReactNode> = {
   "/admin/projects": <FolderKanban className="w-4 h-4" />,
   "/admin/finance": <Wallet className="w-4 h-4" />,
   "/admin/team": <Users className="w-4 h-4" />,
+  "/admin/portfolio": <Images className="w-4 h-4" />,
 };
 
 function NavLink({

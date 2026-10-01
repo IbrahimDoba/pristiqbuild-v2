@@ -92,6 +92,7 @@ export function sectionsFor(role: UserRole) {
     { href: "/admin/leads", label: "Leads", show: can(role, "leads:read") },
     { href: "/admin/projects", label: "Projects", show: can(role, "projects:read") },
     { href: "/admin/finance", label: "Finance", show: can(role, "finance:read") },
+    { href: "/admin/portfolio", label: "Portfolio", show: can(role, "content:write") },
     { href: "/admin/team", label: "Team", show: can(role, "team:manage") },
   ].filter((s) => s.show);
 }
@@ -106,6 +107,7 @@ const ROUTE_CAPABILITIES: [string, Capability][] = [
   ["/admin/projects", "projects:read"],
   ["/admin/finance", "finance:read"],
   ["/admin/team", "team:manage"],
+  ["/admin/portfolio", "content:write"],
 ];
 
 export function capabilityForPath(pathname: string): Capability | null {

@@ -14,7 +14,8 @@
     "generate-assets": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/generate-assets.mjs",
     "db:deploy": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js migrate deploy",
     "db:status": "node --env-file-if-exists=.env --env-file-if-exists=.env.local node_modules/prisma/build/index.js migrate status",
-    "admin:create": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/create-admin.mjs"
+    "admin:create": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/create-admin.mjs",
+    "portfolio:seed": "node --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/seed-portfolio.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

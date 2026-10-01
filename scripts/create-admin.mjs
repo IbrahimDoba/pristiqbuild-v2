@@ -1,7 +1,7 @@
 /**
  * Creates or updates an admin account.
  *
- *   node --env-file=.env scripts/create-admin.mjs <email> [name] [role]
+ *   pnpm admin:create <email> [name] [role]
  *
  * Idempotent: running it again for the same email resets that account's
  * password rather than failing. The password is generated here and printed
@@ -13,12 +13,12 @@
  */
 import { randomBytes } from "node:crypto";
 import bcrypt from "bcryptjs";
-import pg from "pg";
+import { connect } from "./pg-client.mjs";
 
 const [email, name = null, role = "ADMIN"] = process.argv.slice(2);
 
 if (!email || !email.includes("@")) {
-  console.error("usage: node --env-file=.env scripts/create-admin.mjs <email> [name] [role]");
+  console.error("usage: pnpm admin:create <email> [name] [role]");
   process.exit(1);
 }
 // Mirrors the UserRole enum in prisma/schema.prisma. This script cannot
@@ -28,18 +28,13 @@ if (!ROLES.includes(role)) {
   console.error(`role must be one of ${ROLES.join(", ")} (got "${role}")`);
   process.exit(1);
 }
-if (!process.env.DATABASE_URL) {
-  console.error("DATABASE_URL is not set. Run with --env-file=.env");
-  process.exit(1);
-}
 
 // 24 hex characters, about 96 bits of entropy.
 const password = randomBytes(12).toString("hex");
 const passwordHash = await bcrypt.hash(password, 12);
 const normalised = email.toLowerCase().trim();
 
-const client = new pg.Client({ connectionString: process.env.DATABASE_URL });
-await client.connect();
+const client = await connect();
 
 try {
   const { rows } = await client.query(
