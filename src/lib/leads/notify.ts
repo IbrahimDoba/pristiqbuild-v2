@@ -98,11 +98,11 @@ function renderHtml(lead: Lead): string {
     .join("");
 
   const replyTo = lead.email
-    ? `<p style="margin:22px 0 0"><a href="mailto:${escapeHtml(lead.email)}" style="background:#1A5F7A;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-size:14px;display:inline-block">Reply to ${escapeHtml(lead.name)}</a></p>`
+    ? `<p style="margin:22px 0 0"><a href="mailto:${escapeHtml(lead.email)}" style="background:#24597A;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-size:14px;display:inline-block">Reply to ${escapeHtml(lead.name)}</a></p>`
     : "";
 
   return `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:560px;margin:0 auto;padding:28px">
-      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#159895">PristiqBuild</p>
+      <p style="margin:0 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#123244">PristiqBuild</p>
       <h1 style="margin:0 0 20px;font-size:20px;color:#0E181B">New lead</h1>
       <table style="border-collapse:collapse;width:100%">${cells}</table>
       ${replyTo}

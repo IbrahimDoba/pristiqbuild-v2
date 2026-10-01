@@ -28,7 +28,7 @@ export default function SafeImage({
   const [loading, setLoading] = useState(true);
 
   // Fallback gradient background
-  const fallbackGradient = 'linear-gradient(135deg, #1A5F7A 0%, #159895 100%)';
+  const fallbackGradient = 'linear-gradient(135deg, #24597A 0%, #123244 100%)';
 
   if (error) {
     // Show fallback with gradient and alt text

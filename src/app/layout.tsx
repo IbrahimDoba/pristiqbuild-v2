@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
+import { Archivo, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import Analytics from "@/components/Analytics";
@@ -14,10 +14,11 @@ const plexSans = IBM_Plex_Sans({
   variable: "--font-plex-sans",
 });
 
-const spaceGrotesk = Space_Grotesk({
+// Display face, per the brand system.
+const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-space-grotesk",
+  variable: "--font-archivo",
 });
 
 export const metadata: Metadata = {
@@ -104,7 +105,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#1A5F7A",
+  themeColor: "#24597A",
   // Tells the browser which form controls, scrollbars and system UI to
   // render. The site is light-only today, so it says so explicitly rather
   // than leaving the UA to guess.
@@ -117,7 +118,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${plexSans.variable} ${archivo.variable}`}>
       <head>
         {/* next/font self-hosts the faces, so there is no font CDN to reach.
             These cover the Google Maps embed on /contact, which otherwise
@@ -128,7 +129,7 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`${plexSans.variable} ${spaceGrotesk.variable} font-sans antialiased`}
+        className="font-sans antialiased"
       >
         {children}
       </body>
