@@ -5,8 +5,15 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { whatsappLink, WA } from "@/lib/site-config";
+
+const stats = [
+  { value: "2023", label: "Founded" },
+  { value: "25+", label: "LGS roofing projects delivered" },
+  { value: "G550", label: "Steel grade specified" },
+];
 
 export default function HeroLGS() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,7 +76,7 @@ export default function HeroLGS() {
       <div className="hero-bg-image absolute inset-0 z-0">
         <Image
           src="/LGS/lgs1.jpeg"
-          alt="Light Gauge Steel Construction"
+          alt="Light gauge steel roof framing on a PristiqBuild site"
           fill
           className="object-cover"
           priority
@@ -91,48 +98,57 @@ export default function HeroLGS() {
         }}
       />
 
-      {/* Text Content - Positioned Right */}
-      <div className="hero-text-content relative z-20 container-custom px-4 py-20">
-        <div className="max-w-4xl ml-auto">
-          {/* Eyebrow Badge */}
-          <div className="hero-eyebrow inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-5 py-2.5 mb-6 border border-white/20">
-            <Sparkles className="w-4 h-4 text-secondary-400" />
-            <span className="text-sm font-medium text-white/90">
-              Nigeria&apos;s Leading Modular Construction Innovator
-            </span>
-          </div>
-
-          {/* Main Title */}
-          <h1 className="hero-title text-[2.5rem] leading-[1.06] sm:text-5xl md:text-[3.25rem] lg:text-[3.6rem] font-display font-bold text-white mb-6 text-balance">
-            Building Nigeria&apos;s Future,{" "}
-            <span className="text-gradient-gold">One Module</span> at a Time
-          </h1>
-
-          {/* Description */}
-          <p className="hero-description text-xl md:text-2xl text-white/90 leading-relaxed mb-8">
-            Precision modular construction in light gauge steel. Faster to
-            build, engineered to last, and made for Nigerian conditions.
+      {/* Text content, left-aligned on the structural grid */}
+      <div className="hero-text-content relative z-20 container-custom px-4 py-20 w-full">
+        <div className="max-w-4xl">
+          <p className="hero-eyebrow inline-flex items-center gap-3 text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-silver mb-6">
+            <span className="h-px w-8 bg-silver/60" aria-hidden="true" />
+            Abuja · LGS Roofing &amp; Steel-Frame Construction
           </p>
 
-          {/* Primary conversion path.
-              The hero previously contained no link or button at all, so the
-              most-visited section of the site asked for nothing. "Get a Quote"
-              matches the nav label deliberately: one label per intent. */}
+          <h1 className="hero-title text-[2.5rem] leading-[1.06] sm:text-5xl md:text-[3.25rem] lg:text-[3.6rem] font-display font-bold text-white mb-6 text-balance">
+            Precision steel construction, engineered for Nigeria.
+          </h1>
+
+          <p className="hero-description text-lg md:text-xl text-white/85 leading-relaxed mb-8 max-w-3xl">
+            LGS roofing, steel-frame construction and modular buildings,
+            delivered through engineering, fabrication and controlled site
+            execution, by a team based in Maitama, Abuja.
+          </p>
+
           <div className="hero-actions flex flex-col sm:flex-row gap-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-primary-600 text-white font-semibold shadow-lg shadow-primary-900/30 hover:bg-primary-500 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            <a
+              href={whatsappLink(WA.roofAssessment)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-primary-600 text-white font-semibold hover:bg-primary-500 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Get a Quote
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              Request a Roof Assessment
+              <ArrowRight className="w-5 h-5" aria-hidden="true" />
+            </a>
             <Link
-              href="/cost-calculator"
+              href="/projects"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg border border-white/40 bg-white/10 text-white font-semibold backdrop-blur-sm hover:bg-white/20 active:translate-y-px transition-[background-color,transform] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Estimate Your Cost
+              View Completed Projects
             </Link>
           </div>
+
+          <dl className="hero-actions mt-12 grid grid-cols-3 max-w-2xl border-t border-white/20 m-0">
+            {stats.map((s, i) => (
+              <div
+                key={s.label}
+                className={`flex flex-col-reverse justify-end pt-5 pr-4 ${i > 0 ? "pl-4 sm:pl-6 border-l border-white/20" : ""}`}
+              >
+                <dt className="text-xs sm:text-sm text-white/65 leading-snug">
+                  {s.label}
+                </dt>
+                <dd className="m-0 mb-2 font-display font-bold text-2xl sm:text-3xl text-white tabular leading-none">
+                  {s.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
 

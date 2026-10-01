@@ -82,7 +82,7 @@ export default function ProjectHero({
 
       {/* Back Button */}
       <Link
-        href="/#projects"
+        href="/projects"
         className="absolute top-24 sm:top-28 left-4 sm:left-6 md:left-12 z-20 flex items-center gap-2 text-white/80 hover:text-white transition-colors group"
       >
         <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 transition-colors">

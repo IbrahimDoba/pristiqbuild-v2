@@ -40,7 +40,7 @@ export default function MaitamaLayout({
       <JsonLd
         id="project-breadcrumb"
         data={breadcrumbSchema([
-          { name: "Projects", path: "/#projects" },
+          { name: "Projects", path: "/projects" },
           { name: "Maitama Luxury Mansion", path: "/projects/maitama-luxury-mansion" },
         ])}
       />

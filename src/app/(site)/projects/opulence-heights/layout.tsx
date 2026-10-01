@@ -3,30 +3,14 @@ import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title:
-    "Opulence Heights Dawaki | Nigeria's First Smart Steel Residential Estate | Pristiq Build",
+  title: "Opulence Heights, Dawaki Hillside, Abuja",
   description:
-    "Discover Opulence Heights in Dawaki Hillside, Abuja. Nigeria's first precision built steel frame smart villas featuring solar power, EV charging, home automation, and 50 plus year structural frames. 18 luxury villas by EFAB Properties and Pristiq Build.",
-  keywords: [
-    "Opulence Heights Dawaki",
-    "smart homes Nigeria",
-    "steel frame villas Abuja",
-    "solar powered homes Nigeria",
-    "EV charging homes Abuja",
-    "luxury villas Dawaki",
-    "EFAB Properties",
-    "Pristiq Build smart homes",
-    "light gauge steel homes",
-    "automated homes Nigeria",
-    "sustainable housing Abuja",
-    "premium real estate FCT",
-    "5 bedroom villa Abuja",
-    "hillside homes Nigeria",
-  ],
+    "18 villas, 5 ensuite bedrooms plus BQ each, developed in joint venture with EFAB Properties. Phase 1 at foundation stage with a 12-month delivery target.",
+  alternates: { canonical: "/projects/opulence-heights" },
   openGraph: {
-    title: "Opulence Heights | Nigeria's First Smart Steel Residential Estate",
+    title: "Opulence Heights, Dawaki Hillside, Abuja",
     description:
-      "18 luxury smart villas with steel frame construction, solar power, and home automation in Dawaki Hillside, Abuja.",
+      "18 villas, 5 ensuite bedrooms plus BQ each. A PristiqBuild and EFAB Properties joint venture, now at foundation stage.",
     images: ["/dawaki estate/1.png"],
     type: "article",
   },
@@ -42,7 +26,7 @@ export default function OpulenceHeightsLayout({
       <JsonLd
         id="project-breadcrumb"
         data={breadcrumbSchema([
-          { name: "Projects", path: "/#projects" },
+          { name: "Projects", path: "/projects" },
           { name: "Opulence Heights", path: "/projects/opulence-heights" },
         ])}
       />

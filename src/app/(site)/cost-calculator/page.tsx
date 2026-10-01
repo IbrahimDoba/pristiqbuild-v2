@@ -41,7 +41,8 @@ export default function CostCalculatorPage() {
     // Base cost calculation
     let baseCost = selectedType.rate * size * floorCount;
 
-    // Add smart features (15% premium)
+    // Smart-home ready wiring (15% premium). Field is still `smartFeatures`
+    // because the lead API schema uses that name.
     if (smartFeatures) {
       baseCost *= 1.15;
     }
@@ -206,8 +207,8 @@ export default function CostCalculatorPage() {
                         className="w-5 h-5 text-primary-600 rounded focus:ring-primary-500 shrink-0"
                       />
                       <div className="flex-1">
-                        <div className="font-semibold text-steel-900">Smart Building Features</div>
-                        <div className="text-sm text-steel-600">IoT automation, climate control, security systems</div>
+                        <div className="font-semibold text-steel-900">Smart-home ready wiring</div>
+                        <div className="text-sm text-steel-600">Conduit and wiring provision for smart-home controls added later</div>
                       </div>
                       <div className="text-primary-600 font-semibold sm:text-right">+15%</div>
                     </label>

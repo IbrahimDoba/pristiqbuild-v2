@@ -7,7 +7,7 @@ import PortfolioGrid, { PhotoPlaceholder, TagChip } from "@/components/Portfolio
 import { WA, whatsappLink } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Projects | PristiqBuild",
+  title: "Projects",
   description:
     "LGS roofing, structural steel and development work PristiqBuild has delivered or is delivering, across Abuja and beyond.",
   alternates: { canonical: "/projects" },

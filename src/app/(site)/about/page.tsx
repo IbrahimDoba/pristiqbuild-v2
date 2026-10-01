@@ -1,387 +1,190 @@
-"use client";
-
-import { useRef } from "react";
-import { motion } from "framer-motion";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "@/lib/gsap/config";
-import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  Target,
-  Eye,
-  Award,
-  Users,
-  TrendingUp,
-  CheckCircle,
-  ArrowRight,
-  Building2,
-  Zap,
-  Shield,
-} from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
+import { WA, whatsappLink } from "@/lib/site-config";
 
-const stats = [
-  { value: "100+", label: "Projects Completed", icon: Building2 },
-  { value: "50M+", label: "Square Meters Built", icon: TrendingUp },
-  { value: "98%", label: "Client Satisfaction", icon: Award },
-  { value: "15+", label: "Years Experience", icon: Users },
-];
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "PristiqBuild was founded in Abuja in 2023 by three engineers and builders. More than 25 LGS roofing projects delivered, led by a COREN-registered engineer and NIOB-member site leadership.",
+  alternates: { canonical: "/about" },
+};
 
-const values = [
+const delivered = [
   {
-    icon: Target,
-    title: "Precision Engineering",
-    description:
-      "Every component is precision-manufactured in our facility, ensuring perfect fit and structural integrity on-site.",
+    name: "Maitama and Akure residential roofing",
+    detail: "Engineered LGS roofs for private residences in Abuja and Ondo State.",
   },
   {
-    icon: Zap,
-    title: "Speed & Efficiency",
-    description:
-      "Our modular approach reduces construction time by 50-60%, getting you into your building faster.",
+    name: "Popville Homes estate roofing",
+    detail: "A 24-unit LGS roofing contract at Popville, Mabushi.",
   },
   {
-    icon: Shield,
-    title: "Quality Assurance",
-    description:
-      "Rigorous quality control at every stage, from factory to final installation, guarantees excellence.",
+    name: "NITP Secretariat",
+    detail:
+      "A hybrid structural roof: hot-rolled I-beam primaries with LGS secondary trusses.",
   },
   {
-    icon: Eye,
-    title: "Innovation First",
-    description:
-      "Leveraging AR/VR technology and smart building systems to deliver cutting-edge construction solutions.",
+    name: "Breeze Point Estate",
+    detail: "Five terrace duplexes in Kubwa, built in conventional construction.",
+  },
+  {
+    name: "Opulence Heights",
+    detail: "A villa development at Dawaki Hillside, in joint venture with EFAB Properties.",
   },
 ];
 
-const timeline = [
+const leaders = [
   {
-    year: "2010",
-    title: "Foundation",
-    description:
-      "PristiqBuild was founded with a vision to revolutionize Nigeria's construction industry through modular technology.",
+    name: "Yusuf Muhammed Doba",
+    initials: "YD",
+    role: "CEO & Co-Founder",
+    bio: "Leads project delivery and client relationships.",
+    credential: "NIOB member",
   },
   {
-    year: "2015",
-    title: "First Major Project",
-    description:
-      "Completed our first large-scale residential development, showcasing the speed and quality of LGS construction.",
+    name: "Najibu Auwalu Namadina",
+    initials: "NN",
+    role: "CTO & Co-Founder",
+    bio: "Oversees engineering and technical delivery across every LGS and structural project.",
+    credential: "COREN registered",
   },
   {
-    year: "2018",
-    title: "Technology Integration",
-    description:
-      "Introduced AR/VR solutions for client visualization and became pioneers in smart building integration.",
+    name: "Abdulaziz Yakubu",
+    initials: "AY",
+    role: "COO & Co-Founder",
+    bio: "Runs day-to-day operations and site execution.",
+    credential: "NIOB member",
   },
-  {
-    year: "2020",
-    title: "Expansion",
-    description:
-      "Expanded operations across Nigeria, establishing ourselves as leaders in modular construction.",
-  },
-  {
-    year: "2024",
-    title: "Industry Leader",
-    description:
-      "Now recognized as Nigeria's premier modular construction company, setting new standards for quality and innovation.",
-  },
-];
-
-const certifications = [
-  "ISO 9001:2015 Quality Management",
-  "ISO 14001:2015 Environmental Management",
-  "OHSAS 18001 Health & Safety",
-  "Nigerian Institute of Building (NIOB)",
-  "Council for the Regulation of Engineering (COREN)",
 ];
 
 export default function AboutPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useGSAP(
-    () => {
-      const sections = gsap.utils.toArray<HTMLElement>(".fade-in-section");
-      sections.forEach((section) => {
-        gsap.from(section, {
-          opacity: 0,
-          y: 60,
-          duration: 1,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            end: "top 50%",
-            scrub: 1,
-          },
-        });
-      });
-    },
-    { scope: containerRef }
-  );
-
   return (
-    <div ref={containerRef} className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
-        <div className="absolute inset-0 opacity-10">
-          <div className="grid-pattern absolute inset-0" />
+    <div className="bg-white">
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
+          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+            About PristiqBuild
+          </p>
+          <h1 className="heading-xl max-w-4xl">
+            Founded in 2023 by three engineers and builders.
+          </h1>
         </div>
-
-        <div className="container-custom relative z-10 py-32 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="heading-xl text-white mb-6">
-              Building Nigeria&apos;s Future,
-              <br />
-              <span className="text-secondary-400">One Module at a Time</span>
-            </h1>
-            <p className="body-lg text-white/90 max-w-3xl mx-auto mb-8">
-              We&apos;re not just constructing buildings, we&apos;re transforming
-              Nigeria&apos;s construction industry with precision engineering,
-              cutting-edge technology, and unwavering commitment to quality.
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
       </section>
 
-      {/* Stats Section */}
-      <section className="section-padding bg-white fade-in-section">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-50 text-primary-700 mb-4">
-                  <stat.icon size={32} />
-                </div>
-                <div className="heading-lg text-primary-700 mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-steel-600">{stat.label}</div>
-              </motion.div>
-            ))}
+      <section className="section-padding border-b border-steel-200" aria-labelledby="story-heading">
+        <div className="container-custom grid lg:grid-cols-12 gap-10">
+          <h2 id="story-heading" className="heading-md text-steel-900 lg:col-span-4">
+            Our story
+          </h2>
+          <p className="body-lg text-steel-700 lg:col-span-8 max-w-3xl">
+            PristiqBuild was founded to bring engineered Light Gauge Steel
+            construction to Nigerian building. We started with LGS roofing, and
+            it&apos;s become the core of what we do: we&apos;ve now delivered more
+            than 25 roofing projects across Abuja and beyond. We&apos;re actively
+            working toward our original vision, full modular construction built
+            in our own facility, while we continue to take on structural steel
+            and conventional construction work for clients today.
+          </p>
+        </div>
+      </section>
+
+      <section className="section-padding border-b border-steel-200" aria-labelledby="delivered-heading">
+        <div className="container-custom grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <h2 id="delivered-heading" className="heading-md text-steel-900 mb-6">
+              What we&apos;ve delivered
+            </h2>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 font-semibold text-primary-700 hover:text-primary-800 transition-colors"
+            >
+              See all projects
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
+          <ul className="lg:col-span-8 border-t border-steel-200">
+            {delivered.map((item) => (
+              <li
+                key={item.name}
+                className="grid sm:grid-cols-12 gap-2 sm:gap-6 py-6 border-b border-steel-200"
+              >
+                <h3 className="font-display font-semibold text-lg text-steel-900 sm:col-span-5">
+                  {item.name}
+                </h3>
+                <p className="text-steel-600 sm:col-span-7">{item.detail}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {/* Our Story */}
-      <section className="section-padding bg-steel-50 fade-in-section">
+      <section
+        id="leadership"
+        className="section-padding border-b border-steel-200 scroll-mt-24"
+        aria-labelledby="leadership-heading"
+      >
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <span className="eyebrow mb-4 block">Our Story</span>
-              <h2 className="heading-lg text-steel-900 mb-6">
-                Pioneering Modular Construction in Nigeria
-              </h2>
-              <div className="space-y-4 text-steel-700">
-                <p>
-                  PristiqBuild was born from a simple but powerful vision: to
-                  transform how Nigeria builds. We saw an industry stuck in
-                  traditional methods, plagued by delays, cost overruns, and
-                  quality issues. We knew there had to be a better way.
+          <h2 id="leadership-heading" className="heading-md text-steel-900 mb-10">
+            Leadership
+          </h2>
+          <ul className="grid md:grid-cols-3 border-t border-l border-steel-200">
+            {leaders.map((person) => (
+              <li key={person.name} className="p-8 border-r border-b border-steel-200">
+                <div
+                  className="w-16 h-16 rounded-full bg-primary-700 text-white flex items-center justify-center font-display font-bold text-xl mb-6"
+                  aria-hidden="true"
+                >
+                  {person.initials}
+                </div>
+                <h3 className="heading-sm text-steel-900">{person.name}</h3>
+                <p className="text-sm font-semibold uppercase tracking-wider text-primary-700 mt-1 mb-4">
+                  {person.role}
                 </p>
-                <p>
-                  By embracing Light Steel Gauge (LGS) technology and modular
-                  construction methods, we&apos;ve revolutionized the building
-                  process. Our precision-engineered components are manufactured
-                  in controlled factory conditions, ensuring consistent quality
-                  and eliminating on-site waste.
-                </p>
-                <p>
-                  Today, we&apos;re proud to be Nigeria&apos;s leading modular
-                  construction company, having delivered over 100 projects that
-                  stand as testaments to the power of innovation, precision, and
-                  unwavering commitment to excellence.
-                </p>
-              </div>
-            </div>
-
-            <div className="relative">
-              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/LGS/construction.jpg"
-                  alt="PristiqBuild Construction Site"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-secondary-500 rounded-2xl -z-10" />
-              <div className="absolute -top-6 -right-6 w-48 h-48 bg-primary-600 rounded-2xl -z-10" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section className="section-padding bg-white fade-in-section">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Mission */}
-            <div className="bg-linear-to-br from-primary-700 to-primary-900 rounded-2xl p-12 text-white">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
-                <Target size={32} />
-              </div>
-              <h3 className="heading-md mb-6">Our Mission</h3>
-              <p className="body-lg text-white/90">
-                To deliver world-class modular construction solutions that
-                combine precision engineering, sustainability, and cutting-edge
-                technology, transforming how Nigeria builds for generations to
-                come.
-              </p>
-            </div>
-
-            {/* Vision */}
-            <div className="bg-linear-to-br from-secondary-600 to-secondary-700 rounded-2xl p-12 text-white">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/20 mb-6">
-                <Eye size={32} />
-              </div>
-              <h3 className="heading-md mb-6">Our Vision</h3>
-              <p className="body-lg text-white/90">
-                To be Africa&apos;s most trusted and innovative construction
-                company, setting new standards for quality, speed, and
-                sustainability while making modern, affordable housing accessible
-                to all Nigerians.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values */}
-      <section className="section-padding bg-steel-50 fade-in-section">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="eyebrow mb-4 block">Core Values</span>
-            <h2 className="heading-lg text-steel-900 mb-6">
-              The Principles That Drive Us
-            </h2>
-            <p className="body-lg text-steel-600 max-w-2xl mx-auto">
-              Our values aren&apos;t just words on a wall, they&apos;re the
-              foundation of everything we do.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
-              >
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-lg bg-primary-50 text-primary-700 mb-4">
-                  <value.icon size={28} />
-                </div>
-                <h3 className="heading-sm text-steel-900 mb-3">{value.title}</h3>
-                <p className="text-steel-600">{value.description}</p>
-              </motion.div>
+                <p className="text-steel-700 leading-relaxed mb-4">{person.bio}</p>
+                <p className="text-sm text-steel-500">{person.credential}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* Timeline */}
-      <section className="section-padding bg-white fade-in-section">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <span className="eyebrow mb-4 block">Our Journey</span>
-            <h2 className="heading-lg text-steel-900 mb-6">
-              Milestones of Excellence
-            </h2>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            {timeline.map((item, index) => (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="relative pl-8 pb-12 border-l-4 border-primary-200 last:pb-0"
-              >
-                <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-primary-600 border-4 border-white shadow-lg" />
-                <div className="bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-2xl font-bold text-primary-700 mb-2">
-                    {item.year}
-                  </div>
-                  <h3 className="heading-sm text-steel-900 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-steel-600">{item.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      <section className="section-padding" aria-labelledby="compliance-heading">
+        <div className="container-custom grid lg:grid-cols-12 gap-10">
+          <h2 id="compliance-heading" className="heading-md text-steel-900 lg:col-span-4">
+            Engineering &amp; Compliance
+          </h2>
+          <p className="body-lg text-steel-700 lg:col-span-8 max-w-3xl">
+            Our technical work is led by a COREN-registered engineer and
+            NIOB-member site leadership, so every LGS and structural job is
+            specified, reviewed and signed off by qualified professionals, not
+            just built by trades.
+          </p>
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="section-padding bg-primary-900 text-white fade-in-section">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="heading-lg mb-6">
-              Recognized for Excellence
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {certifications.map((cert, index) => (
-              <motion.div
-                key={cert}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl p-4"
-              >
-                <CheckCircle className="text-secondary-400 shrink-0" size={24} />
-                <span className="text-white/90">{cert}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section-padding bg-white fade-in-section">
-        <div className="container-custom">
-          <div className="bg-linear-to-r from-primary-700 to-primary-900 rounded-2xl p-12 md:p-16 text-center text-white">
-            <h2 className="heading-lg mb-6">
-              Ready to Build Your Future with Us?
-            </h2>
-            <p className="body-lg text-white/90 mb-8 max-w-2xl mx-auto">
-              Join the growing number of satisfied clients who&apos;ve
-              experienced the PristiqBuild difference. Let&apos;s turn your
-              vision into reality.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-primary-700 rounded-lg font-semibold hover:bg-steel-50 transition-colors"
-              >
-                Get Started
-                <ArrowRight size={20} />
-              </Link>
-              <Link
-                href="/projects"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-sm text-white rounded-lg font-semibold hover:bg-white/20 transition-colors"
-              >
-                View Our Projects
-              </Link>
-            </div>
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom py-16 flex flex-wrap items-center justify-between gap-6">
+          <p className="heading-sm max-w-xl">
+            Have a project in mind? Talk to the people who will build it.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href={whatsappLink(WA.general)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
+            >
+              <MessageCircle size={20} aria-hidden="true" />
+              Chat on WhatsApp
+            </a>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-7 py-4 border border-white/40 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+            >
+              Send project details
+              <ArrowRight size={20} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>

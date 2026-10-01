@@ -24,7 +24,7 @@ const stats = [
     icon: Clock,
     value: "4 Days",
     label: "Completion Time",
-    sublabel: "60% faster than timber",
+    sublabel: "On-site installation",
   },
   {
     icon: Ruler,
@@ -40,9 +40,9 @@ const stats = [
   },
   {
     icon: Shield,
-    value: "50+ Years",
-    label: "Expected Lifespan",
-    sublabel: "With proper maintenance",
+    value: "G550",
+    label: "Steel Grade",
+    sublabel: "High-tensile galvanized",
   },
 ];
 
@@ -75,7 +75,7 @@ const features = [
     icon: CheckCircle,
     title: "Cost Effective Solution",
     description:
-      "The LGS system delivered over 10% in cost savings when factoring in reduced installation time, minimal material waste, and eliminated maintenance concerns.",
+      "Shorter installation time and minimal material waste, with no timber to treat against termites or replace later.",
   },
   {
     icon: Ruler,

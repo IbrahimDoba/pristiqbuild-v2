@@ -105,7 +105,7 @@ export default function NotFound() {
 
   const suggestedLinks = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Our Projects", href: "/#projects", icon: Search },
+    { name: "Our Projects", href: "/projects", icon: Search },
     { name: "About Us", href: "/about", icon: HardHat },
     { name: "Contact", href: "/contact", icon: Mail },
   ];

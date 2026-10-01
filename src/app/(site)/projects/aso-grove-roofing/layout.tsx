@@ -40,7 +40,7 @@ export default function AsoGroveLayout({
       <JsonLd
         id="project-breadcrumb"
         data={breadcrumbSchema([
-          { name: "Projects", path: "/#projects" },
+          { name: "Projects", path: "/projects" },
           { name: "Aso Grove Roof", path: "/projects/aso-grove-roofing" },
         ])}
       />

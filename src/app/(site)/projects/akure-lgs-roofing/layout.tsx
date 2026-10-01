@@ -40,7 +40,7 @@ export default function AkureLayout({
       <JsonLd
         id="project-breadcrumb"
         data={breadcrumbSchema([
-          { name: "Projects", path: "/#projects" },
+          { name: "Projects", path: "/projects" },
           { name: "Akure Castle Residence", path: "/projects/akure-lgs-roofing" },
         ])}
       />

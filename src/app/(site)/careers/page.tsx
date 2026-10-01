@@ -17,7 +17,7 @@ import {
 export const metadata: Metadata = {
   title: "Careers - Join Our Team | PristiqBuild Nigeria",
   description:
-    "Join Nigeria's leading modular construction company. Explore career opportunities at PristiqBuild and help us build the future of construction.",
+    "Join PristiqBuild, an Abuja team delivering engineered LGS roofing and steel-frame construction. Explore career opportunities and help us build toward full modular construction.",
 };
 
 const values = [
@@ -67,7 +67,7 @@ const benefits = [
 const departments = [
   {
     name: "Engineering & Design",
-    description: "Structural engineers, architects, and design specialists creating innovative modular solutions.",
+    description: "Structural engineers, architects, and design specialists engineering LGS roofs and steel frames.",
     icon: TrendingUp
   },
   {
@@ -86,8 +86,8 @@ const departments = [
     icon: Users
   },
   {
-    name: "Technology & Innovation",
-    description: "AR/VR specialists, IoT engineers, and smart building experts.",
+    name: "Site Execution",
+    description: "Installers and site supervisors who erect and inspect every roof and frame we deliver.",
     icon: Zap
   },
   {
@@ -288,23 +288,24 @@ export default function CareersPage() {
                     find opportunities to grow, learn, and make a real impact.
                   </p>
                   <p>
-                    From our state-of-the-art manufacturing facility to cutting-edge AR/VR labs,
-                    you&apos;ll have access to tools and resources that empower you to do your best work.
+                    You&apos;ll work on real LGS roofing and structural projects, under engineers
+                    who specify, review and sign off every job, as we build toward our own
+                    fabrication facility and full modular construction.
                   </p>
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-4">
                   <div className="px-6 py-3 bg-primary-50 rounded-2xl border border-primary-100">
-                    <div className="text-2xl font-bold text-primary-600">150+</div>
-                    <div className="text-sm text-steel-600">Projects Completed</div>
+                    <div className="text-2xl font-bold text-primary-600">2023</div>
+                    <div className="text-sm text-steel-600">Founded</div>
                   </div>
                   <div className="px-6 py-3 bg-primary-50 rounded-2xl border border-primary-100">
-                    <div className="text-2xl font-bold text-primary-600">12</div>
-                    <div className="text-sm text-steel-600">States Covered</div>
+                    <div className="text-2xl font-bold text-primary-600">25+</div>
+                    <div className="text-sm text-steel-600">LGS roofing projects delivered</div>
                   </div>
                   <div className="px-6 py-3 bg-primary-50 rounded-2xl border border-primary-100">
-                    <div className="text-2xl font-bold text-primary-600">98%</div>
-                    <div className="text-sm text-steel-600">Client Satisfaction</div>
+                    <div className="text-2xl font-bold text-primary-600">G550</div>
+                    <div className="text-sm text-steel-600">Steel grade specified</div>
                   </div>
                 </div>
               </div>

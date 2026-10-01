@@ -12,6 +12,30 @@ const nextConfig: NextConfig = {
   output: process.env.VERCEL ? undefined : "standalone",
 
   /**
+   * Retired routes. Permanent (308) so search engines move their index entries
+   * to the replacement rather than keep crawling a 404.
+   *
+   * - light-steel-gauge was renamed to the LGS Roofing service page.
+   * - /team became the leadership section of /about.
+   * - /case-studies duplicated /projects.
+   * - Smart Building and AR/VR were dropped as standalone services: there is
+   *   no honest replacement page, so they go to the homepage.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/services/light-steel-gauge",
+        destination: "/services/lgs-roofing",
+        permanent: true,
+      },
+      { source: "/team", destination: "/about#leadership", permanent: true },
+      { source: "/case-studies", destination: "/projects", permanent: true },
+      { source: "/services/smart-building", destination: "/", permanent: true },
+      { source: "/services/ar-vr-solutions", destination: "/", permanent: true },
+    ];
+  },
+
+  /**
    * Security headers. The site previously sent none.
    *
    * No Content-Security-Policy yet on purpose: a useful one has to enumerate

@@ -1,4 +1,5 @@
 import JsonLd from '@/components/seo/JsonLd';
+import { EMAIL, PHONE_E164 } from '@/lib/site-config';
 
 /*
  * These three used to render through next/script, which defaults to the
@@ -20,29 +21,29 @@ export default function StructuredData() {
     logo: 'https://www.pristiqbuild.com/logo-dark.png',
     foundingDate: '2023',
     description:
-      "Building Nigeria's future, one module at a time. PristiqBuild delivers precision, sustainability, and cutting-edge technology in modular construction using light steel gauge framing.",
+      "LGS roofing, steel-frame construction and modular buildings, delivered through engineering, fabrication and controlled site execution by a team based in Maitama, Abuja.",
+    // Area only. The site publishes "Maitama, Abuja", not a street address,
+    // so the markup does not claim one either.
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Murjanatu House, 1 Zambezi Crescent',
-      addressLocality: 'Wuse',
+      addressLocality: 'Maitama, Abuja',
       addressRegion: 'FCT',
       addressCountry: 'NG',
-      postalCode: '900001',
     },
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+234-708-718-3815',
+        telephone: PHONE_E164,
         contactType: 'customer service',
-        email: 'info@pristiqbuild.com',
+        email: EMAIL,
         areaServed: 'NG',
         availableLanguage: ['English'],
       },
       {
         '@type': 'ContactPoint',
-        telephone: '+234-708-718-3815',
+        telephone: PHONE_E164,
         contactType: 'sales',
-        email: 'info@pristiqbuild.com',
+        email: EMAIL,
         areaServed: 'NG',
         availableLanguage: ['English'],
       },
@@ -66,20 +67,13 @@ export default function StructuredData() {
       geoRadius: '1000000', // Coverage across Nigeria
     },
     knowsAbout: [
-      'Modular Construction',
+      'LGS Roofing',
       'Light Gauge Steel',
       'Steel Frame Construction',
-      'Prefabricated Buildings',
-      'Sustainable Construction',
-      'Smart Buildings',
-      'AR/VR Construction Technology',
-      'Green Building',
-      'Fast Construction',
+      'Structural Steel',
+      'Modular Construction',
     ],
-    award: [
-      'Leading Modular Construction Company Nigeria',
-      'Innovation in Construction Technology',
-    ],
+    // No `award` list. The previous one named awards nobody had given.
   };
 
   const localBusinessData = {
@@ -88,20 +82,13 @@ export default function StructuredData() {
     '@id': 'https://www.pristiqbuild.com/#business',
     name: 'PristiqBuild',
     image: 'https://www.pristiqbuild.com/logo-dark.png',
-    telephone: '+234-708-718-3815',
-    email: 'info@pristiqbuild.com',
+    telephone: PHONE_E164,
+    email: EMAIL,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Murjanatu House, 1 Zambezi Crescent',
-      addressLocality: 'Wuse',
-      addressRegion: 'Abuja FCT',
-      postalCode: '900001',
+      addressLocality: 'Maitama, Abuja',
+      addressRegion: 'FCT',
       addressCountry: 'NG',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: '9.0765',
-      longitude: '7.3986',
     },
     url: 'https://www.pristiqbuild.com',
     priceRange: '₦₦₦',
@@ -125,7 +112,7 @@ export default function StructuredData() {
     name: 'PristiqBuild',
     url: 'https://www.pristiqbuild.com',
     description:
-      "Nigeria's leading modular construction company specializing in light gauge steel framing and sustainable building solutions.",
+      "Engineered LGS roofing and steel-frame construction, based in Maitama, Abuja.",
     publisher: {
       '@type': 'Organization',
       name: 'PristiqBuild',

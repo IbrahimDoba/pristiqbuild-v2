@@ -1,356 +1,117 @@
-"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft, MessageCircle } from "lucide-react";
+import { ProjectGallery } from "@/components/project-ui";
+import { WA, whatsappLink } from "@/lib/site-config";
 
-import {
-  ProjectHero,
-  ProjectGallery,
-  ProjectStats,
-  ProjectFeatures,
-  ProjectContent,
-  ProjectCTA,
-} from "@/components/project-ui";
-import {
-  Clock,
-  Home,
-  Users,
-  Zap,
-  Shield,
-  Sun,
-  Droplets,
-  Car,
-  Lightbulb,
-  Building2,
-} from "lucide-react";
+/*
+ * The three images in /breezepoint are architectural renders, not site
+ * photos. The previous version of this page captioned them as "active
+ * construction" and "LGS roofing installation", which they are not. They are
+ * labelled as renders here until real progress photos arrive.
+ */
 
-const stats = [
-  {
-    icon: Home,
-    value: "5 Units",
-    label: "Luxury Terraces",
-    sublabel: "4 bedrooms each",
-  },
-  {
-    icon: Building2,
-    value: "280 sqm",
-    label: "Per Unit",
-    sublabel: "Living space",
-  },
-  {
-    icon: Clock,
-    value: "9 Months",
-    label: "Build Timeline",
-    sublabel: "From commencement",
-  },
-  {
-    icon: Users,
-    value: "12 Person",
-    label: "Core Build Team",
-    sublabel: "Plus LGS specialists",
-  },
+const facts = [
+  { label: "Location", value: "Kubwa, Abuja" },
+  { label: "Units", value: "5 terrace duplexes" },
+  { label: "Structure", value: "Joint venture with the landowner" },
+  { label: "Construction", value: "Conventional" },
+  { label: "Status", value: "Nearing completion" },
 ];
 
-const features = [
-  {
-    icon: Sun,
-    title: "Impressive Natural Lighting",
-    description:
-      "Large windows throughout maximize natural light, reducing energy costs while creating bright, welcoming living spaces that connect indoor and outdoor environments.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Smart Home Ready",
-    description:
-      "Pre wired infrastructure for smart home systems including automated lighting, climate control, and security integration, ready for modern connected living.",
-  },
-  {
-    icon: Shield,
-    title: "LGS Roofing System",
-    description:
-      "Among the first luxury builds in F01 to implement full Light Gauge Steel roofing, offering 60% faster installation, zero rot risk, and lifetime structural integrity.",
-  },
-  {
-    icon: Zap,
-    title: "Energy Efficient Design",
-    description:
-      "LED efficient lighting throughout, smart HVAC readiness, and thoughtful orientation reduce energy consumption while maintaining optimal comfort.",
-  },
-  {
-    icon: Droplets,
-    title: "Integrated Systems",
-    description:
-      "Professional drainage, plumbing, and power backup systems built in from foundation, ensuring reliable operation and easy maintenance for years to come.",
-  },
-  {
-    icon: Car,
-    title: "Dedicated Parking",
-    description:
-      "Each unit includes private 2 car covered parking plus landscaped driveways and estate frontage, providing convenience and curb appeal.",
-  },
-];
-
-const contentSections = [
-  {
-    title: "Smart Living. Elegant Design. Thoughtful Craftsmanship.",
-    content:
-      "In the rising heart of Kubwa's prestigious F01 district, Breeze Point Estate emerges as a striking symbol of smart luxury living. Developed by Pristiq Build, this exclusive enclave features five exquisitely built 4 bedroom terrace homes, combining timeless architectural elegance with forward thinking construction technology. With construction led entirely by our team, the project embodies everything Pristiq Build stands for: durability, energy efficiency, structural precision, and modern aesthetics.",
-    image: "/breezepoint/breeze1.jpg",
-    imageAlt: "Breeze Point Estate construction progress",
-    imagePosition: "right" as const,
-  },
-  {
-    title: "Construction System Excellence",
-    content:
-      "While traditional blockwork forms the main structural shell, we integrated a Light Gauge Steel roofing system to align with our commitment to innovative, efficient construction. The combination brings the best of both worlds: classic masonry robustness and future proof roofing technology. All 13 precision fabricated LGS trusses were installed in under 4 days by our specialized team using automated cutting, drilling, and bolting machinery.",
-    image: "/breezepoint/breeze2.jpg",
-    imageAlt: "LGS roofing installation at Breeze Point",
-    imagePosition: "left" as const,
-    highlights: [
-      "Foundation to finish construction executed fully in house",
-      "13 precision fabricated LGS trusses installed in under 4 days",
-      "Anti rust, termite resistant, precision cut steel technology",
-      "Smart HVAC readiness and LED efficient lighting throughout",
-    ],
-  },
-  {
-    title: "Unit Layout and Design",
-    content:
-      "Each terrace home offers a generous 280 square meters of living space, thoughtfully distributed across multiple levels. The ground floor features open plan living and dining, a premium kitchen with custom cabinetry and stone countertops, guest powder room, and guest bedroom. The first floor houses the master suite with walk in closet and en suite, plus two additional family bedrooms. Private garden space and dedicated parking complete each residence.",
-    image: "/breezepoint/breeze3.jpg",
-    imageAlt: "Interior design concept",
-    imagePosition: "right" as const,
-  },
-];
-
-const galleryImages = [
-  {
-    src: "/breezepoint/breeze1.jpg",
-    alt: "Breeze Point Estate construction progress",
-    caption: "Active construction showing structural progress",
-  },
-  {
-    src: "/breezepoint/breeze2.jpg",
-    alt: "LGS roofing system installation",
-    caption: "Precision steel roofing framework",
-  },
-  {
-    src: "/breezepoint/breeze3.jpg",
-    alt: "Building exterior progress",
-    caption: "Exterior development progress",
-  },
-];
-
-const premiumFeatures = [
-  {
-    title: "Custom Kitchen Cabinetry",
-    description: "Stone countertops with modern fixtures and premium finishes",
-  },
-  {
-    title: "Solid Core Interior Doors",
-    description: "Sleek contemporary hardware throughout all living spaces",
-  },
-  {
-    title: "LED Lighting Throughout",
-    description: "Energy efficient lighting system with smart control readiness",
-  },
-  {
-    title: "Professional Landscaping",
-    description: "Beautifully designed driveways and estate frontage",
-  },
-];
+const renders = [
+  { src: "/breezepoint/breeze3.jpg", alt: "Render of the Breeze Point Estate terrace frontage" },
+  { src: "/breezepoint/breeze2.jpg", alt: "Render of the terrace duplexes, end unit view" },
+  { src: "/breezepoint/breeze1.jpg", alt: "Render of the terrace from above, showing the roof" },
+].map((r) => ({ ...r, caption: "Design render" }));
 
 export default function BreezePointProject() {
   return (
-    <>
-        <ProjectHero
-          title="Breeze Point Estate"
-          subtitle="Exclusive luxury living in F01 Kubwa featuring five 4 bedroom terrace homes with Light Gauge Steel roofing and smart home infrastructure."
-          location="F01 District, Kubwa, Abuja"
-          duration="9 Months"
-          area="280 sqm per unit"
-          status="Under Construction"
-          heroImage="/LGS/construction.jpg"
-          category="Residential Development"
-        />
-
-        <ProjectStats stats={stats} />
-
-        <ProjectContent sections={contentSections} />
-
-        <ProjectFeatures
-          title="Premium Features"
-          subtitle="Lifestyle Excellence"
-          features={features}
-        />
-
-        {/* Premium Finishes Section */}
-        <section className="py-16 sm:py-20 bg-linear-to-b from-white to-steel-50">
-          <div className="container-custom">
-            <div className="text-center mb-10 sm:mb-12">
-              <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-                Quality Details
+    <div className="bg-white">
+      {/* Hero */}
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20 grid lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-6">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-sm text-silver hover:text-white transition-colors mb-8"
+            >
+              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              All projects
+            </Link>
+            <p className="mb-4">
+              <span className="inline-block px-2 py-0.5 text-xs font-semibold uppercase tracking-wider border border-silver/40 text-silver rounded">
+                Conventional
               </span>
-              <h2 className="heading-lg text-steel-900">Premium Finishes</h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {premiumFeatures.map((feature, index) => (
-                <div
-                  key={index}
-                  className="p-5 sm:p-6 bg-white rounded-2xl border border-steel-100 shadow-lg hover:shadow-xl hover:border-primary-200 transition-[color,background-color,border-color,box-shadow] duration-300"
-                >
-                  <h3 className="font-display font-bold text-steel-900 text-base sm:text-lg mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-steel-600 text-sm sm:text-base">{feature.description}</p>
-                </div>
-              ))}
-            </div>
+            </p>
+            <h1 className="heading-xl mb-6">Breeze Point Estate, Kubwa</h1>
+            <p className="body-lg text-white/85 max-w-xl">
+              Five terrace duplexes in Kubwa, Abuja, developed in joint venture with the
+              landowner using conventional construction. The project is nearing completion.
+            </p>
           </div>
-        </section>
-
-        {/* Why LGS Section */}
-        <section className="section-padding bg-primary-900 text-white">
-          <div className="container-custom">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-              <div>
-                <span className="inline-block mb-4 text-secondary-400 font-semibold tracking-wider uppercase text-sm">
-                  Innovation First
-                </span>
-                <h2 className="heading-lg text-white mb-6">
-                  Why LGS for Roofing?
-                </h2>
-                <p className="text-lg sm:text-xl text-white/80 leading-relaxed mb-6 sm:mb-8">
-                  Breeze Point Estate is among the first luxury builds in F01 to
-                  implement a full Light Gauge Steel roofing system, setting a
-                  new standard for residential construction in the area.
-                </p>
-                <ul className="space-y-3 sm:space-y-4">
-                  {[
-                    "Over 60% faster installation than traditional timber",
-                    "10% cost savings on roofing materials and labor",
-                    "Zero risk of rot, sagging, or termites",
-                    "Clean finish and long term structural integrity",
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary-500 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg
-                          className="w-3 h-3 sm:w-4 sm:h-4 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                      </span>
-                      <span className="text-white/90 text-sm sm:text-base">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="relative">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 sm:p-8 border border-white/20">
-                  <h3 className="text-xl sm:text-2xl font-display font-bold mb-4 sm:mb-6">
-                    Technical Specifications
-                  </h3>
-                  <div className="space-y-3 sm:space-y-4">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
-                      <span className="text-white/70 text-sm sm:text-base">Truss Profile</span>
-                      <span className="font-semibold text-sm sm:text-base">
-                        Zinc coated 10cm profiles
-                      </span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
-                      <span className="text-white/70 text-sm sm:text-base">Installation Team</span>
-                      <span className="font-semibold text-sm sm:text-base">5 person crew</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:border-b sm:border-white/20 sm:pb-3">
-                      <span className="text-white/70 text-sm sm:text-base">Installation Time</span>
-                      <span className="font-semibold text-sm sm:text-base">4 days</span>
-                    </div>
-                    <div className="flex flex-col sm:flex-row sm:justify-between">
-                      <span className="text-white/70 text-sm sm:text-base">Equipment Used</span>
-                      <span className="font-semibold text-sm sm:text-base">
-                        Automated tools
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <figure className="lg:col-span-6">
+            <div className="relative aspect-[4/3] overflow-hidden border border-white/15">
+              <Image
+                src="/breezepoint/breeze3.jpg"
+                alt="Render of the Breeze Point Estate terrace frontage"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+              />
+              <span className="absolute top-3 left-3 px-2 py-0.5 bg-black/70 text-white text-xs font-semibold uppercase tracking-wider rounded">
+                Render
+              </span>
             </div>
-          </div>
-        </section>
+            <figcaption className="text-sm text-silver/80 mt-3">
+              Design render. Site photos will be added as the project completes.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-        <ProjectGallery images={galleryImages} title="Construction Progress" />
-
-        {/* Investment Info */}
-        <section className="py-16 sm:py-20 bg-white">
-          <div className="container-custom">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-10 sm:mb-12">
-                <span className="eyebrow inline-block mb-4 text-secondary-600 font-semibold tracking-wider uppercase text-sm">
-                  Investment Opportunity
-                </span>
-                <h2 className="heading-lg text-steel-900">Project Status</h2>
+      {/* Facts */}
+      <section className="section-padding border-b border-steel-200" aria-labelledby="facts-heading">
+        <div className="container-custom">
+          <h2 id="facts-heading" className="heading-lg text-steel-900 mb-8">
+            Project at a glance
+          </h2>
+          <dl className="grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-steel-200 border border-steel-200">
+            {facts.map((fact) => (
+              <div key={fact.label} className="p-5 bg-white">
+                <dt className="text-xs uppercase tracking-wider text-steel-500">{fact.label}</dt>
+                <dd className="font-display font-bold text-lg text-steel-900 mt-1">{fact.value}</dd>
               </div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-10 sm:mb-12">
-                <div className="text-center p-5 sm:p-6 bg-steel-50 rounded-2xl">
-                  <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
-                    Under Construction
-                  </div>
-                  <div className="text-steel-600 text-sm sm:text-base">Current Status</div>
-                </div>
-                <div className="text-center p-5 sm:p-6 bg-steel-50 rounded-2xl">
-                  <div className="text-xl sm:text-3xl font-display font-bold text-primary-700 mb-2">
-                    3 Units
-                  </div>
-                  <div className="text-steel-600 text-sm sm:text-base">Remaining Available</div>
-                </div>
-                <div className="text-center p-5 sm:p-6 bg-linear-to-br from-secondary-500 to-secondary-600 rounded-2xl text-white sm:col-span-2 lg:col-span-1">
-                  <div className="text-xl sm:text-3xl font-display font-bold mb-2">
-                    Flexible
-                  </div>
-                  <div className="text-white/90 text-sm sm:text-base">Payment Options</div>
-                </div>
-              </div>
-              <div className="text-center px-4">
-                <p className="text-base sm:text-lg text-steel-600 leading-relaxed">
-                  Payment options include full payment, installments, and
-                  mortgage support. Contact us for detailed pricing and
-                  availability information.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+            ))}
+          </dl>
+          <p className="mt-8 max-w-3xl text-steel-700 leading-relaxed">
+            Breeze Point is one of the conventional construction projects we take on alongside
+            our LGS roofing and structural steel work. We are co-developing it in joint venture
+            with the owner of the land.
+          </p>
+        </div>
+      </section>
 
-        {/* CEO Quote */}
-        <section className="py-16 sm:py-20 bg-linear-to-b from-steel-50 to-white">
-          <div className="container-custom px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="w-16 sm:w-20 h-1 bg-linear-to-r from-secondary-500 to-secondary-600 mx-auto mb-6 sm:mb-8" />
-              <blockquote className="text-xl sm:text-2xl md:text-3xl font-display text-steel-800 leading-relaxed mb-6 sm:mb-8">
-                &ldquo;We are excited to bring Breeze Point Estate to life in
-                Kubwa&apos;s most sought after district. Every detail from foundation
-                to final finish reflects our dedication to building homes that
-                last, function smartly, and stand out in value and
-                beauty.&rdquo;
-              </blockquote>
-              <cite className="text-base sm:text-lg text-steel-600 not-italic">
-                <span className="font-semibold text-steel-900">Yusuf Doba</span>
-                <span className="mx-2">|</span>
-                CEO, Pristiq Build
-              </cite>
-            </div>
-          </div>
-        </section>
+      <ProjectGallery images={renders} title="Design renders" />
 
-        <ProjectCTA
-          title="Interested in Breeze Point Estate?"
-          description="Secure your unit in this exclusive development. Contact us today to schedule a site visit, receive detailed pricing, or learn more about payment options."
-        />
-    </>
+      {/* CTA */}
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom py-16 flex flex-wrap items-center justify-between gap-6">
+          <p className="heading-sm max-w-xl">
+            Interested in Breeze Point Estate, or have a development of your own in mind?
+          </p>
+          <a
+            href={whatsappLink(WA.general)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
+          >
+            <MessageCircle size={20} aria-hidden="true" />
+            Talk to us on WhatsApp
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }

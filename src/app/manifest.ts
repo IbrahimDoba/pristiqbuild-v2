@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'PristiqBuild - Nigeria\'s Leading Modular Construction Innovator',
+    name: 'PristiqBuild · LGS Roofing & Steel-Frame Construction',
     short_name: 'PristiqBuild',
-    description: 'Building Nigeria\'s future, one module at a time. PristiqBuild delivers precision, sustainability, and cutting-edge technology in modular construction using light steel gauge framing.',
+    description: 'LGS roofing, steel-frame construction and modular buildings, delivered through engineering, fabrication and controlled site execution, by a team based in Maitama, Abuja.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

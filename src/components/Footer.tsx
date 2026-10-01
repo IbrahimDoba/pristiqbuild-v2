@@ -10,28 +10,40 @@ import {
   Instagram,
   Linkedin,
   ArrowUp,
+  MessageCircle,
 } from "lucide-react";
+import Link from "next/link";
 import NewsletterForm from "@/components/forms/NewsletterForm";
-import { PHONE_HREF, PHONE_DISPLAY } from "@/lib/site-config";
+import {
+  PHONE_HREF,
+  PHONE_DISPLAY,
+  EMAIL,
+  LOCATION,
+  WA,
+  whatsappLink,
+} from "@/lib/site-config";
 
+/** Same destinations as the header, per the brief's section 3. */
 const footerLinks = {
   company: [
-    { name: "About Us", href: "/about" },
-    { name: "Our Team", href: "/team" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Projects", href: "/projects" },
+    { name: "Insights", href: "/blog" },
     { name: "Careers", href: "/careers" },
-    { name: "News & Blog", href: "/blog" },
   ],
   services: [
+    { name: "LGS Roofing", href: "/services/lgs-roofing" },
     { name: "Modular Construction", href: "/services/modular-construction" },
-    { name: "Light Steel Gauge", href: "/services/light-steel-gauge" },
-    { name: "AR/VR Solutions", href: "/services/ar-vr-solutions" },
-    { name: "Smart Building", href: "/services/smart-building" },
+  ],
+  developments: [
+    { name: "Opulence Heights", href: "/projects/opulence-heights" },
+    { name: "Breeze Point Estate", href: "/projects/breeze-point-estate" },
   ],
   resources: [
-    { name: "Case Studies", href: "/case-studies" },
     { name: "FAQs", href: "/faq" },
     { name: "Cost Calculator", href: "/cost-calculator" },
-    { name: "Contact Us", href: "/contact" },
+    { name: "Contact", href: "/contact" },
   ],
 };
 
@@ -47,7 +59,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-steel-900 text-white overflow-hidden">
+    <footer className="relative bg-deep-steel text-white overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div
@@ -61,7 +73,7 @@ export default function Footer() {
 
       {/* Main Footer Content */}
       <div className="relative z-10 container-custom pt-20 pb-12">
-        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-12 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <div className="mb-6">
@@ -75,10 +87,8 @@ export default function Footer() {
               </div>
             </div>
 
-            <p className="text-steel-400 mb-6 max-w-sm">
-              Building Nigeria&apos;s future, one module at a time. Leading the
-              way in high-tech modular construction with precision,
-              sustainability, and cutting-edge technology.
+            <p className="text-silver mb-6 max-w-sm">
+              Precision steel construction, engineered for Nigeria.
             </p>
 
             {/* Contact Info */}
@@ -87,81 +97,61 @@ export default function Footer() {
                 href={PHONE_HREF}
                 className="flex items-center gap-3 text-steel-400 hover:text-white transition-colors"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4" aria-hidden="true" />
                 <span>{PHONE_DISPLAY}</span>
               </a>
               <a
-                href="mailto:info@pristiqbuild.com"
+                href={`mailto:${EMAIL}`}
                 className="flex items-center gap-3 text-steel-400 hover:text-white transition-colors"
               >
-                <Mail className="w-4 h-4" />
-                <span>info@pristiqbuild.com</span>
+                <Mail className="w-4 h-4" aria-hidden="true" />
+                <span>{EMAIL}</span>
+              </a>
+              <a
+                href={whatsappLink(WA.general)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-steel-400 hover:text-white transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                <span>Chat on WhatsApp</span>
               </a>
               <div className="flex items-start gap-3 text-steel-400">
-                <MapPin className="w-4 h-4 shrink-0 mt-1" />
-                <span>
-                  Murjanatu House, 1 Zambezi Crescent,
-                  <br />
-                  Wuse Abuja, Nigeria
-                </span>
+                <MapPin className="w-4 h-4 shrink-0 mt-1" aria-hidden="true" />
+                <span>{LOCATION}</span>
               </div>
             </div>
           </div>
 
           {/* Links Columns */}
-          <div>
-            <h2 className="font-display font-semibold text-lg mb-6">Company</h2>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-steel-400 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-display font-semibold text-lg mb-6">Services</h2>
-            <ul className="space-y-3">
-              {footerLinks.services.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-steel-400 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h2 className="font-display font-semibold text-lg mb-6">
-              Resources
-            </h2>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-steel-400 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {(
+            [
+              ["Company", footerLinks.company],
+              ["Services", footerLinks.services],
+              ["Developments", footerLinks.developments],
+              ["Resources", footerLinks.resources],
+            ] as const
+          ).map(([heading, links]) => (
+            <nav key={heading} aria-label={`Footer ${heading.toLowerCase()}`}>
+              <h2 className="font-display font-semibold text-lg mb-6">{heading}</h2>
+              <ul className="space-y-3">
+                {links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-steel-400 hover:text-white transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
         {/* Newsletter */}
-        <div className="bg-steel-800/50 rounded-2xl p-6 sm:p-8 mb-12">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 mb-12">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="text-center lg:text-left w-full lg:w-auto">
               <h2 className="font-display font-semibold text-lg mb-2">
@@ -177,7 +167,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-steel-800">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/10">
           {/* Copyright */}
           <p className="text-steel-400 text-sm text-center md:text-left">
             &copy; {new Date().getFullYear()} PristiqBuild. All rights reserved.
@@ -190,7 +180,7 @@ export default function Footer() {
                 key={social.label}
                 href={social.href}
                 aria-label={social.label}
-                className="w-10 h-10 rounded-lg bg-steel-800 flex items-center justify-center text-steel-400 hover:bg-primary-600 hover:text-white transition-colors"
+                className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-steel-400 hover:bg-primary-600 hover:text-white transition-colors"
               >
                 <social.icon className="w-5 h-5" />
               </a>

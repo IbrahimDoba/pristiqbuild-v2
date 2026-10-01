@@ -3,29 +3,15 @@ import JsonLd from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title:
-    "Breeze Point Estate Kubwa | Luxury Terrace Homes with LGS Roofing | Pristiq Build",
+  title: "Breeze Point Estate, Kubwa, Abuja",
   description:
-    "Discover Breeze Point Estate in F01 Kubwa, Abuja. Five luxury 4 bedroom terrace homes featuring Light Gauge Steel roofing, smart home infrastructure, and premium finishes. Under construction by Pristiq Build.",
-  keywords: [
-    "Breeze Point Estate Kubwa",
-    "luxury terrace homes Abuja",
-    "4 bedroom terrace F01",
-    "LGS roofing residential",
-    "smart homes Nigeria",
-    "Pristiq Build development",
-    "steel frame housing Abuja",
-    "energy efficient homes Nigeria",
-    "new construction Kubwa",
-    "premium real estate Abuja",
-    "terrace duplex for sale",
-    "modern homes FCT",
-  ],
+    "Five terrace duplexes in Kubwa, Abuja, developed in joint venture with the landowner using conventional construction. Nearing completion.",
+  alternates: { canonical: "/projects/breeze-point-estate" },
   openGraph: {
-    title: "Breeze Point Estate | Luxury Living in Kubwa, Abuja",
+    title: "Breeze Point Estate, Kubwa, Abuja",
     description:
-      "Exclusive 4 bedroom terrace homes with LGS roofing and smart home features in F01 Kubwa.",
-    images: ["/LGS/construction.jpg"],
+      "Five terrace duplexes in Kubwa, built conventionally in joint venture with the landowner. Nearing completion.",
+    images: ["/breezepoint/breeze1.jpg"],
     type: "article",
   },
 };
@@ -40,7 +26,7 @@ export default function BreezePointLayout({
       <JsonLd
         id="project-breadcrumb"
         data={breadcrumbSchema([
-          { name: "Projects", path: "/#projects" },
+          { name: "Projects", path: "/projects" },
           { name: "Breeze Point Estate", path: "/projects/breeze-point-estate" },
         ])}
       />
