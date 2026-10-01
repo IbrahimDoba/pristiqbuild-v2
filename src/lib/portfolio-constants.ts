@@ -23,16 +23,38 @@ export const TAG_LABEL: Record<PortfolioTag, string> = {
 /** Plain shape handed from server to client components. */
 export type PortfolioEntry = {
   id: string;
+  slug: string;
   name: string;
   location: string;
   tag: PortfolioTag;
   featured: boolean;
   desc: string;
+  body: string | null;
   sqm: string | null;
   steel: string | null;
   waste: string | null;
-  href: string | null;
   image: string | null;
   published: boolean;
   sortOrder: number;
 };
+
+/** Every entry's public page. Hand-built pages share the same URL shape. */
+export function projectHref(slug: string) {
+  return `/projects/${slug}`;
+}
+
+/** Remote photos skip the optimiser, which only allows listed hosts. */
+export function isRemoteImage(src: string) {
+  return /^https?:\/\//.test(src);
+}
+
+/** "Akure Residence, Ondo" -> "akure-residence-ondo". */
+export function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 80);
+}

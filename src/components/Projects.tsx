@@ -7,51 +7,82 @@ import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, ArrowUpRight } from "lucide-react";
+import {
+  TAG_LABEL,
+  isRemoteImage,
+  projectHref,
+  type PortfolioEntry,
+} from "@/lib/portfolio-constants";
+import { PhotoPlaceholder } from "@/components/PortfolioGrid";
 
 /**
- * One project carries the section, two support it.
+ * The homepage strip: featured portfolio entries, chosen in /admin/portfolio.
  *
- * Akure is the featured job because it is the one with verified numbers. The
- * supporting cards are exactly what the brief names for the homepage; the full
- * list lives on /projects.
+ * The first carries the section; up to two more support it. FALLBACK is the
+ * brief's own homepage selection, shown only when the database returns
+ * nothing (an outage, or a build without DATABASE_URL), so the section never
+ * disappears from the homepage.
  */
-const featured = {
-  slug: "akure-lgs-roofing",
-  title: "Akure Residence",
-  tag: "LGS Roofing",
-  location: "Akure, Ondo State",
-  description:
-    "A large residential roof, engineered, fabricated and installed in G550 light gauge steel.",
-  stats: [
-    { value: "1,080 sqm", label: "Roof area" },
-    { value: "6.8t", label: "G550 steel" },
-    { value: "960", label: "C-channels" },
-    { value: "75%", label: "Less waste vs timber" },
-  ],
-  image: "/LGS/1752987831787.jpeg",
-};
-
-const projects = [
+const FALLBACK: PortfolioEntry[] = [
   {
-    slug: "maitama-luxury-mansion",
-    title: "Private Residence, Maitama",
-    tag: "LGS Roofing",
-    location: "Maitama, Abuja",
-    description: "Full project details coming soon.",
-    image: "/maitama/dji_fly_20250305_140920_676_1741180573389_photo.jpg",
+    id: "fallback-akure",
+    slug: "akure-lgs-roofing",
+    name: "Akure Residence",
+    location: "Akure, Ondo State",
+    tag: "LGS_ROOFING",
+    featured: true,
+    desc: "A large residential roof, engineered, fabricated and installed in G550 light gauge steel.",
+    body: null,
+    sqm: "1,080 sqm",
+    steel: "6.8t G550",
+    waste: "75% less vs timber",
+    image: "/LGS/1752987831787.jpeg",
+    published: true,
+    sortOrder: 10,
   },
   {
+    id: "fallback-maitama",
+    slug: "maitama-luxury-mansion",
+    name: "Private Residence, Maitama",
+    location: "Maitama, Abuja",
+    tag: "LGS_ROOFING",
+    featured: true,
+    desc: "Full project details coming soon.",
+    body: null,
+    sqm: null,
+    steel: null,
+    waste: null,
+    image: "/maitama/dji_fly_20250305_140920_676_1741180573389_photo.jpg",
+    published: true,
+    sortOrder: 20,
+  },
+  {
+    id: "fallback-breeze",
     slug: "breeze-point-estate",
-    title: "Breeze Point Estate",
-    tag: "Conventional",
+    name: "Breeze Point Estate",
     location: "Kubwa, Abuja",
-    description:
-      "Five terrace duplexes in a joint venture with the landowner, nearing completion.",
+    tag: "CONVENTIONAL",
+    featured: true,
+    desc: "Five terrace duplexes in a joint venture with the landowner, nearing completion.",
+    body: null,
+    sqm: null,
+    steel: null,
+    waste: null,
     image: "/breezepoint/breeze1.jpg",
+    published: true,
+    sortOrder: 30,
   },
 ];
 
-export default function Projects() {
+export default function Projects({ items }: { items: PortfolioEntry[] }) {
+  const shown = (items.length > 0 ? items : FALLBACK).slice(0, 3);
+  const [featured, ...projects] = shown;
+  const stats = [
+    { label: "Area", value: featured.sqm },
+    { label: "Steel", value: featured.steel },
+    { label: "Waste", value: featured.waste },
+  ].filter((s): s is { label: string; value: string } => Boolean(s.value));
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -104,37 +135,43 @@ export default function Projects() {
 
         {/* Featured: asymmetric split, deliberately not the card shape below. */}
         <Link
-          href={`/projects/${featured.slug}`}
+          href={projectHref(featured.slug)}
           className="proj-feature group grid lg:grid-cols-12 overflow-hidden border border-steel-200 bg-deep-steel text-white mb-6"
         >
           <div className="relative lg:col-span-7 aspect-[16/10] lg:aspect-auto lg:min-h-[440px] overflow-hidden">
-            <Image
-              src={featured.image}
-              alt={`${featured.title}, LGS roof`}
-              fill
-              sizes="(max-width: 1024px) 100vw, 58vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
+            {featured.image ? (
+              <Image
+                src={featured.image}
+                alt={featured.name}
+                fill
+                unoptimized={isRemoteImage(featured.image)}
+                sizes="(max-width: 1024px) 100vw, 58vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+            ) : (
+              <PhotoPlaceholder label={featured.name} />
+            )}
           </div>
 
           <div className="lg:col-span-5 p-8 lg:p-10 flex flex-col justify-center">
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-wider font-semibold text-silver mb-3">
-              <span>Featured · {featured.tag}</span>
+              <span>Featured · {TAG_LABEL[featured.tag]}</span>
               <span className="inline-flex items-center gap-1 normal-case tracking-normal font-normal text-white/60">
                 <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
                 {featured.location}
               </span>
             </p>
             <h3 className="font-display font-bold text-3xl lg:text-4xl mb-4 leading-tight">
-              {featured.title}
+              {featured.name}
             </h3>
-            <p className="text-white/70 leading-relaxed mb-8">{featured.description}</p>
+            <p className="text-white/70 leading-relaxed mb-8">{featured.desc}</p>
 
+            {stats.length > 0 && (
             <dl className="grid grid-cols-2 border-t border-l border-white/15 mb-8 m-0">
-              {featured.stats.map((s) => (
+              {stats.map((s) => (
                 <div
                   key={s.label}
-                  className="flex flex-col-reverse justify-end border-r border-b border-white/15 p-4"
+                  className="flex flex-col-reverse justify-end border-r border-b border-white/15 p-4 odd:last:col-span-2"
                 >
                   <dt className="text-xs text-white/60 leading-snug">{s.label}</dt>
                   <dd className="m-0 mb-1 font-display font-bold text-2xl tabular leading-none">
@@ -143,6 +180,7 @@ export default function Projects() {
                 </div>
               ))}
             </dl>
+            )}
 
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold group-hover:text-silver transition-colors">
               Read the case study
@@ -156,30 +194,35 @@ export default function Projects() {
 
         <ul className="proj-grid grid md:grid-cols-2 gap-6 list-none p-0 m-0">
           {projects.map((project) => (
-            <li key={project.slug} className="proj-card">
+            <li key={project.id} className="proj-card">
               <Link
-                href={`/projects/${project.slug}`}
+                href={projectHref(project.slug)}
                 className="group grid sm:grid-cols-5 h-full overflow-hidden border border-steel-200 bg-white hover:border-primary-300 transition-colors"
               >
                 <div className="relative sm:col-span-2 aspect-[4/3] sm:aspect-auto sm:min-h-[220px] overflow-hidden bg-steel-100">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 40vw, 20vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.name}
+                      fill
+                      unoptimized={isRemoteImage(project.image)}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 40vw, 20vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <PhotoPlaceholder label={project.name} />
+                  )}
                 </div>
 
                 <div className="sm:col-span-3 flex flex-col p-6">
                   <span className="self-start text-xs uppercase tracking-wider text-primary-700 font-semibold border border-primary-200 px-2 py-1 mb-4">
-                    {project.tag}
+                    {TAG_LABEL[project.tag]}
                   </span>
                   <h3 className="font-display font-semibold text-lg text-steel-900 leading-snug mb-2 group-hover:text-primary-700 transition-colors">
-                    {project.title}
+                    {project.name}
                   </h3>
                   <p className="text-sm text-steel-600 leading-relaxed mb-4">
-                    {project.description}
+                    {project.desc}
                   </p>
                   <p className="mt-auto inline-flex items-center gap-1.5 text-xs text-steel-500">
                     <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />

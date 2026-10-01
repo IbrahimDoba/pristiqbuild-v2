@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
-import { getPublishedPortfolio, pickFeatured } from "@/lib/portfolio";
+import { getPublishedPortfolio } from "@/lib/portfolio";
+import { isRemoteImage, projectHref } from "@/lib/portfolio-constants";
 import PortfolioGrid, { PhotoPlaceholder, TagChip } from "@/components/PortfolioGrid";
 import { WA, whatsappLink } from "@/lib/site-config";
 
@@ -19,7 +20,7 @@ export const revalidate = 3600;
 
 export default async function ProjectsPage() {
   const items = await getPublishedPortfolio();
-  const featured = pickFeatured(items);
+  const featured = items.find((i) => i.featured);
   const rest = items.filter((i) => i !== featured);
 
   return (
@@ -48,6 +49,7 @@ export default async function ProjectsPage() {
                   alt={featured.name}
                   fill
                   priority
+                  unoptimized={isRemoteImage(featured.image)}
                   sizes="(max-width: 1024px) 100vw, 58vw"
                   className="object-cover"
                 />
@@ -85,15 +87,13 @@ export default async function ProjectsPage() {
                 </dl>
               )}
 
-              {featured.href && (
-                <Link
-                  href={featured.href}
-                  className="inline-flex items-center gap-2 font-semibold text-primary-700 hover:text-primary-800 transition-colors"
-                >
-                  Read the case study
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </Link>
-              )}
+              <Link
+                href={projectHref(featured.slug)}
+                className="inline-flex items-center gap-2 font-semibold text-primary-700 hover:text-primary-800 transition-colors"
+              >
+                Read the case study
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
             </div>
           </div>
         </section>

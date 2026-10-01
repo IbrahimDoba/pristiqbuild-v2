@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { TAGS, TAG_LABEL, type PortfolioEntry } from "@/lib/portfolio-constants";
+import { TAGS, TAG_LABEL, isRemoteImage, projectHref, type PortfolioEntry } from "@/lib/portfolio-constants";
 import type { PortfolioTag } from "@/generated/prisma/client";
 
 /** Diagonal hairlines where a real photo will go. */
@@ -73,6 +73,7 @@ export default function PortfolioGrid({ items }: { items: PortfolioEntry[] }) {
                     alt={item.name}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    unoptimized={isRemoteImage(item.image)}
                     className="object-cover"
                   />
                 ) : (
@@ -83,9 +84,7 @@ export default function PortfolioGrid({ items }: { items: PortfolioEntry[] }) {
                 <TagChip tag={item.tag} />
                 <h3 className="font-display font-bold text-xl text-steel-900 mt-3 mb-1 flex items-start justify-between gap-3">
                   {item.name}
-                  {item.href && (
-                    <ArrowUpRight className="w-5 h-5 shrink-0 text-primary-700" aria-hidden="true" />
-                  )}
+                  <ArrowUpRight className="w-5 h-5 shrink-0 text-primary-700" aria-hidden="true" />
                 </h3>
                 <p className="flex items-center gap-1.5 text-sm text-steel-500 mb-3">
                   <MapPin className="w-4 h-4" aria-hidden="true" />
@@ -102,13 +101,9 @@ export default function PortfolioGrid({ items }: { items: PortfolioEntry[] }) {
           );
           return (
             <li key={item.id} className="bg-white">
-              {item.href ? (
-                <Link href={item.href} className="block h-full hover:bg-steel-50 transition-colors">
-                  {body}
-                </Link>
-              ) : (
-                body
-              )}
+              <Link href={projectHref(item.slug)} className="block h-full hover:bg-steel-50 transition-colors">
+                {body}
+              </Link>
             </li>
           );
         })}

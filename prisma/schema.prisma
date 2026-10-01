@@ -248,9 +248,12 @@ model Budget {
   @@unique([projectId, category])
 }
 
-/// A public portfolio entry, shown on /projects and the homepage strip.
+/// A public portfolio entry. Every entry is listed on /projects and has its
+/// own page at /projects/<slug>; featured entries make up the homepage strip.
 ///
 /// Edited from /admin/portfolio so the list can change without a deploy.
+/// Five slugs (akure-lgs-roofing and so on) also have hand-built pages under
+/// app/(site)/projects/, and Next serves those ahead of the generic page.
 /// Separate from Project, which is internal cost tracking: most internal jobs
 /// never go public, and marketing copy should not live next to the books.
 model PortfolioItem {
@@ -258,21 +261,25 @@ model PortfolioItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  /// URL segment: /projects/<slug>.
+  slug     String       @unique
   name     String
   location String
   tag      PortfolioTag
-  /// At most one is shown as the featured case study; the newest wins.
+  /// Featured entries form the homepage strip, in sort order. The first is
+  /// also the case study at the top of /projects.
   featured Boolean      @default(false)
+  /// One or two sentences, for cards.
   desc     String       @db.Text
+  /// Longer write-up for the project's own page. Blank lines split paragraphs.
+  body     String?      @db.Text
 
   // Stat strings, printed as entered ("1,080 sqm", "6.8t", "75% less").
   sqm   String?
   steel String?
   waste String?
 
-  /// Optional link to a bespoke page, e.g. /projects/akure-lgs-roofing.
-  href  String?
-  /// Optional photo, a path under public/, e.g. /LGS/1752987831787.jpeg.
+  /// Optional photo: a path under public/ (/LGS/roof.jpeg) or an https URL.
   image String?
 
   published Boolean @default(true)

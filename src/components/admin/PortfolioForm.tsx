@@ -53,7 +53,12 @@ export default function PortfolioForm({ item }: { item?: PortfolioEntry }) {
 
       <div>
         <label htmlFor={`${p}-desc`} className={label}>Description</label>
-        <textarea id={`${p}-desc`} name="desc" required rows={3} defaultValue={item?.desc} className={`${cls} resize-y`} />
+        <textarea id={`${p}-desc`} name="desc" required rows={2} defaultValue={item?.desc} placeholder="One or two sentences, shown on cards…" className={`${cls} resize-y`} />
+      </div>
+
+      <div>
+        <label htmlFor={`${p}-body`} className={label}>Full write-up <span className="font-normal text-steel-400">(optional, shown on the project&apos;s own page; leave a blank line between paragraphs)</span></label>
+        <textarea id={`${p}-body`} name="body" rows={5} defaultValue={item?.body ?? ""} className={`${cls} resize-y`} />
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -70,8 +75,11 @@ export default function PortfolioForm({ item }: { item?: PortfolioEntry }) {
           <input id={`${p}-waste`} name="waste" defaultValue={item?.waste ?? ""} placeholder="75% less vs timber" className={cls} />
         </div>
         <div>
-          <label htmlFor={`${p}-href`} className={label}>Page link <span className="font-normal text-steel-400">(optional)</span></label>
-          <input id={`${p}-href`} name="href" defaultValue={item?.href ?? ""} placeholder="/projects/…" spellCheck={false} className={cls} />
+          <label htmlFor={`${p}-slug`} className={label}>Page address</label>
+          <div className="flex items-center rounded-lg border border-steel-200 bg-white focus-within:border-primary-600 focus-within:ring-2 focus-within:ring-primary-600/20">
+            <span className="pl-3 text-sm text-steel-400 select-none">/projects/</span>
+            <input id={`${p}-slug`} name="slug" defaultValue={item?.slug ?? ""} placeholder="from the name" spellCheck={false} autoComplete="off" className="w-full min-w-0 px-1 py-2 bg-transparent text-sm outline-none" />
+          </div>
         </div>
         <div>
           <label htmlFor={`${p}-sort`} className={label}>Order</label>
@@ -80,7 +88,7 @@ export default function PortfolioForm({ item }: { item?: PortfolioEntry }) {
       </div>
 
       <div>
-        <label htmlFor={`${p}-image`} className={label}>Photo path <span className="font-normal text-steel-400">(optional, a file in public/)</span></label>
+        <label htmlFor={`${p}-image`} className={label}>Photo path <span className="font-normal text-steel-400">(optional: a file in public/, or an https:// link)</span></label>
         <input id={`${p}-image`} name="image" defaultValue={item?.image ?? ""} placeholder="/LGS/1752987831787.jpeg" spellCheck={false} className={cls} />
       </div>
 
@@ -91,7 +99,7 @@ export default function PortfolioForm({ item }: { item?: PortfolioEntry }) {
         </label>
         <label className="inline-flex items-center gap-2 text-sm text-steel-700">
           <input type="checkbox" name="featured" defaultChecked={item?.featured ?? false} className="w-4 h-4 accent-primary-700" />
-          Featured case study
+          Featured on homepage
         </label>
         <button
           type="submit"
