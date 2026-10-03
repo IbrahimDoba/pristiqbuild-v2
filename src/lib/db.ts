@@ -38,6 +38,26 @@ function isLocalHost(host: string) {
  * eavesdropping and not an active man in the middle. That is a real gap, so it
  * says so once at startup rather than looking like a finished job.
  */
+/**
+ * DATABASE_CA_CERT as a PEM Node will accept, however it was pasted.
+ *
+ * Hosting dashboards mangle multi-line values: copied from .env.local it
+ * arrives wrapped in quotes, some UIs store the line breaks as a literal
+ * "\n", and some flatten it onto one line. Any of those makes Node reject
+ * the server's certificate, which looks like a dead database.
+ */
+export function normaliseCa(raw: string): string {
+  let pem = raw.trim().replace(/^["']|["']$/g, "").replace(/\\n/g, "\n").trim();
+  if (!pem.includes("\n")) {
+    const match = pem.match(/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/);
+    if (match) {
+      const body = match[1].replace(/\s+/g, "").match(/.{1,64}/g)?.join("\n") ?? "";
+      pem = `-----BEGIN CERTIFICATE-----\n${body}\n-----END CERTIFICATE-----`;
+    }
+  }
+  return pem + "\n";
+}
+
 function sslFor(connectionString: string) {
   let host: string;
   try {
@@ -53,7 +73,7 @@ function sslFor(connectionString: string) {
   // `host` is passed through to the certificate check. node-postgres sets
   // the TLS servername only for DNS names, so for an IP address Node would
   // otherwise verify the certificate against "localhost" and reject it.
-  if (ca) return { ca, rejectUnauthorized: true, host };
+  if (ca) return { ca: normaliseCa(ca), rejectUnauthorized: true, host };
 
   console.warn(
     `[db] Connecting to ${host} with TLS but without verifying its certificate. ` +
