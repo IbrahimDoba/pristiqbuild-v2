@@ -28,7 +28,9 @@ export async function connect() {
   const ssl = isLocalHost(url.hostname)
     ? undefined
     : ca
-      ? { ca, rejectUnauthorized: true }
+      ? // host: node-postgres sets no servername for an IP, so Node would
+        // check the certificate against "localhost" without it.
+        { ca, rejectUnauthorized: true, host: url.hostname }
       : { rejectUnauthorized: false };
 
   const client = new pg.Client({ connectionString: url.toString(), ssl });

@@ -50,7 +50,10 @@ function sslFor(connectionString: string) {
   if (isLocalHost(host)) return undefined;
 
   const ca = process.env.DATABASE_CA_CERT;
-  if (ca) return { ca, rejectUnauthorized: true };
+  // `host` is passed through to the certificate check. node-postgres sets
+  // the TLS servername only for DNS names, so for an IP address Node would
+  // otherwise verify the certificate against "localhost" and reject it.
+  if (ca) return { ca, rejectUnauthorized: true, host };
 
   console.warn(
     `[db] Connecting to ${host} with TLS but without verifying its certificate. ` +
