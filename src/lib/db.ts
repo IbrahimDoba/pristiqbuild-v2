@@ -1,5 +1,7 @@
 import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { X509Certificate } from "node:crypto";
+import { DOKPLOY_DB_CA, DOKPLOY_DB_HOSTS } from "@/lib/db-ca";
 
 // One client per process, in every environment.
 //
@@ -63,6 +65,28 @@ export function normaliseCa(raw: string): string {
   return pem + "\n";
 }
 
+/**
+ * The CA to verify `host` against: DATABASE_CA_CERT when it parses as a
+ * certificate, else the bundled one when the host is our Dokploy server.
+ */
+function caFor(host: string): string | undefined {
+  const raw = process.env.DATABASE_CA_CERT;
+  if (raw) {
+    const pem = normaliseCa(raw);
+    try {
+      new X509Certificate(pem);
+      return pem;
+    } catch {
+      console.error(
+        "[db] DATABASE_CA_CERT is set but is not a readable certificate " +
+          "(often a paste missing its first or last lines)" +
+          (DOKPLOY_DB_HOSTS.includes(host) ? "; using the bundled one." : ".")
+      );
+    }
+  }
+  return DOKPLOY_DB_HOSTS.includes(host) ? DOKPLOY_DB_CA : undefined;
+}
+
 function sslFor(connectionString: string) {
   let host: string;
   try {
@@ -74,11 +98,11 @@ function sslFor(connectionString: string) {
 
   if (isLocalHost(host)) return undefined;
 
-  const ca = process.env.DATABASE_CA_CERT;
+  const ca = caFor(host);
   // `host` is passed through to the certificate check. node-postgres sets
   // the TLS servername only for DNS names, so for an IP address Node would
   // otherwise verify the certificate against "localhost" and reject it.
-  if (ca) return { ca: normaliseCa(ca), rejectUnauthorized: true, host };
+  if (ca) return { ca, rejectUnauthorized: true, host };
 
   console.warn(
     `[db] Connecting to ${host} with TLS but without verifying its certificate. ` +
