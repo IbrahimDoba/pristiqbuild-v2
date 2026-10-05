@@ -43,13 +43,18 @@ function isLocalHost(host: string) {
  *
  * Hosting dashboards mangle multi-line values: copied from .env.local it
  * arrives wrapped in quotes, some UIs store the line breaks as a literal
- * "\n", and some flatten it onto one line. Any of those makes Node reject
+ * "\n", some flatten it onto one line, and the BEGIN/END lines are easy to
+ * miss when selecting it. Any of those makes Node reject
  * the server's certificate, which looks like a dead database.
  */
 export function normaliseCa(raw: string): string {
   let pem = raw.trim().replace(/^["']|["']$/g, "").replace(/\\n/g, "\n").trim();
-  if (!pem.includes("\n")) {
-    const match = pem.match(/-----BEGIN CERTIFICATE-----(.+)-----END CERTIFICATE-----/);
+  // Just the base64 body, with the BEGIN/END lines lost in the paste.
+  if (!pem.includes("BEGIN CERTIFICATE") && /^[A-Za-z0-9+/=\s]+$/.test(pem)) {
+    pem = `-----BEGIN CERTIFICATE-----${pem}-----END CERTIFICATE-----`;
+  }
+  if (!pem.includes("\n") || !/-----BEGIN CERTIFICATE-----\n/.test(pem)) {
+    const match = pem.match(/-----BEGIN CERTIFICATE-----([\s\S]+)-----END CERTIFICATE-----/);
     if (match) {
       const body = match[1].replace(/\s+/g, "").match(/.{1,64}/g)?.join("\n") ?? "";
       pem = `-----BEGIN CERTIFICATE-----\n${body}\n-----END CERTIFICATE-----`;
