@@ -34,6 +34,7 @@ export type PortfolioEntry = {
   steel: string | null;
   waste: string | null;
   image: string | null;
+  gallery: string[];
   published: boolean;
   sortOrder: number;
 };
@@ -42,6 +43,19 @@ export type PortfolioEntry = {
 export function projectHref(slug: string) {
   return `/projects/${slug}`;
 }
+
+/**
+ * Projects with their own hand-built page under app/(site)/projects/. Next
+ * serves those ahead of the generic page, so for these the admin edits cards
+ * and the homepage strip, not the page itself.
+ */
+export const HAND_BUILT_SLUGS = [
+  "akure-lgs-roofing",
+  "aso-grove-roofing",
+  "breeze-point-estate",
+  "maitama-luxury-mansion",
+  "opulence-heights",
+];
 
 /** Remote photos skip the optimiser, which only allows listed hosts. */
 export function isRemoteImage(src: string) {

@@ -108,6 +108,8 @@ const ROUTE_CAPABILITIES: [string, Capability][] = [
   ["/admin/finance", "finance:read"],
   ["/admin/team", "team:manage"],
   ["/admin/portfolio", "content:write"],
+  // The portfolio editor's preview frame.
+  ["/preview", "content:write"],
 ];
 
 export function capabilityForPath(pathname: string): Capability | null {

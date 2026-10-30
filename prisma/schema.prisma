@@ -279,14 +279,33 @@ model PortfolioItem {
   steel String?
   waste String?
 
-  /// Optional photo: a path under public/ (/LGS/roof.jpeg) or an https URL.
-  image String?
+  /// Cover photo: an upload (/media/<id>.webp), a path under public/
+  /// (/LGS/roof.jpeg) or an https URL.
+  image   String?
+  /// Further photos for the project's own page, in display order. Same forms
+  /// as image.
+  gallery String[] @default([])
 
   published Boolean @default(true)
   /// Lower first.
   sortOrder Int     @default(0)
 
   @@index([published, sortOrder])
+}
+
+/// A photo uploaded in /admin/portfolio, served at /media/<id>.<ext>.
+///
+/// Kept in the database because production runs on Vercel, where the
+/// filesystem is read-only and lost between deploys. The browser resizes each
+/// photo before upload, so a row is a few hundred kilobytes.
+model MediaAsset {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  mime      String
+  width     Int
+  height    Int
+  size      Int
+  bytes     Bytes
 }
 
 enum PortfolioTag {

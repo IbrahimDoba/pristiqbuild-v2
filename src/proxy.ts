@@ -21,7 +21,11 @@ const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { pathname } = req.nextUrl;
-  if (!pathname.startsWith("/admin")) return NextResponse.next();
+  // /preview is the editor's live-preview frame: admin-only, but it lives
+  // outside /admin to render inside the public site's chrome.
+  if (!pathname.startsWith("/admin") && !pathname.startsWith("/preview")) {
+    return NextResponse.next();
+  }
 
   // The login page has to stay reachable while signed out.
   if (pathname === "/admin/login") {
@@ -48,5 +52,5 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/preview/:path*"],
 };
