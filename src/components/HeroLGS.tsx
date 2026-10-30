@@ -99,14 +99,14 @@ export default function HeroLGS() {
       />
 
       {/* Text content, left-aligned on the structural grid */}
-      <div className="hero-text-content relative z-20 container-custom px-4 py-20 w-full">
+      <div className="hero-text-content relative z-20 container-custom py-20 w-full">
         <div className="max-w-4xl">
           <p className="hero-eyebrow inline-flex items-center gap-3 text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-silver mb-6">
             <span className="h-px w-8 bg-silver/60" aria-hidden="true" />
             Abuja · LGS Roofing &amp; Steel-Frame Construction
           </p>
 
-          <h1 className="hero-title text-[2.5rem] leading-[1.06] sm:text-5xl md:text-[3.25rem] lg:text-[3.6rem] font-display font-bold text-white mb-6 text-balance">
+          <h1 className="hero-title text-[clamp(2.125rem,1.2rem+3.4vw,4.25rem)] leading-[1.06] font-display font-bold text-white mb-6 text-balance">
             Precision steel construction, engineered for Nigeria.
           </h1>
 

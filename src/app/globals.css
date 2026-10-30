@@ -95,6 +95,16 @@
   }
 
   html {
+    /* Scale the whole site with the screen past laptop width.
+     *
+     * Tailwind sizes text, spacing and the container in rem, so this one
+     * value decides how big everything is. It stays at the reader's default
+     * (100%, normally 16px) up to about 1600px wide, then grows to 125% on a
+     * 2560px monitor. Before this, a 27" screen showed a laptop-sized page
+     * floating in empty space, which read as "zoomed out". Percentages keep
+     * a reader's own browser font setting in charge. Media queries are not
+     * affected: rem in a media query always means the browser default. */
+    font-size: clamp(100%, 62.5% + 0.375vw, 125%);
     scroll-behavior: smooth;
     scroll-padding-top: 100px;
     /* `clip`, not `hidden`. Both stop the sideways scroll, but `hidden`
@@ -109,6 +119,16 @@
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: clip;
+  }
+
+  /* iOS 15 and older ignore `clip`. There, anything wider than the screen
+   * widens the page and Safari zooms the whole site out to fit it. `hidden`
+   * on the root propagates to the viewport, so sticky headers still work. */
+  @supports not (overflow-x: clip) {
+    html,
+    body {
+      overflow-x: hidden;
+    }
   }
 
   /* Naira figures, square metres, timelines and phone numbers all sit in
@@ -305,40 +325,46 @@
     color: white;
   }
 
-  /* Section Spacing */
+  /* Section Spacing
+   *
+   * Vertical only. Every section wraps its content in .container-custom,
+   * which owns the side padding; this used to add its own on top, so a 360px
+   * phone lost close to 50px a side and everything felt squeezed. The
+   * vertical rhythm is fluid: 4rem on a phone, 7.5rem on a wide screen,
+   * rather than 10rem from 1024px up, which filled a short laptop screen with
+   * one heading. */
   .section-padding {
-    padding: 6rem 1.5rem;
+    padding-block: clamp(4rem, 2.75rem + 3.5vw, 7.5rem);
   }
 
-  @media (min-width: 768px) {
-    .section-padding {
-      padding: 8rem 2rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-padding {
-      padding: 10rem 4rem;
-    }
-  }
-
-  /* Container */
+  /* Container. In rem, so it widens with the root size on big monitors. */
   .container-custom {
-    max-width: 1400px;
+    max-width: 87.5rem;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding-inline: 1.25rem;
   }
 
   @media (min-width: 768px) {
     .container-custom {
-      padding: 0 2rem;
+      padding-inline: 2rem;
     }
   }
 
-  /* Heading Styles */
+  @media (min-width: 1280px) {
+    .container-custom {
+      padding-inline: 3rem;
+    }
+  }
+
+  /* Heading Styles
+   *
+   * Fluid: rem plus a slice of the viewport, so each size grows smoothly
+   * from phone to monitor instead of jumping between fixed steps. The old
+   * clamps hit their caps early, giving 40px four-line headlines on phones
+   * and 80px ones on a 1280x720 laptop. */
   .heading-xl {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: clamp(2.125rem, 1.25rem + 3vw, 4.5rem);
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -346,7 +372,7 @@
 
   .heading-lg {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(1.75rem, 1.1rem + 2vw, 3.25rem);
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.02em;
@@ -354,7 +380,7 @@
 
   .heading-md {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: clamp(1.375rem, 1rem + 1.1vw, 2.25rem);
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -362,14 +388,14 @@
 
   .heading-sm {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-size: clamp(1.125rem, 0.95rem + 0.6vw, 1.625rem);
     font-weight: 600;
     line-height: 1.3;
   }
 
   /* Body Text */
   .body-lg {
-    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    font-size: clamp(1.0625rem, 0.95rem + 0.4vw, 1.25rem);
     line-height: 1.7;
   }
 
