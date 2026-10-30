@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
 import {
   Calculator,
   Home,
@@ -87,34 +88,21 @@ export default function CostCalculatorPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-linear-to-r from-primary-600 to-primary-700 text-white py-20">
-        <div className="absolute inset-0 opacity-10">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
-                                linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: "50px 50px",
-            }}
-          />
-        </div>
-
-        <div className="relative container-custom">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white mb-6">
-              <Calculator className="w-4 h-4" />
-              <span className="text-sm font-semibold">Instant Project Estimates</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Construction Cost Calculator
-            </h1>
-            <p className="text-xl md:text-2xl text-primary-100 leading-relaxed">
-              Get an instant estimate for your modular construction project.
-              Professional quotes provided within 24 hours.
-            </p>
+      <PageHero image="/heroes/cost-calculator.jpg">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white mb-6">
+            <Calculator className="w-4 h-4" />
+            <span className="text-sm font-semibold">Instant Project Estimates</span>
           </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            Construction Cost Calculator
+          </h1>
+          <p className="text-xl md:text-2xl text-primary-100 leading-relaxed">
+            Get an instant estimate for your modular construction project.
+            Professional quotes provided within 24 hours.
+          </p>
         </div>
-      </section>
+      </PageHero>
 
       {/* Calculator Section */}
       <section className="section-padding bg-gray-50">

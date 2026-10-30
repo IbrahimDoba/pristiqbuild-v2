@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { WA, whatsappLink } from "@/lib/site-config";
@@ -14,15 +15,6 @@ const delivered = [
   {
     name: "Maitama and Akure residential roofing",
     detail: "Engineered LGS roofs for private residences in Abuja and Ondo State.",
-  },
-  {
-    name: "Popville Homes estate roofing",
-    detail: "A 24-unit LGS roofing contract at Popville, Mabushi.",
-  },
-  {
-    name: "NITP Secretariat",
-    detail:
-      "A hybrid structural roof: hot-rolled I-beam primaries with LGS secondary trusses.",
   },
   {
     name: "Breeze Point Estate",
@@ -61,16 +53,14 @@ const leaders = [
 export default function AboutPage() {
   return (
     <div className="bg-white">
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
-          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
-            About PristiqBuild
-          </p>
-          <h1 className="heading-xl max-w-4xl">
-            Founded in 2023 by three engineers and builders.
-          </h1>
-        </div>
-      </section>
+      <PageHero image="/heroes/about.jpg">
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          About PristiqBuild
+        </p>
+        <h1 className="heading-xl max-w-4xl">
+          Founded in 2023 by three engineers and builders.
+        </h1>
+      </PageHero>
 
       <section className="section-padding border-b border-steel-200" aria-labelledby="story-heading">
         <div className="container-custom grid lg:grid-cols-12 gap-10">

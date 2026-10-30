@@ -7,6 +7,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/config";
 import { ChevronDown, Search, MessageCircle, Phone, Mail } from "lucide-react";
 import Link from "next/link";
+import PageHero from "@/components/PageHero";
 import { PHONE_HREF } from "@/lib/site-config";
 
 
@@ -61,45 +62,37 @@ export default function FAQPage() {
   return (
     <div ref={containerRef} className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-primary-900 via-primary-800 to-primary-700">
-        <div className="absolute inset-0 opacity-10">
-          <div className="grid-pattern absolute inset-0" />
-        </div>
+      <PageHero image="/heroes/faq.jpg" centered>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="heading-xl text-white mb-6">
+            Frequently Asked
+            <br />
+            <span className="text-secondary-400">Questions</span>
+          </h1>
+          <p className="body-lg text-white/90 max-w-2xl mx-auto mb-8">
+            Find answers to common questions about modular construction, our
+            process, and how PristiqBuild can bring your project to life.
+          </p>
 
-        <div className="container-custom relative z-10 py-32 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="heading-xl text-white mb-6">
-              Frequently Asked
-              <br />
-              <span className="text-secondary-400">Questions</span>
-            </h1>
-            <p className="body-lg text-white/90 max-w-2xl mx-auto mb-8">
-              Find answers to common questions about modular construction, our
-              process, and how PristiqBuild can bring your project to life.
-            </p>
-
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-steel-400" size={20} />
-                <input
-                  type="text"
-                  placeholder="Search for answers…"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-lg bg-white text-steel-900 placeholder-steel-400 focus:outline-none focus:ring-2 focus:ring-secondary-400"
-                />
-              </div>
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-steel-400" size={20} />
+              <input
+                type="text"
+                placeholder="Search for answers…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 rounded-lg bg-white text-steel-900 placeholder-steel-400 focus:outline-none focus:ring-2 focus:ring-secondary-400"
+              />
             </div>
-          </motion.div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white to-transparent" />
-      </section>
+          </div>
+        </motion.div>
+      </PageHero>
 
       {/* FAQ Content */}
       <section className="section-padding bg-white">
