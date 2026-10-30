@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
@@ -76,7 +77,7 @@ const applications = [
   },
   {
     title: "Institutional",
-    body: "Example: the NITP Secretariat, Wuse Zone 5, a hybrid roof of hot-rolled I-beam primaries and LGS secondary trusses.",
+    body: "Roofing for schools, offices and public buildings, including hybrid roofs of hot-rolled steel primaries and LGS secondary trusses.",
   },
 ];
 
@@ -97,29 +98,27 @@ export default function LgsRoofingPage() {
         data={breadcrumbSchema([{ name: "LGS Roofing", path: "/services/lgs-roofing" }])}
       />
 
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
-          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
-            Services · LGS Roofing
-          </p>
-          <h1 className="heading-xl max-w-4xl mb-6">
-            Engineered LGS roofing, start to handover.
-          </h1>
-          <p className="body-lg text-white/85 max-w-2xl mb-10">
-            We don&apos;t just supply steel. We engineer, fabricate, transport,
-            install and inspect the finished roof.
-          </p>
-          <a
-            href={whatsappLink(WA.roofAssessment)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
-          >
-            <MessageCircle size={20} aria-hidden="true" />
-            Request a Roof Assessment
-          </a>
-        </div>
-      </section>
+      <PageHero image="/heroes/lgs-roofing.jpg">
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          Services · LGS Roofing
+        </p>
+        <h1 className="heading-xl max-w-4xl mb-6">
+          Engineered LGS roofing, start to handover.
+        </h1>
+        <p className="body-lg text-white/85 max-w-2xl mb-10">
+          We don&apos;t just supply steel. We engineer, fabricate, transport,
+          install and inspect the finished roof.
+        </p>
+        <a
+          href={whatsappLink(WA.roofAssessment)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
+        >
+          <MessageCircle size={20} aria-hidden="true" />
+          Request a Roof Assessment
+        </a>
+      </PageHero>
 
       <section className="section-padding border-b border-steel-200" aria-labelledby="process-heading">
         <div className="container-custom grid lg:grid-cols-12 gap-10">

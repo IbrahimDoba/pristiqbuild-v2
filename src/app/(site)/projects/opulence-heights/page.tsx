@@ -1,8 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, Clock, MessageCircle } from "lucide-react";
 import { ProjectGallery } from "@/components/project-ui";
 import { WA, whatsappLink } from "@/lib/site-config";
+import { getPortfolioBySlug } from "@/lib/portfolio";
+import PageHero from "@/components/PageHero";
 
 /*
  * Every image on this page is a render of the planned estate, not a photo of
@@ -70,55 +71,39 @@ function StatusList({
   );
 }
 
-export default function OpulenceHeightsProject() {
+// The hero photo is the one chosen for this project in /admin/portfolio, so
+// it changes on save (the admin actions revalidate this path).
+export const revalidate = 3600;
+
+export default async function OpulenceHeightsProject() {
+  const item = await getPortfolioBySlug("opulence-heights");
+  const heroImage = item?.image || "/dawaki estate/1.png";
   const pricingHref = whatsappLink(WA.opulencePricing);
 
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20 grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-silver hover:text-white transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              All projects
-            </Link>
-            <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
-              Development
-            </p>
-            <h1 className="heading-xl mb-6">Opulence Heights, Dawaki Hillside, Abuja</h1>
-            <p className="body-lg text-white/85 max-w-xl mb-8">
-              18 villas, 5 ensuite bedrooms plus BQ each, developed in joint venture with
-              EFAB Properties.
-            </p>
-            <p className="inline-flex items-center gap-2 px-3 py-1.5 bg-oxide text-white text-sm font-semibold rounded">
-              <Clock className="w-4 h-4" aria-hidden="true" />
-              Foundation stage · 12-month delivery target
-            </p>
-          </div>
-          <figure className="lg:col-span-6">
-            <div className="relative aspect-[4/3] overflow-hidden border border-white/15">
-              <Image
-                src="/dawaki estate/1.png"
-                alt="Render of an Opulence Heights villa, as planned"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-              <span className="absolute top-3 left-3 px-2 py-0.5 bg-black/70 text-white text-xs font-semibold uppercase tracking-wider rounded">
-                Render
-              </span>
-            </div>
-            <figcaption className="text-sm text-silver/80 mt-3">
-              Artist&apos;s impression of the planned estate. Phase 1 is at foundation stage.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
+      <PageHero image={heroImage} imageNote="Render: artist's impression of the planned estate">
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 text-sm text-silver hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+          All projects
+        </Link>
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          Development
+        </p>
+        <h1 className="heading-xl max-w-4xl mb-6">Opulence Heights, Dawaki Hillside, Abuja</h1>
+        <p className="body-lg text-white/85 max-w-2xl mb-8">
+          18 villas, 5 ensuite bedrooms plus BQ each, developed in joint venture with
+          EFAB Properties.
+        </p>
+        <p className="inline-flex items-center gap-2 px-3 py-1.5 bg-oxide text-white text-sm font-semibold rounded">
+          <Clock className="w-4 h-4" aria-hidden="true" />
+          Foundation stage · 12-month delivery target
+        </p>
+      </PageHero>
 
       {/* Status */}
       <section className="section-padding border-b border-steel-200" aria-labelledby="status-heading">

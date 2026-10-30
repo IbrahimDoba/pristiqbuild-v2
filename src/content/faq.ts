@@ -20,7 +20,7 @@ export const faqCategories = [
       {
         question: "Do you deliver full modular buildings?",
         answer:
-          "Not yet, and we would rather say so plainly. Full modular construction, with factory-built components assembled on site, is where we are headed. Today we have completed small modular-style builds such as an 18 sqm LGS site office with fibre-cement cladding and roofing. The next step is our own fabrication facility, which will enable full modular residential and commercial buildings.",
+          "Not yet, and we would rather say so plainly. Full modular construction, with factory-built components assembled on site, is where we are headed. The next step is our own fabrication facility, which will enable full modular residential and commercial buildings.",
       },
       {
         question: "Why choose PristiqBuild?",
@@ -30,7 +30,7 @@ export const faqCategories = [
       {
         question: "What types of projects do you take on?",
         answer:
-          "Residential, commercial, industrial and institutional LGS roofing (for example, the hybrid structural roof at the NITP Secretariat in Wuse Zone 5), structural steel work, and conventional construction. Tell us the scope and site and we will come back with a technical assessment.",
+          "Residential, commercial, industrial and institutional LGS roofing, structural steel work, and conventional construction. Tell us the scope and site and we will come back with a technical assessment.",
       },
     ],
   },

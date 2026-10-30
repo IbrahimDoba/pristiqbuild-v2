@@ -1,8 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { ProjectGallery } from "@/components/project-ui";
 import { WA, whatsappLink } from "@/lib/site-config";
+import { getPortfolioBySlug } from "@/lib/portfolio";
+import PageHero from "@/components/PageHero";
 
 /*
  * The three images in /breezepoint are architectural renders, not site
@@ -25,51 +26,35 @@ const renders = [
   { src: "/breezepoint/breeze1.jpg", alt: "Render of the terrace from above, showing the roof" },
 ].map((r) => ({ ...r, caption: "Design render" }));
 
-export default function BreezePointProject() {
+// The hero photo is the one chosen for this project in /admin/portfolio, so
+// it changes on save (the admin actions revalidate this path).
+export const revalidate = 3600;
+
+export default async function BreezePointProject() {
+  const item = await getPortfolioBySlug("breeze-point-estate");
+  const heroImage = item?.image || "/breezepoint/breeze3.jpg";
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20 grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-6">
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-sm text-silver hover:text-white transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-              All projects
-            </Link>
-            <p className="mb-4">
-              <span className="inline-block px-2 py-0.5 text-xs font-semibold uppercase tracking-wider border border-silver/40 text-silver rounded">
-                Conventional
-              </span>
-            </p>
-            <h1 className="heading-xl mb-6">Breeze Point Estate, Kubwa</h1>
-            <p className="body-lg text-white/85 max-w-xl">
-              Five terrace duplexes in Kubwa, Abuja, developed in joint venture with the
-              landowner using conventional construction. The project is nearing completion.
-            </p>
-          </div>
-          <figure className="lg:col-span-6">
-            <div className="relative aspect-[4/3] overflow-hidden border border-white/15">
-              <Image
-                src="/breezepoint/breeze3.jpg"
-                alt="Render of the Breeze Point Estate terrace frontage"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-              <span className="absolute top-3 left-3 px-2 py-0.5 bg-black/70 text-white text-xs font-semibold uppercase tracking-wider rounded">
-                Render
-              </span>
-            </div>
-            <figcaption className="text-sm text-silver/80 mt-3">
-              Design render. Site photos will be added as the project completes.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
+      <PageHero image={heroImage} imageNote="Render: design render, site photos to follow">
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 text-sm text-silver hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+          All projects
+        </Link>
+        <p className="mb-4">
+          <span className="inline-block px-2 py-0.5 text-xs font-semibold uppercase tracking-wider border border-silver/40 text-silver rounded">
+            Conventional
+          </span>
+        </p>
+        <h1 className="heading-xl max-w-4xl mb-6">Breeze Point Estate, Kubwa</h1>
+        <p className="body-lg text-white/85 max-w-2xl">
+          Five terrace duplexes in Kubwa, Abuja, developed in joint venture with the
+          landowner using conventional construction. The project is nearing completion.
+        </p>
+      </PageHero>
 
       {/* Facts */}
       <section className="section-padding border-b border-steel-200" aria-labelledby="facts-heading">

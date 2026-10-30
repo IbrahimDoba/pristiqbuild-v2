@@ -7,6 +7,7 @@ import { EASINGS } from "@/lib/gsap/easings";
 import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Calendar, Maximize2, Clock, ArrowLeft } from "lucide-react";
+import { HERO_HEIGHT } from "@/components/PageHero";
 
 interface ProjectHeroProps {
   title: string;
@@ -65,7 +66,7 @@ export default function ProjectHero({
   );
 
   return (
-    <section ref={containerRef} className="relative min-h-[70vh] sm:min-h-[85vh] flex items-end">
+    <section ref={containerRef} className={`relative ${HERO_HEIGHT} flex items-end`}>
       {/* Hero Image */}
       <div className="hero-image absolute inset-0">
         <Image
@@ -92,7 +93,7 @@ export default function ProjectHero({
       </Link>
 
       {/* Content */}
-      <div className="hero-content relative z-10 container-custom pb-12 sm:pb-16 md:pb-24 pt-32 sm:pt-40">
+      <div className="hero-content relative z-10 container-custom pb-12 sm:pb-16 md:pb-20 pt-28 sm:pt-32">
         {/* Category Badge */}
         <div className="hero-badge mb-4 sm:mb-6">
           <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-linear-to-r from-secondary-500 to-secondary-600 rounded-full text-xs sm:text-sm font-bold text-white shadow-lg">

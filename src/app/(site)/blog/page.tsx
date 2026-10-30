@@ -9,6 +9,7 @@ import {
   POSTS_PER_PAGE,
 } from "@/lib/blog-query";
 import SafeImage from "@/components/SafeImage";
+import PageHero from "@/components/PageHero";
 import BlogFilters from "@/components/blog/BlogFilters";
 import BlogPagination from "@/components/blog/BlogPagination";
 import JsonLd from "@/components/seo/JsonLd";
@@ -54,19 +55,17 @@ export default async function BlogPage({
         id="blog-breadcrumb"
         data={breadcrumbSchema([{ name: "Blog", path: "/blog" }])}
       />
-      <section className="relative bg-linear-to-r from-primary-700 to-primary-800 text-white py-16 md:py-20">
-        <div className="container-custom">
-          <div className="max-w-3xl">
-            <h1 className="heading-lg mb-5">
-              Light Gauge Steel Construction Insights
-            </h1>
-            <p className="body-lg text-primary-100">
-              Practical guidance on light gauge steel technology, costs and
-              applications for Nigerian construction projects.
-            </p>
-          </div>
+      <PageHero image="/heroes/insights.jpg">
+        <div className="max-w-3xl">
+          <h1 className="heading-lg mb-5">
+            Light Gauge Steel Construction Insights
+          </h1>
+          <p className="body-lg text-primary-100">
+            Practical guidance on light gauge steel technology, costs and
+            applications for Nigerian construction projects.
+          </p>
         </div>
-      </section>
+      </PageHero>
 
       <section className="border-b border-steel-100 bg-steel-50 py-6">
         <div className="container-custom">

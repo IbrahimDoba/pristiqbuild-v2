@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import PageHero from "@/components/PageHero";
 import {
   Phone,
   Mail,
@@ -96,30 +97,28 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Intro */}
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
-          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
-            Contact
-          </p>
-          <h1 className="heading-xl max-w-3xl mb-6">
-            Tell us the scope and the site.
-          </h1>
-          <p className="body-lg text-white/85 max-w-2xl mb-10">
-            WhatsApp is usually the fastest way to reach us. We typically reply
-            within a few hours. Prefer email or a form? Use the one below
-            instead.
-          </p>
-          <a
-            href={whatsappLink(WA.general)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
-          >
-            <MessageCircle size={20} aria-hidden="true" />
-            Chat on WhatsApp
-          </a>
-        </div>
-      </section>
+      <PageHero image="/heroes/contact.jpg">
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          Contact
+        </p>
+        <h1 className="heading-xl max-w-3xl mb-6">
+          Tell us the scope and the site.
+        </h1>
+        <p className="body-lg text-white/85 max-w-2xl mb-10">
+          WhatsApp is usually the fastest way to reach us. We typically reply
+          within a few hours. Prefer email or a form? Use the one below
+          instead.
+        </p>
+        <a
+          href={whatsappLink(WA.general)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
+        >
+          <MessageCircle size={20} aria-hidden="true" />
+          Chat on WhatsApp
+        </a>
+      </PageHero>
 
       <section className="section-padding bg-steel-50">
         <div className="container-custom grid lg:grid-cols-[1fr_22rem] gap-10">

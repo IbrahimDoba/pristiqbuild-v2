@@ -26,20 +26,6 @@ const ITEMS = [
     image: "/LGS/1752987831787.jpeg",
   },
   {
-    slug: "nitp-secretariat",
-    name: "NITP Secretariat",
-    location: "Wuse Zone 5, Abuja",
-    tag: "STRUCTURAL",
-    desc: "Hybrid roof structure: hot-rolled I-beam primaries carrying LGS secondary trusses.",
-  },
-  {
-    slug: "popville-homes-pop-01",
-    name: "Popville Homes (POP 01)",
-    location: "Popville, Mabushi, Abuja",
-    tag: "LGS_ROOFING",
-    desc: "Roofing contract across a 24-unit estate.",
-  },
-  {
     slug: "breeze-point-estate",
     name: "Breeze Point Estate",
     location: "Kubwa, Abuja",
@@ -64,22 +50,6 @@ const ITEMS = [
     tag: "LGS_ROOFING",
     desc: "LGS roofing project. Full project details coming soon.",
     image: "/aso/aso1.JPG",
-  },
-  {
-    slug: "lgs-site-office",
-    name: "Site Office",
-    location: "Abuja",
-    tag: "MODULAR_STYLE",
-    desc: "An 18 sqm site office built in LGS with fibre-cement cladding and roofing. A completed proof of concept for our modular roadmap.",
-    sqm: "18 sqm",
-  },
-  {
-    slug: "16-unit-staff-housing",
-    name: "16-Unit Staff Housing",
-    location: "Abuja",
-    tag: "IN_DEVELOPMENT",
-    desc: "Staff housing of roughly 384 sqm, currently at costing and design stage. Not yet built.",
-    sqm: "~384 sqm",
   },
 ];
 

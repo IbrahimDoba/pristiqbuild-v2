@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import PageHero from "@/components/PageHero";
 import { MessageCircle } from "lucide-react";
 import { getPublishedPortfolio } from "@/lib/portfolio";
 import ProjectsIndex from "@/components/portfolio/ProjectsIndex";
@@ -20,19 +21,17 @@ export default async function ProjectsPage() {
 
   return (
     <div className="bg-white">
-      <section className="bg-deep-steel text-white">
-        <div className="container-custom pt-36 pb-16 md:pt-44 md:pb-20">
-          <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
-            Projects
-          </p>
-          <h1 className="heading-xl max-w-3xl mb-6">Work we have delivered.</h1>
-          <p className="body-lg text-white/85 max-w-2xl">
-            Every project here is real work we&apos;ve delivered or are currently
-            delivering. This list updates directly, no rebuild needed each time a
-            job wraps up.
-          </p>
-        </div>
-      </section>
+      <PageHero image="/heroes/projects.jpg">
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          Projects
+        </p>
+        <h1 className="heading-xl max-w-3xl mb-6">Work we have delivered.</h1>
+        <p className="body-lg text-white/85 max-w-2xl">
+          Every project here is real work we&apos;ve delivered or are currently
+          delivering. This list updates directly, no rebuild needed each time a
+          job wraps up.
+        </p>
+      </PageHero>
 
       <ProjectsIndex items={items} />
 

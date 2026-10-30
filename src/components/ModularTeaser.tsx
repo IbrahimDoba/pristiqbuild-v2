@@ -10,7 +10,7 @@ import { whatsappLink, WA } from "@/lib/site-config";
 
 /**
  * Modular is the company's direction, not its current offer. This teaser says
- * so plainly and shows the three-stage roadmap from the Modular page. Oxide is
+ * so plainly and shows the roadmap from the Modular page. Oxide is
  * used here, and only here on the homepage, because this is the one "coming
  * soon" state.
  */
@@ -19,12 +19,6 @@ const stages = [
     label: "Today",
     title: "LGS roofing & structural work",
     description: "25+ projects delivered.",
-  },
-  {
-    label: "Proof of concept",
-    title: "Small modular-style builds",
-    description:
-      "Site offices and laundry blocks in LGS with fibre-cement cladding and roofing.",
   },
   {
     label: "Next",

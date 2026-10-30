@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
+import PageHero from "@/components/PageHero";
 import {
   Users,
   Zap,
@@ -101,34 +102,21 @@ export default function CareersPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[500px] bg-steel-900">
-        <SafeImage
-          src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=2000&q=80"
-          alt="Team collaboration and innovation"
-          fill
-          className="object-cover opacity-30"
-          priority
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-steel-900/95 to-primary-900/70" />
-
-        <div className="relative h-full flex items-center">
-          <div className="container-custom">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600/20 backdrop-blur-sm border border-primary-400/30 rounded-full text-primary-300 mb-6">
-                <Users className="w-4 h-4" />
-                <span className="text-sm font-semibold">Build Your Career With Us</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                Careers at PristiqBuild
-              </h1>
-              <p className="text-xl md:text-2xl text-steel-200 leading-relaxed">
-                Join a team that&apos;s transforming Nigeria&apos;s construction industry with
-                innovation, excellence, and cutting-edge technology.
-              </p>
-            </div>
+      <PageHero image="/heroes/careers.jpg" imagePosition="center 35%">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600/20 backdrop-blur-sm border border-primary-400/30 rounded-full text-primary-300 mb-6">
+            <Users className="w-4 h-4" />
+            <span className="text-sm font-semibold">Build Your Career With Us</span>
           </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            Careers at PristiqBuild
+          </h1>
+          <p className="text-xl md:text-2xl text-steel-200 leading-relaxed">
+            Join a team that&apos;s transforming Nigeria&apos;s construction industry with
+            innovation, excellence, and cutting-edge technology.
+          </p>
         </div>
-      </section>
+      </PageHero>
 
       {/* Current Status */}
       <section className="section-padding bg-linear-to-b from-primary-50 to-white">
