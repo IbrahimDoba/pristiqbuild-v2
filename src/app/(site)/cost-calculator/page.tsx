@@ -1,419 +1,150 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import PageHero from "@/components/PageHero";
-import {
-  Calculator,
-  Home,
-  Building2,
-  Warehouse,
-  CheckCircle,
-  Info,
-  DollarSign,
-  FileText,
-  Phone
-} from "lucide-react";
-import { PHONE_HREF } from "@/lib/site-config";
+import RoofCalculator from "@/components/roof-calculator/RoofCalculator";
+import { COVERINGS, RATES, type Covering } from "@/lib/roof-estimate";
+import { WA, whatsappLink } from "@/lib/site-config";
+
+export const metadata: Metadata = {
+  title: "LGS Roof Cost Calculator",
+  description:
+    "Estimate the cost of a light gauge steel (LGS) roof in Nigeria: G550 steel frame, installation, covering and gutters, from your building's footprint, roof shape and location.",
+  alternates: { canonical: "/cost-calculator" },
+};
+
+const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 });
+const span = ([low, high]: readonly [number, number], unit = "") =>
+  `${naira.format(low)} to ${naira.format(high)}${unit}`;
+
+/** The published method, read from the same rate table the calculator uses. */
+const method = [
+  {
+    title: "Roof area",
+    body: `Your footprint plus a ${RATES.overhang * 1000} mm eaves overhang all round, then enlarged for the pitch: a 25° roof has about 10% more surface than the plan it covers.`,
+  },
+  {
+    title: "Steel",
+    body: `Kilograms of G550 per square metre of plan, by building type and roof shape, at ${span(RATES.steelPerKg, " per kg")} roll-formed with fixings. Our Akure Residence roof used 6.8 t over 1,080 m².`,
+  },
+  {
+    title: "Installation",
+    body: `${span(RATES.installPerM2, " per m²")} of roof surface, plus ${Math.round(RATES.installPerStorey * 100)}% for each storey above the first.`,
+  },
+  {
+    title: "Engineering",
+    body: `Load calculation, truss layout and drawings, at ${Math.round(RATES.engineeringShare * 100)}% of the frame with a minimum of ${naira.format(RATES.engineeringMin)}.`,
+  },
+  {
+    title: "Covering",
+    body: (Object.keys(COVERINGS) as Covering[])
+      .filter((key) => key !== "none")
+      .map((key) => `${COVERINGS[key].label}: ${span(RATES.coveringPerM2[key], "/m²")}`)
+      .join(". ")
+      .concat(". Supplied and fixed, with cutting waste and ridge, hip and flashing pieces added for the shape."),
+  },
+  {
+    title: "Outside Abuja",
+    body: `Transport and crew upkeep add ${Math.round(RATES.logistics.nearby[0] * 100)}-${Math.round(RATES.logistics.nearby[1] * 100)}% in neighbouring states and ${Math.round(RATES.logistics.further[0] * 100)}-${Math.round(RATES.logistics.further[1] * 100)}% further afield.`,
+  },
+];
+
+const changesThePrice = [
+  "Long clear spans, which need deeper trusses and heavier sections",
+  "Valleys, dormers and changes of level, which add members and cutting",
+  "Site access, crane or scaffolding needs, and how far the steel travels",
+  "The covering's brand, gauge and profile",
+  "Steel prices on the day we buy, which move with the naira",
+];
 
 export default function CostCalculatorPage() {
-  const [projectType, setProjectType] = useState<string>("");
-  const [buildingSize, setBuildingSize] = useState<string>("");
-  const [floors, setFloors] = useState<string>("1");
-  const [smartFeatures, setSmartFeatures] = useState<boolean>(false);
-  const [solarPower, setSolarPower] = useState<boolean>(false);
-  const [estimate, setEstimate] = useState<number | null>(null);
-
-  const projectTypes = [
-    { value: "residential", label: "Residential", icon: Home, rate: 65000 },
-    { value: "commercial", label: "Commercial", icon: Building2, rate: 85000 },
-    { value: "industrial", label: "Industrial", icon: Warehouse, rate: 55000 }
-  ];
-
-  const calculateEstimate = () => {
-    if (!projectType || !buildingSize) return;
-
-    const selectedType = projectTypes.find(t => t.value === projectType);
-    if (!selectedType) return;
-
-    const size = parseFloat(buildingSize);
-    const floorCount = parseInt(floors);
-
-    // Base cost calculation
-    let baseCost = selectedType.rate * size * floorCount;
-
-    // Smart-home ready wiring (15% premium). Field is still `smartFeatures`
-    // because the lead API schema uses that name.
-    if (smartFeatures) {
-      baseCost *= 1.15;
-    }
-
-    // Add solar power (₦8,000 per sqm)
-    if (solarPower) {
-      baseCost += 8000 * size;
-    }
-
-    setEstimate(baseCost);
-
-    // Record the calculation. Fire and forget on purpose: this is our own
-    // analytics, so a failure must never interrupt the estimate the visitor
-    // asked for. Anonymous runs are stored but do not email the sales team.
-    void fetch("/api/lead", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: "CALCULATOR",
-        projectType,
-        buildingSize: size,
-        floors: floorCount,
-        smartFeatures,
-        solarPower,
-        estimate: baseCost,
-      }),
-      keepalive: true,
-    }).catch(() => {
-      /* Never surfaced to the visitor. */
-    });
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
   return (
-    <main className="min-h-screen bg-white">
-      {/* Hero Section */}
+    <div className="bg-white">
       <PageHero image="/heroes/cost-calculator.jpg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white mb-6">
-            <Calculator className="w-4 h-4" />
-            <span className="text-sm font-semibold">Instant Project Estimates</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Construction Cost Calculator
-          </h1>
-          <p className="text-xl md:text-2xl text-primary-100 leading-relaxed">
-            Get an instant estimate for your modular construction project.
-            Professional quotes provided within 24 hours.
-          </p>
-        </div>
+        <p className="text-sm font-semibold uppercase tracking-wider text-silver/80 mb-4">
+          Roof cost calculator
+        </p>
+        <h1 className="heading-xl max-w-3xl mb-6 text-balance">What will your LGS roof cost?</h1>
+        <p className="body-lg text-white/85 max-w-2xl">
+          A planning range for an engineered G550 steel roof, from the building&apos;s
+          footprint, the roof&apos;s shape and where the site is. Ours to build, start to
+          handover.
+        </p>
       </PageHero>
 
-      {/* Calculator Section */}
-      <section className="section-padding bg-gray-50">
+      <section className="section-padding" aria-label="Calculator">
         <div className="container-custom">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Calculator Form */}
-              <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-steel-900 mb-6 sm:mb-8">
-                  Project Details
-                </h2>
-
-                {/* Project Type */}
-                <div className="mb-8">
-                  <label className="block text-steel-900 font-semibold mb-4">
-                    Project Type *
-                  </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {projectTypes.map((type) => (
-                      <button
-                        key={type.value}
-                        onClick={() => setProjectType(type.value)}
-                        className={`p-4 sm:p-6 rounded-2xl border-2 transition-colors ${
-                          projectType === type.value
-                            ? 'border-primary-600 bg-primary-50'
-                            : 'border-gray-200 hover:border-primary-300'
-                        }`}
-                      >
-                        <type.icon
-                          className={`w-8 h-8 mx-auto mb-3 ${
-                            projectType === type.value ? 'text-primary-600' : 'text-steel-400'
-                          }`}
-                        />
-                        <div className={`text-sm font-semibold ${
-                          projectType === type.value ? 'text-primary-600' : 'text-steel-700'
-                        }`}>
-                          {type.label}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Building Size */}
-                <div className="mb-8">
-                  <label className="block text-steel-900 font-semibold mb-3">
-                    Building Size (Square Meters) *
-                  </label>
-                  <input
-                    type="number"
-                    value={buildingSize}
-                    onChange={(e) => setBuildingSize(e.target.value)}
-                    placeholder="e.g., 250"
-                    className="w-full px-4 py-3 border-2 border-steel-200 rounded-lg outline-none transition-colors focus:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600/25 text-steel-900"
-                  />
-                  <p className="text-sm text-steel-500 mt-2">
-                    Enter the total floor area in square meters
-                  </p>
-                </div>
-
-                {/* Number of Floors */}
-                <div className="mb-8">
-                  <label className="block text-steel-900 font-semibold mb-3">
-                    Number of Floors
-                  </label>
-                  <select
-                    value={floors}
-                    onChange={(e) => setFloors(e.target.value)}
-                    className="w-full px-4 py-3 border-2 border-steel-200 rounded-lg outline-none transition-colors focus:border-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600/25 text-steel-900"
-                  >
-                    {[1, 2, 3, 4, 5, 6].map((num) => (
-                      <option key={num} value={num}>
-                        {num} {num === 1 ? 'Floor' : 'Floors'}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Additional Features */}
-                <div className="mb-8">
-                  <label className="block text-steel-900 font-semibold mb-4">
-                    Additional Features
-                  </label>
-                  <div className="space-y-3">
-                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-2xl hover:border-primary-300 cursor-pointer transition-colors">
-                      <input
-                        type="checkbox"
-                        checked={smartFeatures}
-                        onChange={(e) => setSmartFeatures(e.target.checked)}
-                        className="w-5 h-5 text-primary-600 rounded focus:ring-primary-500 shrink-0"
-                      />
-                      <div className="flex-1">
-                        <div className="font-semibold text-steel-900">Smart-home ready wiring</div>
-                        <div className="text-sm text-steel-600">Conduit and wiring provision for smart-home controls added later</div>
-                      </div>
-                      <div className="text-primary-600 font-semibold sm:text-right">+15%</div>
-                    </label>
-
-                    <label className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 border-2 border-gray-200 rounded-2xl hover:border-primary-300 cursor-pointer transition-colors">
-                      <input
-                        type="checkbox"
-                        checked={solarPower}
-                        onChange={(e) => setSolarPower(e.target.checked)}
-                        className="w-5 h-5 text-primary-600 rounded focus:ring-primary-500 shrink-0"
-                      />
-                      <div className="flex-1">
-                        <div className="font-semibold text-steel-900">Solar Power System</div>
-                        <div className="text-sm text-steel-600">Reduce energy costs by up to 60%</div>
-                      </div>
-                      <div className="text-primary-600 font-semibold sm:text-right">₦8k/m²</div>
-                    </label>
-                  </div>
-                </div>
-
-                {/* Calculate Button */}
-                <button
-                  onClick={calculateEstimate}
-                  disabled={!projectType || !buildingSize}
-                  className="w-full py-4 bg-linear-to-r from-primary-600 to-primary-700 text-white font-bold rounded-lg hover:from-primary-700 hover:to-primary-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  <Calculator className="w-5 h-5" />
-                  Calculate Estimate
-                </button>
-              </div>
-
-              {/* Results Panel */}
-              <div>
-                {estimate !== null ? (
-                  <div className="bg-linear-to-br from-primary-600 to-primary-700 rounded-2xl shadow-2xl p-6 sm:p-8 text-white lg:sticky lg:top-32">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-6">Estimated Cost</h3>
-
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 sm:p-6 mb-6">
-                      <div className="text-sm text-primary-100 mb-2">Project Estimate</div>
-                      <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 break-words">
-                        {formatCurrency(estimate)}
-                      </div>
-                      <div className="text-sm text-primary-100">
-                        ±10% based on final specifications
-                      </div>
-                    </div>
-
-                    {/* Breakdown */}
-                    <div className="space-y-4 mb-8">
-                      <div className="flex items-center gap-3 text-white/90">
-                        <CheckCircle className="w-5 h-5 shrink-0" />
-                        <span>Design & engineering included</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-white/90">
-                        <CheckCircle className="w-5 h-5 shrink-0" />
-                        <span>LGS framing & structure</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-white/90">
-                        <CheckCircle className="w-5 h-5 shrink-0" />
-                        <span>Installation & assembly</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-white/90">
-                        <CheckCircle className="w-5 h-5 shrink-0" />
-                        <span>Project management</span>
-                      </div>
-                    </div>
-
-                    <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
-                      <div className="flex items-start gap-3">
-                        <Info className="w-5 h-5 shrink-0 mt-0.5" />
-                        <div className="text-sm text-white/90">
-                          This is a preliminary estimate. Final pricing depends on site conditions,
-                          finishes, and detailed specifications. Request a detailed quote for accuracy.
-                        </div>
-                      </div>
-                    </div>
-
-                    <Link
-                      href="/contact"
-                      className="block w-full py-4 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-colors text-center"
-                    >
-                      Get Detailed Quote
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 h-full flex flex-col items-center justify-center text-center">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                      <Calculator className="w-8 h-8 sm:w-10 sm:h-10 text-primary-600" />
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-steel-900 mb-3 sm:mb-4">
-                      Ready to Calculate?
-                    </h3>
-                    <p className="text-sm sm:text-base text-steel-600 mb-4 sm:mb-6 max-w-sm px-4">
-                      Fill in your project details to get an instant cost estimate
-                      for your modular construction project.
-                    </p>
-                    <div className="space-y-3 text-left w-full max-w-sm">
-                      <div className="flex items-center gap-3 text-steel-700">
-                        <CheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
-                        <span>Instant estimates</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-steel-700">
-                        <CheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
-                        <span>Transparent pricing</span>
-                      </div>
-                      <div className="flex items-center gap-3 text-steel-700">
-                        <CheckCircle className="w-5 h-5 text-primary-600 shrink-0" />
-                        <span>No hidden fees</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <RoofCalculator />
         </div>
       </section>
 
-      {/* Pricing Info */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-steel-900 mb-12 text-center">
-              What&apos;s Included in Our Pricing
+      <section className="section-padding bg-steel-50 border-y border-steel-200" aria-labelledby="method-heading">
+        <div className="container-custom grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <p className="text-xs font-semibold uppercase tracking-wider text-steel-500 mb-3">The method</p>
+            <h2 id="method-heading" className="heading-md text-steel-900 mb-4">
+              How the figure is worked out
             </h2>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-linear-to-br from-primary-50 to-white p-8 rounded-2xl border border-primary-100">
-                <div className="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-6">
-                  <FileText className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-steel-900 mb-4">Included in Base Price</h3>
-                <ul className="space-y-3">
-                  {[
-                    "Architectural & structural design",
-                    "Engineering calculations",
-                    "LGS framework & materials",
-                    "Factory manufacturing",
-                    "Transportation to site",
-                    "On-site assembly & installation",
-                    "Project management",
-                    "Quality assurance"
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <CheckCircle className="w-5 h-5 text-primary-600 shrink-0 mt-0.5" />
-                      <span className="text-steel-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-linear-to-br from-gray-50 to-white p-8 rounded-2xl border border-gray-200">
-                <div className="w-12 h-12 bg-steel-600 rounded-lg flex items-center justify-center mb-6">
-                  <DollarSign className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-steel-900 mb-4">Additional Costs</h3>
-                <ul className="space-y-3">
-                  {[
-                    "Site preparation & foundations",
-                    "External finishes (cladding, paint)",
-                    "Interior finishes (flooring, tiles)",
-                    "Electrical & plumbing fixtures",
-                    "HVAC systems",
-                    "Landscaping",
-                    "Permits & approvals",
-                    "Utility connections"
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Info className="w-5 h-5 text-steel-400 shrink-0 mt-0.5" />
-                      <span className="text-steel-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="mt-8 p-6 bg-primary-50 border-l-4 border-primary-600 rounded-r-xl">
-              <p className="text-steel-700 leading-relaxed">
-                <strong className="text-steel-900">Note:</strong> Every project is unique.
-                For the most accurate pricing tailored to your specific needs, site conditions,
-                and finish preferences, please contact us for a detailed consultation and quote.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section-padding bg-linear-to-r from-primary-600 to-primary-700 text-white">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Ready for a Detailed Quote?
-            </h2>
-            <p className="text-xl md:text-2xl text-primary-100 mb-10 leading-relaxed">
-              Our team will provide a comprehensive, itemized quote tailored to your
-              exact requirements, usually within 24 hours.
+            <p className="text-steel-600">
+              The same take-off a quantity surveyor does, with rates from our own jobs and
+              current Abuja supplier prices. Ranges, because no two roofs are framed alike.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link
-                href="/contact"
-                className="px-10 py-5 bg-white text-primary-600 font-bold rounded-lg hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-xl inline-flex items-center justify-center gap-3 text-lg"
-              >
-                <FileText className="w-6 h-6" />
-                Request Detailed Quote
-              </Link>
-              <Link
-                href={PHONE_HREF}
-                className="px-10 py-5 bg-primary-800 text-white font-bold rounded-lg hover:bg-primary-900 transition-[color,background-color,border-color,transform] hover:scale-105 border-2 border-primary-400 inline-flex items-center justify-center gap-3 text-lg"
-              >
-                <Phone className="w-6 h-6" />
-                Call Us Now
-              </Link>
-            </div>
+          </div>
+          <dl className="lg:col-span-8 border-t border-steel-200">
+            {method.map((m) => (
+              <div key={m.title} className="grid sm:grid-cols-[10rem_1fr] gap-x-6 gap-y-1 py-5 border-b border-steel-200">
+                <dt className="font-display font-semibold text-steel-900">{m.title}</dt>
+                <dd className="text-steel-600 leading-relaxed">{m.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="section-padding" aria-labelledby="changes-heading">
+        <div className="container-custom grid lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-4">
+            <h2 id="changes-heading" className="heading-md text-steel-900">
+              What moves the final price
+            </h2>
+          </div>
+          <div className="lg:col-span-8">
+            <ul className="space-y-3 mb-8">
+              {changesThePrice.map((item) => (
+                <li key={item} className="flex gap-3 text-steel-700">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-primary-700" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="text-steel-600">
+              Not included: VAT, walls, ceilings, electrical work and anything below the wall
+              plate. See the{" "}
+              <Link href="/terms-of-service" className="text-primary-700 underline underline-offset-4 hover:text-primary-800">
+                terms
+              </Link>{" "}
+              for how estimates may be used.
+            </p>
           </div>
         </div>
       </section>
-    </main>
+
+      <section className="bg-deep-steel text-white">
+        <div className="container-custom py-16 flex flex-wrap items-center justify-between gap-6">
+          <p className="heading-sm max-w-xl">
+            For a firm price, we measure the building and engineer the roof.
+          </p>
+          <a
+            href={whatsappLink(WA.roofAssessment)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-7 py-4 bg-white text-primary-800 rounded-lg font-semibold hover:bg-silver transition-colors"
+          >
+            <MessageCircle size={20} aria-hidden="true" />
+            Request a Roof Assessment
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }

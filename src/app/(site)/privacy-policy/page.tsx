@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.pristiqbuild.com/privacy-policy" },
 };
 
-const UPDATED = "2026-08-25";
+const UPDATED = "2026-11-23";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -64,9 +64,11 @@ export default function PrivacyPolicyPage() {
 
       <h3>When you use the cost calculator</h3>
       <p>
-        We record the figures you enter, being project type, building size,
-        number of floors, whether you selected smart features or solar power,
-        and the estimate produced. This is stored without any contact details
+        We record the figures you enter, being the building type, footprint
+        (and length and width if you give them), number of storeys, roof shape,
+        pitch, covering, whether you chose gutters or replacing an existing
+        roof, the site&apos;s general location (Abuja, neighbouring states or
+        elsewhere), and the estimate produced. This is stored without any contact details
         unless you separately choose to give them. We use it to understand what
         kinds of project people are planning, and to keep our published rates
         realistic.

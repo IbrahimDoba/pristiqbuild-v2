@@ -43,7 +43,7 @@ const footerLinks = {
   ],
   resources: [
     { name: "FAQs", href: "/faq" },
-    { name: "Cost Calculator", href: "/cost-calculator" },
+    { name: "Roof Cost Calculator", href: "/cost-calculator" },
     { name: "Contact", href: "/contact" },
   ],
 };

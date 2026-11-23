@@ -1,5 +1,18 @@
 import { z } from "zod";
 import { LeadSource, Prisma } from "@/generated/prisma/client";
+import {
+  BUILDING_TYPES,
+  COVERINGS,
+  LOCATIONS,
+  PITCHES,
+  ROOF_SHAPES,
+  estimateRoof,
+  type BuildingType,
+  type Covering,
+  type Location,
+  type Pitch,
+  type RoofShape,
+} from "@/lib/roof-estimate";
 
 /**
  * Field names below mirror the existing forms exactly. They are not renamed:
@@ -58,18 +71,27 @@ const quoteFormSchema = antiSpam.extend({
   message,
 });
 
-/** Cost calculator. Captured even when the visitor gives no contact details. */
+/**
+ * LGS roof cost calculator. Captured even when the visitor gives no contact
+ * details. Only the inputs are accepted: the server works the estimate out
+ * again itself rather than storing a figure the browser sent.
+ */
 const calculatorSchema = antiSpam.extend({
   source: z.literal("CALCULATOR"),
   name: name.optional().or(z.literal("")),
   email: email.optional().or(z.literal("")),
   phone,
-  projectType: z.string().trim().max(120),
-  buildingSize: z.coerce.number().positive().max(1_000_000),
-  floors: z.coerce.number().int().positive().max(200),
-  smartFeatures: z.boolean().default(false),
-  solarPower: z.boolean().default(false),
-  estimate: z.coerce.number().nonnegative(),
+  buildingType: z.enum(Object.keys(BUILDING_TYPES) as [BuildingType, ...BuildingType[]]),
+  footprint: z.coerce.number().positive().max(100_000),
+  length: z.coerce.number().positive().max(1_000).optional(),
+  width: z.coerce.number().positive().max(1_000).optional(),
+  storeys: z.coerce.number().int().min(1).max(20),
+  shape: z.enum(Object.keys(ROOF_SHAPES) as [RoofShape, ...RoofShape[]]),
+  pitch: z.enum(Object.keys(PITCHES) as [Pitch, ...Pitch[]]),
+  covering: z.enum(Object.keys(COVERINGS) as [Covering, ...Covering[]]),
+  gutters: z.boolean().default(false),
+  reroof: z.boolean().default(false),
+  location: z.enum(Object.keys(LOCATIONS) as [Location, ...Location[]]),
 });
 
 /** Footer newsletter. */
@@ -167,7 +189,20 @@ export function toLeadRecord(
         },
       };
 
-    case "CALCULATOR":
+    case "CALCULATOR": {
+      const inputs = {
+        buildingType: input.buildingType,
+        footprint: input.footprint,
+        ...(input.length && input.width ? { length: input.length, width: input.width } : {}),
+        storeys: input.storeys,
+        shape: input.shape,
+        pitch: input.pitch,
+        covering: input.covering,
+        gutters: input.gutters,
+        reroof: input.reroof,
+        location: input.location,
+      };
+      const estimate = estimateRoof(inputs);
       return {
         ...base,
         // An anonymous calculation is still worth keeping: it tells us what
@@ -176,19 +211,21 @@ export function toLeadRecord(
         email: blank(input.email) ?? "",
         phone: blank(input.phone),
         source: LeadSource.CALCULATOR,
-        projectType: blank(input.projectType),
-        budgetBand: bandForEstimate(input.estimate),
+        projectType: `LGS roof: ${BUILDING_TYPES[inputs.buildingType].label}`,
+        location: LOCATIONS[inputs.location].label,
+        budgetBand: bandForEstimate((estimate.total[0] + estimate.total[1]) / 2),
         payload: {
           ...payload,
           calculator: {
-            buildingSize: input.buildingSize,
-            floors: input.floors,
-            smartFeatures: input.smartFeatures,
-            solarPower: input.solarPower,
-            estimate: input.estimate,
+            version: 2,
+            ...inputs,
+            roofArea: Math.round(estimate.surfaceArea),
+            estimateLow: estimate.total[0],
+            estimateHigh: estimate.total[1],
           },
         },
       };
+    }
 
     case "NEWSLETTER":
       return {

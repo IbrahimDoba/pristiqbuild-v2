@@ -206,18 +206,18 @@ export default async function BlogPost({
         {/* CTA */}
         <div className="mt-12 p-8 md:p-10 bg-linear-to-r from-primary-600 to-primary-700 rounded-2xl text-white text-center shadow-xl">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            Ready to Start Your LGS Project?
+            Planning an LGS roof?
           </h3>
           <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
-            Get expert guidance and quality materials for your light gauge steel
-            construction project.
+            Get a planning figure for your roof in a minute, or talk to us
+            about the building.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/cost-calculator"
               className="px-8 py-4 bg-white text-primary-600 font-semibold rounded-2xl hover:bg-gray-50 transition-[color,background-color,border-color,transform] hover:scale-105 shadow-lg"
             >
-              Calculate Your Project Cost
+              Estimate Your Roof Cost
             </Link>
             <Link
               href="/contact"

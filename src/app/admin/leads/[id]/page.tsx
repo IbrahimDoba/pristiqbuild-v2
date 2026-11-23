@@ -4,12 +4,9 @@ import { auth } from "@/lib/auth";
 import { getLead, STAGES, STAGE_LABEL, SOURCE_LABEL, BUDGET_LABEL } from "@/lib/admin/leads";
 import { setLeadStage, claimLead, releaseLead, addNote } from "@/lib/admin/actions";
 import { ArrowLeft, Mail, Phone, MapPin, Calculator } from "lucide-react";
+import { calculatorRows } from "@/lib/leads/calculator-summary";
 
 export const dynamic = "force-dynamic";
-
-const naira = new Intl.NumberFormat("en-NG", {
-  style: "currency", currency: "NGN", maximumFractionDigits: 0,
-});
 
 export default async function LeadDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -79,11 +76,9 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                 What they calculated
               </h2>
               <dl className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <Field label="Building size">{String(calc.buildingSize)} sqm</Field>
-                <Field label="Floors">{String(calc.floors)}</Field>
-                <Field label="Smart features">{calc.smartFeatures ? "Yes" : "No"}</Field>
-                <Field label="Solar power">{calc.solarPower ? "Yes" : "No"}</Field>
-                <Field label="Estimate shown">{naira.format(Number(calc.estimate))}</Field>
+                {calculatorRows(calc).map(([label, value]) => (
+                  <Field key={label} label={label}>{value}</Field>
+                ))}
               </dl>
             </section>
           )}
