@@ -285,6 +285,9 @@ model PortfolioItem {
   /// Further photos for the project's own page, in display order. Same forms
   /// as image.
   gallery String[] @default([])
+  /// Short clips for the project's own page, in display order. Uploads only
+  /// (/media/<id>.mp4); each has a poster frame at /media/<id>p.webp.
+  videos  String[] @default([])
 
   published Boolean @default(true)
   /// Lower first.
@@ -293,11 +296,16 @@ model PortfolioItem {
   @@index([published, sortOrder])
 }
 
-/// A photo uploaded in /admin/portfolio, served at /media/<id>.<ext>.
+/// A photo or short video uploaded in /admin/portfolio, served at
+/// /media/<id>.<ext>.
 ///
 /// Kept in the database because production runs on Vercel, where the
 /// filesystem is read-only and lost between deploys. The browser resizes each
-/// photo before upload, so a row is a few hundred kilobytes.
+/// photo before upload, so a photo row is a few hundred kilobytes. Videos are
+/// capped at MAX_VIDEO_BYTES and read back in slices, never whole; the bytes
+/// column is stored uncompressed (see the portfolio_videos migration) so a
+/// slice does not have to unpack the full file. A video arriving in pieces has
+/// size 0 until its last piece lands.
 model MediaAsset {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())

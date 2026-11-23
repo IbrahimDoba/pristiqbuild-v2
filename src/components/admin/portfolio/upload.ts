@@ -57,3 +57,89 @@ export async function uploadPhoto(file: File): Promise<string> {
   }
   return data.url;
 }
+
+const VIDEO_CHUNK = 3 * 1024 * 1024;
+
+/** The video's size and a frame from one second in, as a WebP poster. */
+async function readVideo(file: File) {
+  const video = document.createElement("video");
+  video.preload = "auto";
+  video.muted = true;
+  video.playsInline = true;
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    await new Promise<void>((resolve, reject) => {
+      video.onloadeddata = () => resolve();
+      video.onerror = () =>
+        reject(new Error(`${file.name}: this browser can't play that file. Export it as an MP4 (H.264).`));
+      video.src = objectUrl;
+    });
+    // The very first frame is often black or mid-fade.
+    await new Promise<void>((resolve) => {
+      video.onseeked = () => resolve();
+      video.currentTime = Math.min(1, (video.duration || 2) / 2);
+    });
+
+    const scale = Math.min(1, 1600 / Math.max(video.videoWidth, video.videoHeight));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.round(video.videoWidth * scale);
+    canvas.height = Math.round(video.videoHeight * scale);
+    canvas.getContext("2d")?.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const poster = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/webp", 0.8));
+    return {
+      width: video.videoWidth,
+      height: video.videoHeight,
+      // Older Safari hands back a PNG when asked for WebP; go without a poster.
+      poster: poster?.type === "image/webp" ? poster : null,
+      posterWidth: canvas.width,
+      posterHeight: canvas.height,
+    };
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
+/**
+ * Uploads a video in pieces and returns its address, e.g. /media/abc123.mp4.
+ * `onProgress` gets a fraction from 0 to 1.
+ */
+export async function uploadVideo(file: File, onProgress: (fraction: number) => void): Promise<string> {
+  const { width, height, poster, posterWidth, posterHeight } = await readVideo(file);
+
+  let id = "";
+  let url = "";
+  for (let offset = 0; offset < file.size; offset += VIDEO_CHUNK) {
+    const query = new URLSearchParams({ total: String(file.size) });
+    if (id) {
+      query.set("id", id);
+      query.set("offset", String(offset));
+    } else {
+      query.set("width", String(width));
+      query.set("height", String(height));
+    }
+    const response = await fetch(`/api/admin/media/video?${query}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/octet-stream" },
+      body: file.slice(offset, offset + VIDEO_CHUNK),
+    });
+    const data = (await response.json().catch(() => ({}))) as { id?: string; url?: string; error?: string };
+    if (!response.ok || !data.id) {
+      throw new Error(`${file.name}: ${data.error ?? `upload failed (${response.status}).`}`);
+    }
+    id = data.id;
+    if (data.url) url = data.url;
+    onProgress(Math.min(1, (offset + VIDEO_CHUNK) / file.size));
+  }
+  if (!url) throw new Error(`${file.name}: the upload did not finish.`);
+
+  if (poster) {
+    const form = new FormData();
+    form.append("file", poster, "poster.webp");
+    form.append("width", String(posterWidth));
+    form.append("height", String(posterHeight));
+    form.append("posterFor", id);
+    // A missing poster only means a blank tile before play; not worth failing for.
+    await fetch("/api/admin/media", { method: "POST", body: form }).catch(() => undefined);
+  }
+  return url;
+}

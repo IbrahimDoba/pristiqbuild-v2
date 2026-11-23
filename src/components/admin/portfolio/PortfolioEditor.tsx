@@ -15,6 +15,7 @@ import {
 import { deletePortfolioItem, savePortfolioItem, type PortfolioDraft } from "@/lib/admin/portfolio-actions";
 import { withDraft, type PreviewView } from "@/lib/portfolio-preview";
 import PhotoManager from "./PhotoManager";
+import VideoManager from "./VideoManager";
 import PreviewPane from "./PreviewPane";
 
 /** The homepage strip shows this many featured projects. */
@@ -35,6 +36,7 @@ function toDraft(item: PortfolioEntry | undefined, sortOrder: number): Portfolio
     steel: item?.steel ?? "",
     waste: item?.waste ?? "",
     photos: item ? [item.image, ...item.gallery].filter((p): p is string => Boolean(p)) : [],
+    videos: item?.videos ?? [],
     featured: item?.featured ?? false,
     published: item?.published ?? true,
     sortOrder: item?.sortOrder ?? sortOrder,
@@ -56,6 +58,7 @@ function toEntry(draft: PortfolioDraft): PortfolioEntry {
     waste: draft.waste.trim() || null,
     image: draft.photos[0] ?? null,
     gallery: draft.photos.slice(1),
+    videos: draft.videos,
     featured: draft.featured,
     published: draft.published,
     sortOrder: Number.isFinite(draft.sortOrder) ? draft.sortOrder : 0,
@@ -94,8 +97,15 @@ export default function PortfolioEditor({ item, others, nextSortOrder = 0 }: Pro
     setJustSaved(false);
   }, []);
 
+  const setVideos = useCallback((update: (previous: string[]) => string[]) => {
+    setDraft((d) => ({ ...d, videos: update(d.videos) }));
+    setJustSaved(false);
+  }, []);
+  // Photo and video uploads report separately; either one holds the save.
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+
   const save = useCallback(() => {
-    if (uploading || saving) return;
+    if (uploading || uploadingVideo || saving) return;
     startSaving(async () => {
       const result = await savePortfolioItem(draft);
       if (!result.ok) {
@@ -110,7 +120,7 @@ export default function PortfolioEditor({ item, others, nextSortOrder = 0 }: Pro
       if (item) router.refresh();
       else router.replace(`/admin/portfolio/${result.id}`);
     });
-  }, [draft, item, router, saving, uploading]);
+  }, [draft, item, router, saving, uploading, uploadingVideo]);
 
   // Ctrl/Cmd+S saves, as in any editor.
   useEffect(() => {
@@ -184,8 +194,8 @@ export default function PortfolioEditor({ item, others, nextSortOrder = 0 }: Pro
 
         <div className="ml-auto flex flex-wrap items-center gap-3">
           <p aria-live="polite" className="text-sm text-steel-500">
-            {uploading
-              ? "Uploading photos…"
+            {uploading || uploadingVideo
+              ? uploadingVideo ? "Uploading video…" : "Uploading photos…"
               : dirty
                 ? "Unsaved changes"
                 : justSaved
@@ -210,7 +220,7 @@ export default function PortfolioEditor({ item, others, nextSortOrder = 0 }: Pro
           <button
             type="button"
             onClick={save}
-            disabled={saving || uploading || (!dirty && Boolean(item))}
+            disabled={saving || uploading || uploadingVideo || (!dirty && Boolean(item))}
             title="Save (Ctrl+S)"
             className="px-4 py-2 rounded-lg bg-primary-700 text-white text-sm font-semibold hover:bg-primary-800 disabled:opacity-60 active:translate-y-px transition-[background-color,transform,opacity]"
           >
@@ -242,6 +252,16 @@ export default function PortfolioEditor({ item, others, nextSortOrder = 0 }: Pro
               </p>
             </div>
             <PhotoManager photos={draft.photos} setPhotos={setPhotos} onBusyChange={setUploading} name={draft.name} />
+          </section>
+
+          <section className={card} aria-labelledby="videos-heading">
+            <div>
+              <h2 id="videos-heading" className={cardTitle}>Videos</h2>
+              <p className="text-sm text-steel-500 mt-0.5">
+                Short clips shown on the project page, below the photos. MP4, up to 40 MB each: about a minute.
+              </p>
+            </div>
+            <VideoManager videos={draft.videos} setVideos={setVideos} onBusyChange={setUploadingVideo} name={draft.name} />
           </section>
 
           <section className={card} aria-labelledby="story-heading">

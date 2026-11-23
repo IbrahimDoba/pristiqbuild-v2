@@ -5,6 +5,7 @@ import { isRemoteImage, type PortfolioEntry } from "@/lib/portfolio-constants";
 import { PhotoPlaceholder, TagChip } from "@/components/PortfolioGrid";
 import ProjectGallery from "@/components/project-ui/ProjectGallery";
 import { whatsappLink } from "@/lib/site-config";
+import { videoPoster } from "@/lib/media";
 
 /**
  * A portfolio entry's own page, below the site chrome.
@@ -109,6 +110,32 @@ export default function ProjectDetail({ item }: { item: PortfolioEntry }) {
           </div>
         </aside>
       </div>
+
+      {item.videos.length > 0 && (
+        <section className="border-t border-steel-200" aria-labelledby="project-videos">
+          <div className="container-custom section-padding">
+            <h2 id="project-videos" className="heading-md text-steel-900 mb-8">
+              {item.videos.length === 1 ? "Video" : "Videos"}
+            </h2>
+            <ul className={`grid gap-6 list-none p-0 m-0 ${item.videos.length > 1 ? "md:grid-cols-2" : "max-w-4xl"}`}>
+              {item.videos.map((src, i) => (
+                <li key={src}>
+                  {/* preload="none": nothing downloads until a visitor presses play. */}
+                  <video
+                    src={src}
+                    poster={videoPoster(src)}
+                    controls
+                    preload="none"
+                    playsInline
+                    aria-label={`${item.name}, video ${i + 1}`}
+                    className="w-full aspect-video bg-steel-900 border border-steel-200"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {item.gallery.length > 0 && (
         <ProjectGallery

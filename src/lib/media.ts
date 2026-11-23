@@ -23,8 +23,45 @@ export function mediaUrl(id: string, mime: MediaMime) {
 
 /** "/media/abc123.webp" -> "abc123". Null for anything that is not an upload. */
 export function mediaId(src: string | null | undefined) {
-  const match = src?.match(/^\/media\/([a-z0-9]+)\.(webp|jpg|png)$/);
+  const match = src?.match(/^\/media\/([a-z0-9]+)\.(webp|jpg|png|mp4)$/);
   return match ? match[1] : null;
+}
+
+export const VIDEO_MIME = "video/mp4";
+
+/**
+ * Enough for about a minute of 720p. Clips belong on the page as a glimpse of
+ * the site, not as the full drone flight; longer footage should be trimmed
+ * and compressed before upload.
+ */
+export const MAX_VIDEO_BYTES = 40 * 1024 * 1024;
+
+/** One upload request. Vercel refuses bodies over 4.5 MB. */
+export const VIDEO_CHUNK_BYTES = 3 * 1024 * 1024;
+
+export function videoUrl(id: string) {
+  return `/media/${id}.mp4`;
+}
+
+/** "/media/abc123.mp4" -> "abc123". Null for anything else. */
+export function videoId(src: string | null | undefined) {
+  const match = src?.match(/^\/media\/([a-z0-9]+)\.mp4$/);
+  return match ? match[1] : null;
+}
+
+/** A video's poster frame is a photo stored under the video's id plus "p". */
+export function posterId(id: string) {
+  return `${id}p`;
+}
+
+export function videoPoster(src: string) {
+  const id = videoId(src);
+  return id ? `/media/${posterId(id)}.webp` : undefined;
+}
+
+/** An MP4 starts with a box whose type, at byte 4, is "ftyp". */
+export function sniffMp4(bytes: Uint8Array) {
+  return bytes.length > 12 && bytes[4] === 0x66 && bytes[5] === 0x74 && bytes[6] === 0x79 && bytes[7] === 0x70;
 }
 
 /**

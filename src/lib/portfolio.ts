@@ -15,6 +15,7 @@ const SELECT = {
   waste: true,
   image: true,
   gallery: true,
+  videos: true,
   published: true,
   sortOrder: true,
 } as const;

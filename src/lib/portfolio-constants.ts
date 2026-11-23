@@ -35,6 +35,8 @@ export type PortfolioEntry = {
   waste: string | null;
   image: string | null;
   gallery: string[];
+  /** Uploaded clips, e.g. /media/abc123.mp4. */
+  videos: string[];
   published: boolean;
   sortOrder: number;
 };
