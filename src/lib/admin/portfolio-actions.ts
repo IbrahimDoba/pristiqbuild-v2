@@ -6,7 +6,7 @@ import { getDb } from "@/lib/db";
 import { Prisma, type PortfolioTag } from "@/generated/prisma/client";
 import { can } from "@/lib/admin/permissions";
 import { TAGS, slugify } from "@/lib/portfolio-constants";
-import { mediaId } from "@/lib/media";
+import { mediaId, posterId, videoId } from "@/lib/media";
 
 /** Re-checks the session: a server action is reachable without its page. */
 async function requireContent() {
@@ -30,9 +30,13 @@ function validImage(image: string) {
   return !image.includes("..") && /^\/[\w\-/. ]+\.(jpe?g|png|webp|avif)$/i.test(image);
 }
 
-/** Uploaded photos an entry points at. */
-function mediaIds(item: { image: string | null; gallery: string[] }) {
-  return [item.image, ...item.gallery].map(mediaId).filter((id): id is string => Boolean(id));
+/** Uploads an entry points at: photos, videos and each video's poster. */
+function mediaIds(item: { image: string | null; gallery: string[]; videos: string[] }) {
+  const ids = [item.image, ...item.gallery, ...item.videos]
+    .map(mediaId)
+    .filter((id): id is string => Boolean(id));
+  const posters = item.videos.map(videoId).filter((id): id is string => Boolean(id)).map(posterId);
+  return [...ids, ...posters];
 }
 
 /** Deletes uploads that `before` used and `after` no longer does. */
@@ -55,6 +59,8 @@ export type PortfolioDraft = {
   waste: string;
   /** In display order; the first is the cover. */
   photos: string[];
+  /** Uploaded clips, in display order. */
+  videos: string[];
   featured: boolean;
   published: boolean;
   sortOrder: number;
@@ -86,7 +92,14 @@ export async function savePortfolioItem(draft: PortfolioDraft): Promise<Portfoli
   if (!desc) return { ok: false, error: "Add a short description." };
   if (!(TAGS as string[]).includes(tag)) return { ok: false, error: "Pick a type of work." };
   if (!slug) return { ok: false, error: "The page address needs at least one letter or number." };
+  const videos = (Array.isArray(draft.videos) ? draft.videos : []).map(clean).filter(Boolean);
+
   if (photos.length > 40) return { ok: false, error: "Keep it to 40 photos or fewer." };
+  if (videos.length > 8) return { ok: false, error: "Keep it to 8 videos or fewer." };
+  // Videos are uploads only: nothing here can point a player at another site.
+  if (videos.some((video) => !videoId(video))) {
+    return { ok: false, error: "One of the videos has an address this site cannot play." };
+  }
   if (photos.some((photo) => !validImage(photo))) {
     return { ok: false, error: "One of the photos has an address this site cannot show." };
   }
@@ -102,6 +115,7 @@ export async function savePortfolioItem(draft: PortfolioDraft): Promise<Portfoli
     tag: tag as PortfolioTag,
     image: photos[0] ?? null,
     gallery: photos.slice(1),
+    videos,
     sqm: optional(draft.sqm),
     steel: optional(draft.steel),
     waste: optional(draft.waste),
@@ -115,7 +129,7 @@ export async function savePortfolioItem(draft: PortfolioDraft): Promise<Portfoli
     if (id) {
       const before = await db.portfolioItem.findUnique({
         where: { id },
-        select: { slug: true, image: true, gallery: true },
+        select: { slug: true, image: true, gallery: true, videos: true },
       });
       if (!before) return { ok: false, error: "This project was deleted in the meantime." };
       await db.portfolioItem.update({ where: { id }, data });
@@ -139,7 +153,7 @@ export async function deletePortfolioItem(id: string) {
   await requireContent();
   const removed = await getDb().portfolioItem.delete({
     where: { id },
-    select: { slug: true, image: true, gallery: true },
+    select: { slug: true, image: true, gallery: true, videos: true },
   });
   await dropUnusedMedia(mediaIds(removed), []);
   revalidatePublic(removed.slug);
