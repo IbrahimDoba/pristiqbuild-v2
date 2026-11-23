@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import type { Lead } from "@/generated/prisma/client";
+import { calculatorRows } from "@/lib/leads/calculator-summary";
 
 /**
  * Lead notification.
@@ -24,12 +25,6 @@ const BUDGET_LABEL: Record<string, string> = {
   "50m-100m": "50M to 100M naira",
   "over-100m": "Over 100M naira",
 };
-
-const naira = new Intl.NumberFormat("en-NG", {
-  style: "currency",
-  currency: "NGN",
-  maximumFractionDigits: 0,
-});
 
 function escapeHtml(value: string): string {
   return value
@@ -58,13 +53,7 @@ function rowsFor(lead: Lead): Row[] {
   const payload = lead.payload as Record<string, unknown> | null;
   const calc = payload?.calculator as Record<string, unknown> | undefined;
 
-  if (calc) {
-    rows.push(["Building size", `${calc.buildingSize} sqm`]);
-    rows.push(["Floors", String(calc.floors)]);
-    rows.push(["Smart features", calc.smartFeatures ? "Yes" : "No"]);
-    rows.push(["Solar power", calc.solarPower ? "Yes" : "No"]);
-    rows.push(["Estimate shown", naira.format(Number(calc.estimate))]);
-  }
+  if (calc) rows.push(...calculatorRows(calc));
 
   if (lead.message) rows.push(["Message", lead.message]);
   if (payload?.referrer) rows.push(["Came from", String(payload.referrer)]);

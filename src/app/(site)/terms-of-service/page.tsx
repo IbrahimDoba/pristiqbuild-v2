@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://www.pristiqbuild.com/terms-of-service" },
 };
 
-const UPDATED = "2026-08-25";
+const UPDATED = "2026-11-23";
 
 export default function TermsOfServicePage() {
   return (
@@ -46,9 +46,9 @@ export default function TermsOfServicePage() {
 
       <h2>The cost calculator</h2>
       <p>
-        The calculator produces a rough order-of-magnitude figure from a small
-        number of inputs and a published rate per square metre. Please treat it
-        accordingly:
+        The roof cost calculator produces a planning range for a light gauge
+        steel roof from a small number of inputs and published typical rates.
+        Please treat it accordingly:
       </p>
       <ul>
         <li>
@@ -56,9 +56,10 @@ export default function TermsOfServicePage() {
           a tender, or a price we are offering.
         </li>
         <li>
-          It does not account for site conditions, ground works, foundations,
-          access, planning and regulatory costs, finishes, fittings, external
-          works, or professional fees.
+          It covers the roof only: the steel frame, its installation and
+          engineering, and the covering, gutters and strip-out where selected.
+          It does not include VAT, walls, ceilings, electrical work, anything
+          below the wall plate, or unusual site access, spans or geometry.
         </li>
         <li>
           Nigerian construction input costs move with exchange rates and
